@@ -1,0 +1,70 @@
+.navbar-expand-lg{
+  background-color: #fc8d74;
+}
+.nav-brand{
+  text-decoration: none;
+  color: #EC2D01;
+  font-size: x-large;
+  font-weight: 700;
+}
+
+.navbar-nav .nav-link {
+  display: flex;
+  
+}
+.navbar-collapse ul{
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.userfn-btn{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.userfn-btn .userlogin-name{
+  text-wrap:nowrap;
+}
+.userfn-btn button{
+  width: fit-content;
+  height: fit-content;
+  text-align: center;
+  text-wrap: nowrap;
+}
+
+
+@media (max-width:480px){
+    .Navbar-buttondiv{
+        display: flex;
+        flex-direction: column;
+        width: fit-content;
+        margin: 3px;
+    }
+    .navbar-nav .nav-link {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      text-align: left;
+    }
+    .navbar-collapse ul{
+      width: 100%;
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+    .userfn-btn{
+      display: flex;
+      flex-direction: column;
+      width: fit-content;
+      margin-left: 10px;
+      justify-content: left;
+      align-items: flex-start;
+    }
+}
+
+@media (min-width: 992px) {
+    .drawer-open {
+      display: none !important; /* Ensure the drawer is hidden on large screens */
+    }
+  }

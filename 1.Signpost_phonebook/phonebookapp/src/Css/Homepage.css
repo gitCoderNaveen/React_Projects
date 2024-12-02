@@ -1,0 +1,346 @@
+/* General Reset */  
+.mycontainer {
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;    
+  }
+  /* Sticky Container */
+  .sticky-container {
+    position: sticky;
+    top: 55px; /* Distance from the top of the viewport */
+    z-index: 1000; /* Ensures it stays above other content */
+    background-color: #fff; /* Matches the page background */
+    padding: 10px;
+    margin: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional for visual separation */
+  }
+  
+  
+  /* Search Bars */
+  .search-container {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .search-box {
+    width: 90%;
+    max-width: 400px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  /* Searchbar with Icons */
+  .input-container {
+    position: relative;
+    width: 250px;
+  }
+  
+  .input-container input {
+    width: 100%;
+    padding: 10px 10px 10px 40px; /* Leave space for the icon */
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+  
+  .input-container .icon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #888;
+    font-size: 18px;
+  }
+  
+
+
+
+  /* Home page Card  */
+  .card-container {
+    display: flex;
+    gap: 3px;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    width: 30%;
+    margin: 10px auto;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-left {
+    flex: 1;
+    text-align: left;
+  }
+  
+  .card-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .card-location {
+    font-size: 14px;
+    color: #555;
+    margin: 4px 0 0;
+  }
+  
+  .card-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .phone-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .phone-icon {
+    margin-right: 8px;
+    font-size: 18px;
+  }
+  
+  .phone-number {
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .button-group {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+  }
+  .button-group a{
+    text-decoration: none;
+    color:#ffffff;
+  }
+  
+  .mybtn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .call-btn {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .call-btn:hover {
+    background-color: #45a049;
+  }
+  
+  .more-btn {
+    background-color: #008cba;
+    color: white;
+  }
+  
+  .more-btn:hover {
+    background-color: #007bb5;
+  }
+
+  /* More button Popup */
+  .popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .popup-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    position: relative;
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 8px;
+    right: 15px;
+    font-size: 18px;
+    background: none;
+    border: none;
+    height: fit-content;
+    cursor: pointer;
+    color: #ffffff;
+    background-color: #4169E1;   
+  }
+  .popup-content h2{
+    margin-top: 40px;
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+  }
+  
+  .popup-btn {
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 14px;
+  }
+  
+  .whatsapp-btn {
+    background-color: #106a31;
+  }
+  
+  .mail-btn {
+    background-color: #0073e6;
+  }
+  
+  .call-btn {
+    background-color: #bf6335;
+  }
+  
+  .sms-btn {
+    background-color: #ff9800;
+  }
+  
+
+  /* Contact Card */
+  .contactcard-div{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .contact-card {
+    text-align: left;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    width: 300px;
+    margin: 1px auto;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .contact-card h2 {
+    text-wrap: wrap;
+    margin: 0;
+    font-size: 1.5em;
+    color: #333;
+  }
+  
+  .contact-card p {
+    margin: 5px 0;
+    color: #555;
+    font-size: 1em;
+  }
+  
+  /* Media Queries for Responsiveness */
+  @media (max-width: 768px) {
+    .search-box {
+      font-size: 14px;
+      padding: 8px;
+    }
+  
+    .contact-card {
+      padding: 15px;
+    }
+  
+    .icons-container a {
+      font-size: 12px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .userDetails{
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      position: relative;
+      left: 0;
+    }
+    .userDetails, .userName{
+      text-align: left;
+      width: 100%;
+      left: 10px;
+    }
+    .userDetails .buttondiv{
+     display: flex;
+     flex-direction: column;
+    }
+    .search-box {
+      width: 95%;
+      font-size: 12px;
+      padding: 6px;
+    }
+    .sticky-container {
+      position: sticky;
+      top: 55px; /* Distance from the top of the viewport */
+      z-index: 1000; /* Ensures it stays above other content */
+      background-color: #fff; /* Matches the page background */
+      padding: auto;
+      margin: 4px auto;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      width: 100%; /* Optional for visual separation */
+    }
+    
+
+    .contactcard-div{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+  
+      .card-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 16px;
+        width: 100%;
+        margin: 1px auto;
+        background-color: #f9f9f9;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+    .contact-card {
+      font-size: 0.9em;
+    }
+  
+    .icons-container {
+      flex-direction: row;
+      align-items: center;
+    } 
+    .search-container{
+        display: flex;
+        flex-direction: column;
+    }
+  
+  }
+  
