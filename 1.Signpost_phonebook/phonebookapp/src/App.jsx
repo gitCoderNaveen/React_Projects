@@ -12,11 +12,13 @@ import MediaPartner from "./Components/MediaPartner";
 import UserProfile from "./Components/UserProfile ";
 import NearbyPromotion from "./Components/Nearbypromotion";
 import NavbarWithDrawer from "./Components/NavbarWithDrawer ";
+import EditableDropdowns from "./Components/EditableDropdowns";
+import SearchAndSendSMS from "./Components/SearchAndSendSMS";
 export default function App() {
   return (
     <div>
       <div>
-        <Auth>
+        {/* <Auth>
           <Navigationpage />
           <Routes>
             <Route path="/" element={<Homepage />} />
@@ -27,7 +29,8 @@ export default function App() {
             <Route path="/contactus" element={<Contactus />} />
             <Route path="/MediaPartner" element={<MediaPartner />} />
           </Routes>
-        </Auth>
+        </Auth> */}
+        <SearchAndSendSMS />
       </div>
     </div>
   );

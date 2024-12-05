@@ -64,11 +64,10 @@ const Nearbypromotion = () => {
     }
 
     selectedBusinesses.forEach((business) => {
-      const { prefix, businessname, mobileno } = business;
-      const personalizedMessage = customMessage.replace(
-        "{name}",
-        `${prefix} ${businessname}`
-      );
+      const { mobileno } = business;
+      const personalizedMessage = `Signpost Celfon Team wishes your family a HAPPY & JOYOUS DEEPAVALI!
+    On this occasion, we launch our SIGNPOST PHONE BOOK Mobile App to help micro businesses promote their business in their neighborhood. Tap the link to access:
+    WWW.signpostphonebook.in`;
       const smsUrl = `sms:${mobileno}?body=${encodeURIComponent(
         personalizedMessage
       )}`;

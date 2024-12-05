@@ -1,0 +1,110 @@
+.productCityMainDiv{
+  display: flex;
+  justify-content: center;
+}
+.productCityDiv{
+  width: 80%;
+}
+.productCityDiv h2{
+  text-align: center;
+}
+.inputContainer{
+  display: flex;
+  gap: 2px;
+  justify-content: center;
+  align-items: center;
+}
+.inputContainer button{
+  height: fit-content;
+}
+.card-containerMain {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 5px;
+    justify-content: center;
+    height: 300px;
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 10px; /* Add some padding for better aesthetics */
+    border: 1px solid #ccc; /* Add a subtle border */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #f9f9f9; /* Light background color */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
+  
+  
+  .card {
+    display: flex;
+    width: 30%;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 10px; 
+    margin-bottom: 10px; 
+    background-color: #ffffff; 
+    border: 1px solid #e0e0e0; 
+    border-radius: 6px; 
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08); 
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .card:hover {
+    transform: scale(1.02); 
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15); 
+  }
+  .selectallInput{
+    position: absolute;
+    top: 20%;
+    right: 15%;
+  }
+  
+  .card-details {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    flex-direction: column; 
+    justify-content: space-between;
+  }  
+
+  .card-details p {
+    text-wrap: wrap;
+    width: 50%;
+    margin: 0; 
+    font-size: 14px; 
+    color: #333;
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+  }
+  .card-details .heading-text{
+    font-weight: 600;
+    font-size: medium;
+    position: inherit;
+  }
+  .checkbox {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height:100%;
+    text-align: center;
+  }
+  .checkbox p{
+    align-items: center;
+    position: relative;
+    top: 40%;
+  }
+  .checkbox .inputCheckbox{
+    position: absolute;
+    top: 10%;
+    right: -40%;    
+  }
+  .selectedList{
+    display: flex;
+    margin-top: 20px;
+    justify-content: space-between;
+  }
+
+
+  
