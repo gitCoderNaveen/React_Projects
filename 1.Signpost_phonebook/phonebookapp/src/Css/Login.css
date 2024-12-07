@@ -41,7 +41,7 @@
   
   h2 {
     margin-bottom: 20px;
-    color: #333;
+    color: #EC2D01;
   }
   
   .input-group {
@@ -89,4 +89,8 @@
   .links a:hover {
     text-decoration: underline;
   }
-  
+  .signupButton{
+    background: none;
+    border: none;
+    color: #007bff;
+  }

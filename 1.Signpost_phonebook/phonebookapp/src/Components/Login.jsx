@@ -23,10 +23,7 @@ const Login = () => {
   const handlePassword = (e) => {
     setPassword(e.target.value);
   };
-
-  const handleSignup = () => {
-    navigate("/signup");
-  };
+  
   const handleLogin = (e) => {
     e.preventDefault();
     Login(mobileno, password);
@@ -74,9 +71,15 @@ const Login = () => {
             <div className="links">
               <a href="#forgot-password">Forgot password?</a>
               <span> | </span>
-              <a href="/signup" onClick={handleSignup}>
+              <button
+                type="button"
+                className="signupButton"
+                onClick={() => {
+                  navigate("/signup");
+                }}
+              >
                 Signup
-              </a>
+              </button>
             </div>
           </div>
         </div>

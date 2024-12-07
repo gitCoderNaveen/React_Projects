@@ -104,7 +104,8 @@ export default function SearchAndSendSMS() {
     }
 
     const mobileNumbers = selectedClients.map((client) => client.mobileno);
-    const message = "Welcome to all";
+    const message =
+      "I Saw Your Listing in SIGNPOST PHONE BOOK. I am Interested in your Products. Please Send Details/Call Me.";
 
     try {
       // Join multiple numbers with a comma
@@ -221,19 +222,36 @@ export default function SearchAndSendSMS() {
               </ul>
             )}
           </div>
-          {productInput ? <button onClick={handleClear}>Clear</button> : <></>}
+          {productInput ? (
+            <button className="btn btn-primary" onClick={handleClear}>
+              clear
+            </button>
+          ) : (
+            <></>
+          )}
+        </div>
+        <div className="controlSection">
+          <div className="selectedList">
+            <p>Total Cards: {data.length}</p>
+            <p>Selected cards: {selectedClients.length}</p>
+          </div>
+          <div className="selectallInput">
+            <div>
+              <label>Select All</label>
+            </div>
+            &nbsp;
+            <div>
+              <input
+                type="checkbox"
+                checked={selectAll}
+                onChange={handleSelectAllChange}
+              />
+            </div>
+          </div>
         </div>
         <div className="card-containerMain">
           {data.length > 0 ? (
             <>
-              <div className="selectallInput">
-                <label>Select All</label>
-                <input
-                  type="checkbox"
-                  checked={selectAll}
-                  onChange={handleSelectAllChange}
-                />
-              </div>
               {data.map((item) => (
                 <div className="card" key={item.id}>
                   <div className="card-details">
@@ -256,24 +274,22 @@ export default function SearchAndSendSMS() {
             <p>No data available.</p>
           )}
         </div>
-        <div className="selectedList">
-          <p>Total cards fetched: {data.length}</p>
-          <p>Selected cards: {selectedClients.length}</p>
+        <div className="sendButton">
+          <button
+            onClick={sendSMS}
+            style={{
+              marginTop: "10px",
+              padding: "10px 20px",
+              border: "none",
+              borderRadius: "5px",
+              backgroundColor: "#007BFF",
+              color: "#fff",
+              cursor: "pointer",
+            }}
+          >
+            Send SMS
+          </button>
         </div>
-        <button
-          onClick={sendSMS}
-          style={{
-            marginTop: "10px",
-            padding: "10px 20px",
-            border: "none",
-            borderRadius: "5px",
-            backgroundColor: "#007BFF",
-            color: "#fff",
-            cursor: "pointer",
-          }}
-        >
-          Send SMS
-        </button>
       </div>
     </div>
   );

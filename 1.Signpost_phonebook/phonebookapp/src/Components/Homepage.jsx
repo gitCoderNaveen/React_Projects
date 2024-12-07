@@ -44,6 +44,14 @@ export default function Homepage() {
     }
   };
 
+  function toTitleCase(str) {
+    return str
+      .toLowerCase()
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  }
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 480);
@@ -235,7 +243,9 @@ export default function Homepage() {
             data.map((item) => (
               <div className="card-container" key={item.id}>
                 <div className="card-left">
-                  <h3 className="card-name">{item.businessname}</h3>
+                  <h3 className="card-name">
+                    {toTitleCase(item.businessname)}
+                  </h3>
                   <p className="card-location">
                     {productName ? (
                       <>{item.product}</>
@@ -278,7 +288,7 @@ export default function Homepage() {
         {selectedItem && (
           <div className="popup">
             <div className="popup-content">
-              <button className="close-btn" onClick={closePopup}>
+              <button className="close-button" onClick={closePopup}>
                 &times;
               </button>
               <h2>{selectedItem.businessname}</h2>
@@ -287,7 +297,7 @@ export default function Homepage() {
                 {maskMobileNumber(selectedItem.mobileno)}
               </p>
               <p>
-                <strong>Product:</strong> <br />
+                <strong>Product/Services:</strong> <br />
                 {selectedItem.product}
               </p>
               <p>

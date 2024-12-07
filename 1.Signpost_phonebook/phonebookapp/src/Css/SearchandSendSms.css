@@ -17,6 +17,7 @@
 .inputContainer button{
   height: fit-content;
 }
+
 .card-containerMain {
     display: flex;
     flex-direction: row;
@@ -24,6 +25,7 @@
     width: 100%;
     gap: 5px;
     justify-content: center;
+    margin-top: 20px;
     height: 300px;
     overflow-y: auto; /* Enable vertical scrolling */
     padding: 10px; /* Add some padding for better aesthetics */
@@ -33,7 +35,11 @@
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
   }
   
-  
+
+  .controlSection{
+    display: flex;
+  }
+
   .card {
     display: flex;
     width: 30%;
@@ -53,9 +59,9 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15); 
   }
   .selectallInput{
-    position: absolute;
-    top: 20%;
-    right: 15%;
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
   }
   
   .card-details {
@@ -98,13 +104,48 @@
   .checkbox .inputCheckbox{
     position: absolute;
     top: 10%;
-    right: -40%;    
+    right: -40%;   
   }
   .selectedList{
     display: flex;
-    margin-top: 20px;
+    width: 100%;
     justify-content: space-between;
   }
 
+  @media (max-width: 480px){
+    .card-containerMain{
+     display: flex;
+     height: 500px;
+    }
+    .card{
+      width: 100%;
+      height: fit-content;
+    }
+    .selectallInput{
+      display: flex;
+      position: absolute;
+      top: 26%;
+      right: 10%;
+      margin: 10px;
+    }
+    .sendButton{
+      display: flex;
+      justify-content: center;
+    }
+    .controlSection{
+      display: flex;
+    }
+    .selectedList{
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+    }
+    .selectallInput{
+      display: flex;
+      width: 100%;
+      justify-content: flex-end;
+      margin: 25px;
+    }
 
+  }
   

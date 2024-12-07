@@ -120,7 +120,7 @@ const Signup = () => {
         <button className="close-button" onClick={() => navigate("/login")}>
           &times;
         </button>
-        <h2 className="header-text">Signpost Phonebook</h2>
+        <h2 className="header-text">Signup</h2>
 
         <div className="form-container">
           <form className="scrollable-form">
@@ -132,6 +132,7 @@ const Signup = () => {
               value={mymobileno}
               onChange={(e) => setMobileno(e.target.value)}
               onBlur={() => checkMobileNumber(mymobileno)}
+              required
             />
 
             <label>Person / Business Name :</label>
@@ -140,37 +141,38 @@ const Signup = () => {
               placeholder="Person/Business Name"
               value={mybusinessname}
               onChange={(e) => setBusinessname(e.target.value)}
+              required
             />
 
-            <div className="prefix-container">
-              <label>Prefix:</label>
-              <div className="radio-container">
-                <label>
+            <label>*Prefix:</label>
+            <div className="radio-group" aria-required>
+              <div className="input-buttons">
+                <label htmlFor="Mr">
                   <input
                     type="radio"
                     value="Mr."
                     checked={myprefix === "Mr."}
                     onChange={(e) => setPrefix(e.target.value)}
                   />
-                  Mr.
+                  &nbsp;Male
                 </label>
-                <label>
+                <label htmlFor="Mr">
                   <input
                     type="radio"
                     value="Ms."
                     checked={myprefix === "Ms."}
                     onChange={(e) => setPrefix(e.target.value)}
                   />
-                  Ms.
+                  &nbsp;Female
                 </label>
-                <label>
+                <label htmlFor="Mr">
                   <input
                     type="radio"
                     value="M/s."
                     checked={myprefix === "M/s."}
                     onChange={(e) => setPrefix(e.target.value)}
                   />
-                  M/s.(for Firms)
+                  &nbsp;Firm/Business
                 </label>
               </div>
             </div>
@@ -230,16 +232,36 @@ const Signup = () => {
               value={myemail}
               onChange={(e) => setEmail(e.target.value)}
             />
-
-            <button type="button" onClick={insertRecord}>
-              Submit
-            </button>
+            <label>Promo-Code :</label>
+            <input
+              type="number"
+              placeholder="Your Promo-Code"
+              value={myemail}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </form>
+        </div>
+        <div className="submit-Button">
+          <button
+            className="btn btn-primary"
+            type="button"
+            onClick={insertRecord}
+          >
+            Submit
+          </button>
         </div>
         <div className="login-container">
           <p>
             Already Have an Account?{" "}
-            <a onClick={() => navigate("/login")}>Login</a>
+            <button
+              type="button"
+              className="signupButton"
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              Login
+            </button>
           </p>
         </div>
       </div>

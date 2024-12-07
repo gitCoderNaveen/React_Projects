@@ -76,7 +76,7 @@
     cursor: pointer;
   }
   
-  .login-container p a {
+  .login-container p{
     color: #007bff;
     text-decoration: none;
   }
@@ -84,4 +84,7 @@
   .login-container a:hover {
     text-decoration: underline;
   }
-  
+  .submit-Button{
+    display: flex;
+    justify-content: center;
+  }

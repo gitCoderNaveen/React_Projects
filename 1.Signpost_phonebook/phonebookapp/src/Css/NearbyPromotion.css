@@ -1,4 +1,4 @@
-.container {
+/* .container {
     padding: 20px;
   }
   
@@ -61,5 +61,104 @@
   .selected-message {
     margin-top: 10px;
     text-align: center;
+  }
+   */
+
+   .container {
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  .input-section {
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+  
+  .prefix-container {
+    display: flex;
+    gap: 10px;
+  }
+  .prefix-item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .selectAllSection{
+    display: flex;
+    gap: 3px;
+  }
+  .input-section{
+    margin-bottom: 0;
+  }
+  
+  .input-section input,
+  select,
+  textarea {
+    margin-top: 10px;
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+  }
+  
+  .result-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .result-container {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    animation: fadeIn 0.5s;
+  }
+  
+  .card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .card-content p {
+    margin: 0;
+  }
+  
+  .card:hover {
+    background: #f9f9f9;
+  }
+  
+  .btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+  
+  .btn:hover {
+    background: #0056b3;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
   

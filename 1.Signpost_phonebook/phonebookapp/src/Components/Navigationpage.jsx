@@ -17,6 +17,7 @@ export default function Navigationpage() {
 
   const handleAddCustomer = () => {
     navigate("/Mediapartner");
+    toggleDrawer();
   };
 
   const handleLogin = () => {

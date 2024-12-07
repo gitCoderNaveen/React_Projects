@@ -14,23 +14,26 @@ import NearbyPromotion from "./Components/Nearbypromotion";
 import NavbarWithDrawer from "./Components/NavbarWithDrawer ";
 import EditableDropdowns from "./Components/EditableDropdowns";
 import SearchAndSendSMS from "./Components/SearchAndSendSMS";
+import PopupFilter from "./Components/PopupFilter";
+import Nearbypromotion from "./Components/Nearbypromotion";
 export default function App() {
   return (
     <div>
       <div>
-        {/* <Auth>
+        <Auth>
           <Navigationpage />
           <Routes>
             <Route path="/" element={<Homepage />} />
-            <Route path="/NearbyPromotion" element={<NearbyPromotion />} />
+            <Route path="/NearbyPromotion" element={<PopupFilter />} />
+            <Route path="/SearchandSendSms" element={<SearchAndSendSMS />} />
+            <Route path="/PrefixandPicode" element={<NearbyPromotion />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/about" element={<Aboutpage />} />
             <Route path="/contactus" element={<Contactus />} />
             <Route path="/MediaPartner" element={<MediaPartner />} />
           </Routes>
-        </Auth> */}
-        <SearchAndSendSMS />
+        </Auth>
       </div>
     </div>
   );
