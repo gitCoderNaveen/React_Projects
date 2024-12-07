@@ -95,6 +95,8 @@ export default function SearchAndSendSMS() {
 
   const handleClear = () => {
     setProductInput("");
+    setSelectAll(false);
+    setSelectedClients("");
   };
 
   const sendSMS = () => {
@@ -222,32 +224,36 @@ export default function SearchAndSendSMS() {
               </ul>
             )}
           </div>
-          {productInput ? (
-            <button className="btn btn-primary" onClick={handleClear}>
-              clear
-            </button>
-          ) : (
-            <></>
-          )}
         </div>
         <div className="controlSection">
           <div className="selectedList">
             <p>Total Cards: {data.length}</p>
             <p>Selected cards: {selectedClients.length}</p>
           </div>
-          <div className="selectallInput">
-            <div>
+          <div className="selectedList">
+            <div className="selectionDiv">
               <label>Select All</label>
+              &nbsp;&nbsp;
+              <div>
+                <input
+                  type="checkbox"
+                  checked={selectAll}
+                  onChange={handleSelectAllChange}
+                />
+              </div>
             </div>
-            &nbsp;
             <div>
-              <input
-                type="checkbox"
-                checked={selectAll}
-                onChange={handleSelectAllChange}
-              />
+              {productInput ? (
+                <button className="form-btn" onClick={handleClear}>
+                  Clear
+                </button>
+              ) : (
+                <></>
+              )}
             </div>
           </div>
+
+          <div></div>
         </div>
         <div className="card-containerMain">
           {data.length > 0 ? (

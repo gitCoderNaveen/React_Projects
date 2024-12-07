@@ -38,6 +38,7 @@
 
   .controlSection{
     display: flex;
+    flex-wrap: wrap;
   }
 
   .card {
@@ -58,10 +59,15 @@
     transform: scale(1.02); 
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15); 
   }
-  .selectallInput{
+  .selectionDiv{
     display: flex;
-    width: 100%;
-    justify-content: flex-end;
+  }
+  .form-btn{
+    background: #EC2D01;
+    border: none;
+    color: #f9f9f9;
+    border-radius: 20px;
+    padding: 5px;
   }
   
   .card-details {
@@ -121,30 +127,28 @@
       width: 100%;
       height: fit-content;
     }
-    .selectallInput{
-      display: flex;
-      position: absolute;
-      top: 26%;
-      right: 10%;
-      margin: 10px;
-    }
     .sendButton{
       display: flex;
       justify-content: center;
     }
     .controlSection{
       display: flex;
+      flex-wrap: wrap;
     }
     .selectedList{
       display: flex;
       width: 100%;
       justify-content: space-between;
     }
-    .selectallInput{
+    .selectionDiv{
       display: flex;
-      width: 100%;
-      justify-content: flex-end;
-      margin: 25px;
+    }
+    .form-btn{
+      background: #EC2D01;
+      border: none;
+      color: #f9f9f9;
+      border-radius: 20px;
+      padding: 5px;
     }
 
   }

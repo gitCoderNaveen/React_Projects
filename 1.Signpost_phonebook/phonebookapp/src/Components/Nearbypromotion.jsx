@@ -231,22 +231,48 @@ const Nearbypromotion = () => {
     setSelectedBusinesses(checked ? businesses : []);
   };
 
+  // const sendBatchSMS = () => {
+  //   if (selectedBusinesses.length === 0) {
+  //     alert("Please select at least one business!");
+  //     return;
+  //   }
+
+  //   selectedBusinesses.forEach((business) => {
+  //     const { mobileno } = business;
+  //     const personalizedMessage = `I Saw Your Listing in SIGNPOST PHONE BOOK. I am Interested in your Products. Please Send Details/Call Me.`;
+  //     const smsUrl = `sms:${mobileno}?body=${encodeURIComponent(
+  //       personalizedMessage
+  //     )}`;
+  //     window.open(smsUrl, "_blank");
+  //   });
+
+  //   alert("All messages have been sent!");
+  // };
   const sendBatchSMS = () => {
     if (selectedBusinesses.length === 0) {
-      alert("Please select at least one business!");
+      window.alert("No clients selected!");
       return;
     }
 
-    selectedBusinesses.forEach((business) => {
-      const { mobileno } = business;
-      const personalizedMessage = `I Saw Your Listing in SIGNPOST PHONE BOOK. I am Interested in your Products. Please Send Details/Call Me.`;
-      const smsUrl = `sms:${mobileno}?body=${encodeURIComponent(
-        personalizedMessage
-      )}`;
-      window.open(smsUrl, "_blank");
-    });
+    const mobileNumbers = selectedBusinesses.map((client) => client.mobileno);
+    const message =
+      "I Saw Your Listing in SIGNPOST PHONE BOOK. I am Interested in your Products. Please Send Details/Call Me.";
 
-    alert("All messages have been sent!");
+    try {
+      // Join multiple numbers with a comma
+      const recipients = mobileNumbers.join(",");
+
+      // Create the SMS URI
+      const smsUri = `sms:${recipients}?body=${encodeURIComponent(message)}`;
+
+      // Trigger the SMS application
+      window.location.href = smsUri;
+    } catch (error) {
+      console.error("Error opening SMS application:", error.message);
+      window.alert(
+        "An error occurred while opening the SMS application. Please try again."
+      );
+    }
   };
 
   return (
@@ -289,23 +315,6 @@ const Nearbypromotion = () => {
       <button className="btn btn-primary" onClick={fetchBusinesses}>
         Search
       </button>
-
-      {/* <select
-        value={selectedTemplate}
-        onChange={(e) => {
-          setSelectedTemplate(e.target.value);
-          setCustomMessage(templates[e.target.value]);
-        }}
-      >
-        <option value="">Select Template</option>
-        <option value="template1">Template 1</option>
-        <option value="template2">Template 2</option>
-      </select>
-
-      <textarea
-        value={customMessage}
-        onChange={(e) => setCustomMessage(e.target.value)}
-      /> */}
 
       {loading ? (
         <p>Loading...</p>
