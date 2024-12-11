@@ -16,11 +16,12 @@ import EditableDropdowns from "./Components/EditableDropdowns";
 import SearchAndSendSMS from "./Components/SearchAndSendSMS";
 import PopupFilter from "./Components/PopupFilter";
 import Nearbypromotion from "./Components/Nearbypromotion";
+import TextAnimation from "./Components/TextAnimation";
 export default function App() {
   return (
     <div>
       <div>
-        {/* <Auth>
+        <Auth>
           <Navigationpage />
           <Routes>
             <Route path="/" element={<Homepage />} />
@@ -29,12 +30,12 @@ export default function App() {
             <Route path="/PrefixandPicode" element={<NearbyPromotion />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/profilePage" element={<UserProfile />} />
             <Route path="/about" element={<Aboutpage />} />
             <Route path="/contactus" element={<Contactus />} />
             <Route path="/MediaPartner" element={<MediaPartner />} />
           </Routes>
-        </Auth> */}
-        <Nearbypromotion />
+        </Auth>
       </div>
     </div>
   );

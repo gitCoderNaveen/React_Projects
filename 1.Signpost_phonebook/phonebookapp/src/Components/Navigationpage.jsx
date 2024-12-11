@@ -32,6 +32,10 @@ export default function Navigationpage() {
     toggleDrawer();
   };
 
+  const handleProfile = () => {
+    navigate("/profilePage");
+  };
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top">
@@ -76,7 +80,11 @@ export default function Navigationpage() {
               <div className="userfn-btn">
                 <span className="navbar-text d-block m-2 userlogin-name">
                   Welcome,{" "}
-                  {user ? <strong>{user}</strong> : <strong>Guest</strong>}
+                  {user ? (
+                    <button onClick={handleProfile}>{user}</button>
+                  ) : (
+                    <strong>Guest</strong>
+                  )}
                 </span>
                 <button onClick={handleAddCustomer} className="btn btn-primary">
                   <FaPlus className="me-2" />
@@ -111,7 +119,12 @@ export default function Navigationpage() {
         }}
       >
         <span className="navbar-text d-block m-2">
-          Welcome, {user ? <strong>{user}</strong> : <strong>Guest</strong>}
+          Welcome,{" "}
+          {user ? (
+            <button onClick={handleProfile}>{user}</button>
+          ) : (
+            <strong>Guest</strong>
+          )}
         </span>
         <ul className="navbar-nav p-3">
           <li className="nav-item">

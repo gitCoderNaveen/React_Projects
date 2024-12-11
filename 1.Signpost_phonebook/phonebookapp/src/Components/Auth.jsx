@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 const Authcontext = React.createContext();
 export default function Auth({ children }) {
   const [user, setUser] = useState(null);
+  const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
   const Login = async (username, password) => {
     if (!username) {
@@ -19,12 +20,14 @@ export default function Auth({ children }) {
     }
     try {
       const response = await axios.post(
-        "https://signpostphonebook.in/client_login.php",
+        "https://signpostphonebook.in/test.php",
         { mobileno: username }
       );
 
       if (response.data.valid) {
         setUser(response.data.businessname);
+        setUserData(response.data);
+        console.log(userData);
         navigate("/");
       } else {
         alert("Error: User Not Found, Please Sign Up");
@@ -41,7 +44,7 @@ export default function Auth({ children }) {
   };
   return (
     <div>
-      <Authcontext.Provider value={{ user, Login, Logout }}>
+      <Authcontext.Provider value={{ user, userData, Login, Logout }}>
         {children}
       </Authcontext.Provider>
     </div>
