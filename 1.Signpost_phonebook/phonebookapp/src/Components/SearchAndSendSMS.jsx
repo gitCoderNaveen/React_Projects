@@ -277,7 +277,7 @@ export default function SearchAndSendSMS() {
               ))}
             </>
           ) : (
-            <p>No data available.</p>
+            <p>Loading...</p>
           )}
         </div>
         <div className="sendButton">

@@ -280,7 +280,7 @@ export default function Homepage() {
               </div>
             ))
           ) : (
-            <p>No data available.</p>
+            <p>{`Loading... Please Wait... `}</p>
           )}
         </div>
 

@@ -36,7 +36,7 @@ const UserProfile = () => {
           <div className="card-stats">
             <div>
               <h3>342</h3>
-              <p>Posts</p>
+              <p>Counts</p>
             </div>
             <div>
               <h3>120k</h3>

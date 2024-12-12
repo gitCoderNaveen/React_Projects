@@ -1,201 +1,56 @@
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-// import "../Css/NearbyPromotion.css";
-
-// const Nearbypromotion = () => {
-//   const [pincodeInput, setPincodeInput] = useState("");
-//   const [businesses, setBusinesses] = useState([]);
-//   const [selectedBusinesses, setSelectedBusinesses] = useState([]);
-//   const [selectedTemplate, setSelectedTemplate] = useState("template1");
-//   const [customMessage, setCustomMessage] = useState("");
-//   const [prefixes, setPrefixes] = useState([]);
-//   const [selectedPrefix, setSelectedPrefix] = useState(null);
-//   const [loading, setLoading] = useState(false);
-
-//   const templates = {
-//     template1: `Signpost Celfon Team wishes your family a HAPPY & JOYOUS DEEPAVALI!
-//     On this occasion, we launch our SIGNPOST PHONE BOOK Mobile App to help micro businesses promote their business in their neighborhood. Tap the link to access:
-//     WWW.signpostphonebook.in`,
-
-//     template2: `Dear customer, celebrate Deepavali with joy! Explore new business opportunities with the SIGNPOST PHONE BOOK App. Start promoting your services now! Visit:
-//     WWW.signpostphonebook.in`,
-//   };
-
-//   useEffect(() => {
-//     axios
-//       .get("https://signpostphonebook.in/client_get_prefix.php")
-//       .then((response) => setPrefixes(response.data))
-//       .catch((error) => console.error("Error fetching prefixes:", error));
-//   }, []);
-
-//   const fetchBusinesses = () => {
-//     if (!pincodeInput || !selectedPrefix) {
-//       alert("Please enter a valid pincode and select a prefix.");
-//       return;
-//     }
-
-//     setLoading(true);
-//     axios
-//       .get(
-//         `https://signpostphonebook.in/sms_client_details.php?pincode=${pincodeInput}&prefix=${selectedPrefix}`
-//       )
-//       .then((response) => setBusinesses(response.data))
-//       .catch((error) => console.error("Error fetching businesses:", error))
-//       .finally(() => setLoading(false));
-//     setBusinesses([]);
-//   };
-
-//   const toggleSelectBusiness = (business) => {
-//     const isSelected = selectedBusinesses.some(
-//       (b) => b.mobileno === business.mobileno
-//     );
-//     if (isSelected) {
-//       setSelectedBusinesses((prev) =>
-//         prev.filter((b) => b.mobileno !== business.mobileno)
-//       );
-//     } else {
-//       setSelectedBusinesses((prev) => [...prev, business]);
-//     }
-//   };
-
-//   const sendBatchSMS = () => {
-//     if (selectedBusinesses.length === 0) {
-//       alert("Please select at least one business!");
-//       return;
-//     }
-
-//     selectedBusinesses.forEach((business) => {
-//       const { mobileno } = business;
-//       const personalizedMessage = `Signpost Celfon Team wishes your family a HAPPY & JOYOUS DEEPAVALI!
-//     On this occasion, we launch our SIGNPOST PHONE BOOK Mobile App to help micro businesses promote their business in their neighborhood. Tap the link to access:
-//     WWW.signpostphonebook.in`;
-//       const smsUrl = `sms:${mobileno}?body=${encodeURIComponent(
-//         personalizedMessage
-//       )}`;
-
-//       window.open(smsUrl, "_blank");
-//     });
-
-//     alert("All messages have been sent!");
-//   };
-
-//   return (
-//     <div className="container">
-//       <div>
-//         <label>Select Prefix</label>
-//         <div className="prefix-container">
-//           {prefixes.map((prefix) => (
-//             <div key={prefix.name} className="prefix-item">
-//               <input
-//                 type="radio"
-//                 id={prefix.name}
-//                 name="prefix"
-//                 value={prefix.name}
-//                 onChange={() => setSelectedPrefix(prefix.name)}
-//                 checked={selectedPrefix === prefix.name}
-//               />
-//               <label htmlFor={prefix.name}>{prefix.name}</label>
-//             </div>
-//           ))}
-//         </div>
-//       </div>
-//       <div className="input-container">
-//         <input
-//           type="text"
-//           placeholder="Enter Pincode"
-//           maxLength={6}
-//           value={pincodeInput}
-//           onChange={(e) => setPincodeInput(e.target.value)}
-//         />
-//         <button className="btn btn-primary" onClick={fetchBusinesses}>
-//           Search
-//         </button>
-//       </div>
-
-//       <select
-//         value={selectedTemplate}
-//         onChange={(e) => {
-//           setSelectedTemplate(e.target.value);
-//           setCustomMessage(templates[e.target.value]);
-//         }}
-//       >
-//         <option value="">Select Template</option>
-//         <option value="template1">Template 1</option>
-//         <option value="template2">Template 2</option>
-//       </select>
-
-//       <textarea
-//         value={customMessage}
-//         onChange={(e) => setCustomMessage(e.target.value)}
-//       />
-
-//       {loading ? (
-//         <p>Loading...</p>
-//       ) : (
-//         <div>
-//           {businesses.map((business) => (
-//             <div key={business.mobileno} className="card">
-//               <div>
-//                 <p>
-//                   {business.prefix} {business.businessname}
-//                 </p>
-//                 <p>{business.mobileno.slice(0, 5)}xxxxx</p>
-//               </div>
-//               <button
-//                 className="btn btn-primary"
-//                 onClick={() => toggleSelectBusiness(business)}
-//               >
-//                 {selectedBusinesses.some(
-//                   (b) => b.mobileno === business.mobileno
-//                 )
-//                   ? "Deselect"
-//                   : "Select"}
-//               </button>
-//             </div>
-//           ))}
-//         </div>
-//       )}
-
-//       {selectedBusinesses.length > 0 && (
-//         <p>Selected Businesses: {selectedBusinesses.length}</p>
-//       )}
-
-//       <button className="btn btn-primary" onClick={sendBatchSMS}>
-//         Send SMS to Selected
-//       </button>
-//     </div>
-//   );
-// };
-
-// export default Nearbypromotion;
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../Css/NearbyPromotion.css";
 
 const Nearbypromotion = () => {
   const [pincodeInput, setPincodeInput] = useState("");
-  const [businesses, setBusinesses] = useState([]);
+  const [selectAll, setSelectAll] = useState(false);
+  const [clrBtn, setClrBtn] = useState(false);
+  const [datas, setData] = useState([]);
   const [selectedBusinesses, setSelectedBusinesses] = useState([]);
-  const [selectedTemplate, setSelectedTemplate] = useState("template1");
-  const [customMessage, setCustomMessage] = useState("");
-  const [prefixes, setPrefixes] = useState([]);
   const [selectedPrefix, setSelectedPrefix] = useState(null);
+  const [customMessage, setCustomMessage] = useState(
+    "I Saw Your Listing in SIGNPOST PHONE BOOK. I am Interested in your Products. Please Send Details/Call Me."
+  );
+  const [prefixes, setPrefixes] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  // const templates = {
-  //   template1: `Signpost Celfon Team wishes your family a HAPPY & JOYOUS DEEPAVALI!
-  //   On this occasion, we launch our SIGNPOST PHONE BOOK Mobile App to help micro businesses promote their business in their neighborhood. Tap the link to access:
-  //   WWW.signpostphonebook.in`,
-
-  //   template2: `Dear customer, celebrate Deepavali with joy! Explore new business opportunities with the SIGNPOST PHONE BOOK App. Start promoting your services now! Visit:
-  //   WWW.signpostphonebook.in`,
-  // };
 
   useEffect(() => {
     axios
       .get("https://signpostphonebook.in/client_get_prefix.php")
       .then((response) => setPrefixes(response.data))
       .catch((error) => console.error("Error fetching prefixes:", error));
+  }, []);
+
+  const handleSelectAllChange = () => {
+    if (selectAll) {
+      setSelectedBusinesses([]);
+    } else {
+      setSelectedBusinesses(datas);
+    }
+    setSelectAll(!selectAll);
+  };
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        "https://signpostphonebook.in/client_fetch.php"
+      );
+      if (!response.ok)
+        throw new Error(`HTTP Error! Status: ${response.status}`);
+      const jsonResponse = await response.json();
+      if (Array.isArray(jsonResponse)) {
+        setData(jsonResponse.sort((a, b) => b.id - a.id));
+      } else {
+        alert("Unexpected response from server.");
+      }
+    } catch (error) {
+      alert("Failed to load data: " + error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
   }, []);
 
   const fetchBusinesses = () => {
@@ -207,47 +62,32 @@ const Nearbypromotion = () => {
     setLoading(true);
     axios
       .get(
-        `https://signpostphonebook.in/sms_client_details.php?pincode=${pincodeInput}&prefix=${selectedPrefix}`
+        `https://signpostphonebook.in/testprefix.php?pincode=${pincodeInput}&prefix=${selectedPrefix}`
       )
-      .then((response) => setBusinesses(response.data))
+      .then((response) => {
+        setData(response.data);
+        setClrBtn(true);
+      })
       .catch((error) => console.error("Error fetching businesses:", error))
       .finally(() => setLoading(false));
   };
 
-  const toggleSelectBusiness = (business) => {
-    const isSelected = selectedBusinesses.some(
-      (b) => b.mobileno === business.mobileno
+  const handleCheckboxChange = (client) => {
+    setSelectedBusinesses((prev) =>
+      prev.includes(client)
+        ? prev.filter((item) => item !== client)
+        : [...prev, client]
     );
-    if (isSelected) {
-      setSelectedBusinesses((prev) =>
-        prev.filter((b) => b.mobileno !== business.mobileno)
-      );
-    } else {
-      setSelectedBusinesses((prev) => [...prev, business]);
-    }
   };
 
-  const selectAllBusinesses = (checked) => {
-    setSelectedBusinesses(checked ? businesses : []);
+  const clearItems = () => {
+    setPincodeInput("");
+    setSelectedPrefix(null);
+    fetchData();
+    setSelectAll(false);
+    setSelectedBusinesses([]);
+    setClrBtn(!clrBtn);
   };
-
-  // const sendBatchSMS = () => {
-  //   if (selectedBusinesses.length === 0) {
-  //     alert("Please select at least one business!");
-  //     return;
-  //   }
-
-  //   selectedBusinesses.forEach((business) => {
-  //     const { mobileno } = business;
-  //     const personalizedMessage = `I Saw Your Listing in SIGNPOST PHONE BOOK. I am Interested in your Products. Please Send Details/Call Me.`;
-  //     const smsUrl = `sms:${mobileno}?body=${encodeURIComponent(
-  //       personalizedMessage
-  //     )}`;
-  //     window.open(smsUrl, "_blank");
-  //   });
-
-  //   alert("All messages have been sent!");
-  // };
   const sendBatchSMS = () => {
     if (selectedBusinesses.length === 0) {
       window.alert("No clients selected!");
@@ -255,17 +95,11 @@ const Nearbypromotion = () => {
     }
 
     const mobileNumbers = selectedBusinesses.map((client) => client.mobileno);
-    const message =
-      "I Saw Your Listing in SIGNPOST PHONE BOOK. I am Interested in your Products. Please Send Details/Call Me.";
-
     try {
-      // Join multiple numbers with a comma
       const recipients = mobileNumbers.join(",");
-
-      // Create the SMS URI
-      const smsUri = `sms:${recipients}?body=${encodeURIComponent(message)}`;
-
-      // Trigger the SMS application
+      const smsUri = `sms:${recipients}?body=${encodeURIComponent(
+        customMessage
+      )}`;
       window.location.href = smsUri;
     } catch (error) {
       console.error("Error opening SMS application:", error.message);
@@ -303,18 +137,34 @@ const Nearbypromotion = () => {
         </div>
         <div>
           <label htmlFor="">Pincode : </label>
-          <input
-            type="text"
-            placeholder="Enter Pincode"
-            maxLength={6}
-            value={pincodeInput}
-            onChange={(e) => setPincodeInput(e.target.value)}
-          />
+        </div>
+        <div className="search_Container">
+          <div className="input-wrapper">
+            <input
+              type="text"
+              placeholder="Enter Pincode"
+              maxLength={6}
+              value={pincodeInput}
+              onChange={(e) => setPincodeInput(e.target.value)}
+            />
+            {clrBtn ? (
+              <button
+                className="btn btn-primary search_Button"
+                onClick={clearItems}
+              >
+                Clear
+              </button>
+            ) : (
+              <button
+                className="btn btn-primary search_Button"
+                onClick={fetchBusinesses}
+              >
+                Search
+              </button>
+            )}
+          </div>
         </div>
       </div>
-      <button className="btn btn-primary" onClick={fetchBusinesses}>
-        Search
-      </button>
 
       {loading ? (
         <p>Loading...</p>
@@ -328,38 +178,54 @@ const Nearbypromotion = () => {
               <div>
                 <input
                   type="checkbox"
-                  onChange={(e) => selectAllBusinesses(e.target.checked)}
-                  checked={selectedBusinesses.length === businesses.length}
+                  onChange={handleSelectAllChange}
+                  checked={selectAll}
                 />
               </div>
             </div>
-            <p>
-              Fetched: {businesses.length}, Selected:{" "}
-              {selectedBusinesses.length}
-            </p>
-          </div>
-          <div className="result-container">
-            {businesses.map((business) => (
-              <div key={business.mobileno} className="card">
-                <div className="card-content">
-                  <p>{business.businessname}</p>
-                  <p>{business.mobileno.slice(0, 5)}xxxxx</p>
-                </div>
-                <div>
-                  <input
-                    type="checkbox"
-                    checked={selectedBusinesses.some(
-                      (b) => b.mobileno === business.mobileno
-                    )}
-                    onChange={() => toggleSelectBusiness(business)}
-                  />
-                </div>
+            <div className="data_Controls">
+              <div>
+                <p>Fetched: {datas.length},</p>
               </div>
-            ))}
+              <div>
+                <p>Selected: {selectedBusinesses.length}</p>
+              </div>
+            </div>
+          </div>
+          <div className="scroll-container">
+            {datas.length > 0 ? (
+              <>
+                {datas.map((item) => (
+                  <div className="card" key={item.id}>
+                    <div className="card-details">
+                      <p className="heading-text">{item.businessname}</p>
+                      <p className="card-para">{item.product}</p>
+                    </div>
+                    <div className="checkbox">
+                      <p>{item.mobileno.slice(0, -5)}xxxxx</p>
+                      <input
+                        className="inputCheckbox"
+                        type="checkbox"
+                        checked={selectedBusinesses.includes(item)}
+                        onChange={() => handleCheckboxChange(item)}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </>
+            ) : (
+              <p>Loading...</p>
+            )}
           </div>
         </div>
       )}
 
+      <textarea
+        className="message-box"
+        value={customMessage}
+        onChange={(e) => setCustomMessage(e.target.value)}
+        rows={4}
+      ></textarea>
       <button className="btn btn-primary" onClick={sendBatchSMS}>
         Send SMS
       </button>
