@@ -197,6 +197,7 @@ const Signup = () => {
               type="text"
               placeholder="Pincode"
               maxLength={6}
+              required
               value={mypincode}
               onChange={(e) => setPincode(e.target.value)}
             />
@@ -206,6 +207,7 @@ const Signup = () => {
               type="text"
               placeholder="Product"
               value={myproduct}
+              required
               onChange={(e) => setProduct(e.target.value)}
             />
 
