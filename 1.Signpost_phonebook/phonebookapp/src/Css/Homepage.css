@@ -59,7 +59,12 @@
     color: #888;
     font-size: 18px;
   }
-  
+  .loading_text{
+    text-align: center;
+    position: relative;
+    top: 50%;    
+    width: 100%;
+  }
 
 
 

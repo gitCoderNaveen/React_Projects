@@ -280,7 +280,7 @@ export default function Homepage() {
               </div>
             ))
           ) : (
-            <p>{`Loading... Please Wait... `}</p>
+            <p className="loading_text"><strong>Loading... Please Wait...</strong></p>
           )}
         </div>
 

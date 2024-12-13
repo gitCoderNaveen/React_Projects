@@ -1,0 +1,21 @@
+.phonebook_Intro{
+    display: flex;
+    justify-content: center;
+}
+.img_Section img{
+    width: 120px;
+    height: 200px;
+}
+.QR_Section img{
+    width: 200px;
+    height: 200px;
+}
+@media (max-width: 600px) {
+    .phonebook_Intro{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+  }
+  

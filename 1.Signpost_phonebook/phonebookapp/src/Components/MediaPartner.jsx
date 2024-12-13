@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../Css/MediaPartner.css";
 import { useNavigate } from "react-router-dom";
-import { prefix } from "@fortawesome/free-solid-svg-icons";
+import { useAuth } from "./Auth";
 
 const MediaPartner = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -16,8 +16,14 @@ const MediaPartner = () => {
   const [myprefix, setPrefix] = useState("");
   const [mymobileno, setMobileno] = useState("");
   const [isRegistered, setIsRegistered] = useState(false);
+  const { userData } = useAuth();
+  const [mycount, setCount] = useState(1);
+
+  const userName = userData?.businessname || "";
+  const userId = userData?.id || "";
 
   const navigate = useNavigate();
+
   const resetForm = () => {
     setBusinessname("");
     setDoorno("");
@@ -31,27 +37,29 @@ const MediaPartner = () => {
     setMobileno("");
     setIsRegistered(false);
   };
+
   useEffect(() => {
     setShowPopup(true);
   }, []);
 
   const handleMobileno = (e) => {
-    if (e.target.value.length <= 10) {
-      setMobileno(e.target.value);
+    const mobile = e.target.value;
+    if (mobile.length <= 10) {
+      setMobileno(mobile);
     } else {
       alert("Allowed 10 digits only");
     }
   };
 
   const checkMobileNumber = async (mobile) => {
+    if (!mobile) return;
+
     try {
       const response = await fetch(
         `https://signpostphonebook.in/client_insert.php`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ mobileno: mobile }),
         }
       );
@@ -68,23 +76,53 @@ const MediaPartner = () => {
     }
   };
 
+  const insertCount = async () => {
+    const dataEntry = {
+      name: userName,
+      id: userId,
+      date: new Date().toISOString().split("T")[0],
+      count: mycount, // Ensure this variable holds the correct value
+    };
+
+    console.log("Data being sent:", dataEntry); // Debugging: Log the data being sent
+
+    try {
+      const response = await fetch(
+        "https://signpostphonebook.in/data_enty_insert.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(dataEntry),
+        }
+      );
+      const jsonResponse = await response.json();
+      if (jsonResponse.message) {
+        alert("Success: " + jsonResponse.message);
+      }
+    } catch (error) {
+      alert("Error: " + error.message);
+    }
+  };
+
   const insertRecord = async (e) => {
     e.preventDefault();
+
     if (
       !mymobileno.trim() ||
       !mybusinessname.trim() ||
       !myprefix ||
-      !myproduct
+      !myproduct.trim()
     ) {
       alert("Enter details in required fields.");
       return;
     }
+
     if (isRegistered) {
       alert("Mobile number is already registered.");
       return;
     }
 
-    const Data = {
+    const data = {
       businessname: mybusinessname,
       doorno: mydoorno,
       city: mycity,
@@ -102,17 +140,15 @@ const MediaPartner = () => {
         "https://signpostphonebook.in/client_insert.php",
         {
           method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(Data),
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
         }
       );
-
       const jsonResponse = await response.json();
       if (jsonResponse.Message) {
         alert("Success: " + jsonResponse.Message);
+        setCount((prevCount) => prevCount + 1);
+        await insertCount();
         resetForm();
       } else {
         alert("Unexpected response from server.");
@@ -128,7 +164,7 @@ const MediaPartner = () => {
         <div className="popup-overlay">
           <div className="popup-card animate-slide-in">
             <h1 className="header-text">Media Partner</h1>
-            <form className="form-container">
+            <form className="form-container" onSubmit={insertRecord}>
               <label>*Mobile Number :</label>
               <input
                 type="number"
@@ -149,36 +185,34 @@ const MediaPartner = () => {
               />
 
               <label>*Prefix:</label>
-              <div className="radio-group" aria-required>
-                <div className="input-buttons" aria-required>
-                  <label htmlFor="Mr">
-                    <input
-                      type="radio"
-                      value="Mr."
-                      checked={myprefix === "Mr."}
-                      onChange={(e) => setPrefix(e.target.value)}
-                    />
-                    &nbsp;Male
-                  </label>
-                  <label htmlFor="Mr">
-                    <input
-                      type="radio"
-                      value="Ms."
-                      checked={myprefix === "Ms."}
-                      onChange={(e) => setPrefix(e.target.value)}
-                    />
-                    &nbsp;Female
-                  </label>
-                  <label htmlFor="Mr">
-                    <input
-                      type="radio"
-                      value="M/s."
-                      checked={myprefix === "M/s."}
-                      onChange={(e) => setPrefix(e.target.value)}
-                    />
-                    &nbsp;Firm/Business
-                  </label>
-                </div>
+              <div className="radio-group">
+                <label>
+                  <input
+                    type="radio"
+                    value="Mr."
+                    checked={myprefix === "Mr."}
+                    onChange={(e) => setPrefix(e.target.value)}
+                  />
+                  &nbsp;Male
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    value="Ms."
+                    checked={myprefix === "Ms."}
+                    onChange={(e) => setPrefix(e.target.value)}
+                  />
+                  &nbsp;Female
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    value="M/s."
+                    checked={myprefix === "M/s."}
+                    onChange={(e) => setPrefix(e.target.value)}
+                  />
+                  &nbsp;Firm/Business
+                </label>
               </div>
 
               <label>*Address :</label>
@@ -237,27 +271,23 @@ const MediaPartner = () => {
                 value={myemail}
                 onChange={(e) => setEmail(e.target.value)}
               />
-            </form>
 
-            <div className="submitButton">
-              <button
-                className="open-popup-btn "
-                type="button"
-                onClick={insertRecord}
-              >
-                Submit
-              </button>
-              <button
-                type="button"
-                className="close-popup-btn"
-                onClick={() => {
-                  setShowPopup(false);
-                  navigate("/");
-                }}
-              >
-                X
-              </button>
-            </div>
+              <div className="submitButton">
+                <button className="open-popup-btn" type="submit">
+                  Submit
+                </button>
+                <button
+                  type="button"
+                  className="close-popup-btn"
+                  onClick={() => {
+                    setShowPopup(false);
+                    navigate("/");
+                  }}
+                >
+                  X
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

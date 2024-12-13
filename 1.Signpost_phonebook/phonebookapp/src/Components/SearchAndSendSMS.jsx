@@ -12,9 +12,11 @@ export default function SearchAndSendSMS() {
   const [isProductDropdownVisible, setIsProductDropdownVisible] =
     useState(false);
   const [isCityDropdownVisible, setIsCityDropdownVisible] = useState(false);
-  const [smsClients, setSmsClients] = useState([]);
   const [selectedClients, setSelectedClients] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
+  const [customMessage, setCustomMessage] = useState(
+    "I Saw Your Listing in SIGNPOST PHONE BOOK. I am Interested in your Products. Please Send Details/Call Me."
+  );
 
   const handleProductChange = (value) => {
     setProductInput(value);
@@ -106,17 +108,11 @@ export default function SearchAndSendSMS() {
     }
 
     const mobileNumbers = selectedClients.map((client) => client.mobileno);
-    const message =
-      "I Saw Your Listing in SIGNPOST PHONE BOOK. I am Interested in your Products. Please Send Details/Call Me.";
-
     try {
-      // Join multiple numbers with a comma
       const recipients = mobileNumbers.join(",");
-
-      // Create the SMS URI
-      const smsUri = `sms:${recipients}?body=${encodeURIComponent(message)}`;
-
-      // Trigger the SMS application
+      const smsUri = `sms:${recipients}?body=${encodeURIComponent(
+        customMessage
+      )}`;
       window.location.href = smsUri;
     } catch (error) {
       console.error("Error opening SMS application:", error.message);
@@ -280,6 +276,12 @@ export default function SearchAndSendSMS() {
             <p>Loading...</p>
           )}
         </div>
+        <textarea
+          className="message-box"
+          value={customMessage}
+          onChange={(e) => setCustomMessage(e.target.value)}
+          rows={4}
+        ></textarea>
         <div className="sendButton">
           <button
             onClick={sendSMS}

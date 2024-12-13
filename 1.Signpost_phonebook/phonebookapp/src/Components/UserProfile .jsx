@@ -32,24 +32,11 @@ const UserProfile = () => {
         <div className="card-content">
           <h2>{userData.businessname}</h2>
           <p>{userData.product}</p>
-          <p>Id : {userData.id}</p>
           <div className="card-stats">
             <div>
               <h3>342</h3>
               <p>Counts</p>
             </div>
-            <div>
-              <h3>120k</h3>
-              <p>Followers</p>
-            </div>
-            <div>
-              <h3>285</h3>
-              <p>Following</p>
-            </div>
-          </div>
-          <div className="card-actions">
-            <button className="btn follow-btn">Follow</button>
-            <button className="btn message-btn">Message</button>
           </div>
         </div>
       </div>

@@ -81,7 +81,9 @@ export default function Navigationpage() {
                 <span className="navbar-text d-block m-2 userlogin-name">
                   Welcome,{" "}
                   {user ? (
-                    <button onClick={handleProfile}>{user}</button>
+                    <button className="user_btn" onClick={handleProfile}>
+                      <strong>{user}</strong>
+                    </button>
                   ) : (
                     <strong>Guest</strong>
                   )}
