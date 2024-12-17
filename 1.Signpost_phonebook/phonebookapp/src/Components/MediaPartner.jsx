@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "../Css/MediaPartner.css";
-import { useNavigate } from "react-router-dom";
+import { useAsyncError, useNavigate } from "react-router-dom";
 import { useAuth } from "./Auth";
+import axios from "axios";
 
 const MediaPartner = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -17,7 +18,7 @@ const MediaPartner = () => {
   const [mymobileno, setMobileno] = useState("");
   const [isRegistered, setIsRegistered] = useState(false);
   const { userData } = useAuth();
-  const [mycount, setCount] = useState(1);
+  const [message, setMessage] = useState("");
 
   const userName = userData?.businessname || "";
   const userId = userData?.id || "";
@@ -81,29 +82,37 @@ const MediaPartner = () => {
       name: userName,
       id: userId,
       date: new Date().toISOString().split("T")[0],
-      count: mycount, // Ensure this variable holds the correct value
+      count: 1, // Default count is 1 if mycount is not set
     };
 
-    console.log("Data being sent:", dataEntry); // Debugging: Log the data being sent
-
     try {
-      const response = await fetch(
+      const response = await axios.post(
         "https://signpostphonebook.in/data_enty_insert.php",
+        dataEntry,
         {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(dataEntry),
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
         }
       );
-      const jsonResponse = await response.json();
-      if (jsonResponse.message) {
-        alert("Success: " + jsonResponse.message);
+
+      const responseData = response.data;
+
+      // Handle response
+      if (responseData.success) {
+        setMessage(
+          `Success: ${responseData.message}, New Count: ${responseData.newCount}`
+        );
+        console.log(message);
+      } else {
+        setMessage(`Error: ${responseData.message}`);
+        console.log(message);
       }
     } catch (error) {
-      alert("Error: " + error.message);
+      setMessage(`Error: Unable to reach the server. ${error.message}`);
+      console.log(message);
     }
   };
-
   const insertRecord = async (e) => {
     e.preventDefault();
 
@@ -147,7 +156,6 @@ const MediaPartner = () => {
       const jsonResponse = await response.json();
       if (jsonResponse.Message) {
         alert("Success: " + jsonResponse.Message);
-        setCount((prevCount) => prevCount + 1);
         await insertCount();
         resetForm();
       } else {
@@ -186,33 +194,39 @@ const MediaPartner = () => {
 
               <label>*Prefix:</label>
               <div className="radio-group">
-                <label>
-                  <input
-                    type="radio"
-                    value="Mr."
-                    checked={myprefix === "Mr."}
-                    onChange={(e) => setPrefix(e.target.value)}
-                  />
-                  &nbsp;Male
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    value="Ms."
-                    checked={myprefix === "Ms."}
-                    onChange={(e) => setPrefix(e.target.value)}
-                  />
-                  &nbsp;Female
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    value="M/s."
-                    checked={myprefix === "M/s."}
-                    onChange={(e) => setPrefix(e.target.value)}
-                  />
-                  &nbsp;Firm/Business
-                </label>
+                <div>
+                  <label>
+                    <input
+                      type="radio"
+                      value="Mr."
+                      checked={myprefix === "Mr."}
+                      onChange={(e) => setPrefix(e.target.value)}
+                    />
+                    Male
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    <input
+                      type="radio"
+                      value="Ms."
+                      checked={myprefix === "Ms."}
+                      onChange={(e) => setPrefix(e.target.value)}
+                    />
+                    &nbsp;Female
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    <input
+                      type="radio"
+                      value="M/s."
+                      checked={myprefix === "M/s."}
+                      onChange={(e) => setPrefix(e.target.value)}
+                    />
+                    &nbsp;Firm/Business
+                  </label>
+                </div>
               </div>
 
               <label>*Address :</label>

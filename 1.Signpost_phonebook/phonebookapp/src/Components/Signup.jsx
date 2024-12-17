@@ -154,7 +154,7 @@ const Signup = () => {
                     checked={myprefix === "Mr."}
                     onChange={(e) => setPrefix(e.target.value)}
                   />
-                  &nbsp;Male
+                  &nbsp;Mr.
                 </label>
                 <label htmlFor="Mr">
                   <input
@@ -163,7 +163,7 @@ const Signup = () => {
                     checked={myprefix === "Ms."}
                     onChange={(e) => setPrefix(e.target.value)}
                   />
-                  &nbsp;Female
+                  &nbsp;Ms.
                 </label>
                 <label htmlFor="Mr">
                   <input
