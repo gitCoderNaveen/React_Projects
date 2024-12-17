@@ -25,9 +25,8 @@ export default function App() {
           <Navigationpage />
           <Routes>
             <Route path="/" element={<Homepage />} />
-            <Route path="/NearbyPromotion" element={<PopupFilter />} />
+            <Route path="/NearbyPromotion" element={<NearbyPromotion />} />
             <Route path="/SearchandSendSms" element={<SearchAndSendSMS />} />
-            <Route path="/PrefixandPicode" element={<NearbyPromotion />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/profilePage" element={<UserProfile />} />

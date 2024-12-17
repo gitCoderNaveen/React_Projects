@@ -172,7 +172,7 @@ const MediaPartner = () => {
         <div className="popup-overlay">
           <div className="popup-card animate-slide-in">
             <h1 className="header-text">Media Partner</h1>
-            <form className="form-container" onSubmit={insertRecord}>
+            <form className="form-container">
               <label>*Mobile Number :</label>
               <input
                 type="number"
@@ -202,7 +202,7 @@ const MediaPartner = () => {
                       checked={myprefix === "Mr."}
                       onChange={(e) => setPrefix(e.target.value)}
                     />
-                    Male
+                    Mr.
                   </label>
                 </div>
                 <div>
@@ -213,7 +213,7 @@ const MediaPartner = () => {
                       checked={myprefix === "Ms."}
                       onChange={(e) => setPrefix(e.target.value)}
                     />
-                    &nbsp;Female
+                    &nbsp;Ms.
                   </label>
                 </div>
                 <div>
@@ -287,9 +287,6 @@ const MediaPartner = () => {
               />
 
               <div className="submitButton">
-                <button className="open-popup-btn" type="submit">
-                  Submit
-                </button>
                 <button
                   type="button"
                   className="close-popup-btn"
@@ -302,6 +299,9 @@ const MediaPartner = () => {
                 </button>
               </div>
             </form>
+            <button className="open-popup-btn m-2" onClick={insertRecord}>
+              Submit
+            </button>
           </div>
         </div>
       )}

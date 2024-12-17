@@ -146,7 +146,7 @@ const Signup = () => {
 
             <label>*Prefix:</label>
             <div className="radio-group" aria-required>
-              <div className="input-buttons">
+
                 <label htmlFor="Mr">
                   <input
                     type="radio"
@@ -174,7 +174,7 @@ const Signup = () => {
                   />
                   &nbsp;Firm/Business
                 </label>
-              </div>
+
             </div>
 
             <label>Address :</label>

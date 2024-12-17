@@ -34,6 +34,7 @@ export default function Navigationpage() {
 
   const handleProfile = () => {
     navigate("/profilePage");
+    toggleDrawer();
   };
 
   return (
@@ -58,23 +59,33 @@ export default function Navigationpage() {
                   Home
                 </NavLink>
               </li>
-              {user && (
-                <li className="nav-item">
-                  <NavLink className="nav-link" to="/NearbyPromotion">
-                    Nearby Promotion
-                  </NavLink>
-                </li>
+              {user ? (
+                <>
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to="/NearbyPromotion">
+                      Nearby Promotion
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to="/SearchandSendSms">
+                      Categorywise Marketing
+                    </NavLink>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to="/about">
+                      About
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to="/contactus">
+                      Contact Us
+                    </NavLink>
+                  </li>
+                </>
               )}
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/about">
-                  About
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/contactus">
-                  Contact Us
-                </NavLink>
-              </li>
             </ul>
             {user ? (
               <div className="userfn-btn">
@@ -123,7 +134,9 @@ export default function Navigationpage() {
         <span className="navbar-text d-block m-2">
           Welcome,{" "}
           {user ? (
-            <button onClick={handleProfile}>{user}</button>
+            <button className="user_btn" onClick={handleProfile}>
+              {user}
+            </button>
           ) : (
             <strong>Guest</strong>
           )}
@@ -134,31 +147,41 @@ export default function Navigationpage() {
               Home
             </NavLink>
           </li>
-          {user && (
-            <li className="nav-item">
-              <NavLink
-                className="nav-link"
-                to="/NearbyPromotion"
-                onClick={toggleDrawer}
-              >
-                Nearby Promotion
-              </NavLink>
-            </li>
+          {user ? (
+            <>
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link"
+                  to="/NearbyPromotion"
+                  onClick={toggleDrawer}
+                >
+                  Nearby Promotion
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link"
+                  to="/SearchandSendSms"
+                  onClick={toggleDrawer}
+                >
+                  Categorywise Marketing
+                </NavLink>
+              </li>
+            </>
+          ) : (
+            <>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/about">
+                  About
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/contactus">
+                  Contact Us
+                </NavLink>
+              </li>
+            </>
           )}
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/about" onClick={toggleDrawer}>
-              About
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink
-              className="nav-link"
-              to="/contactus"
-              onClick={toggleDrawer}
-            >
-              Contact Us
-            </NavLink>
-          </li>
         </ul>
         <div>
           {user && (

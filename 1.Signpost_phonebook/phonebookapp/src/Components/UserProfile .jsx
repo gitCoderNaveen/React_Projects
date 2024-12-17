@@ -3,38 +3,41 @@ import { useAuth } from "./Auth";
 import "../Css/UserProfile.css";
 
 const UserProfile = () => {
+  const [details, setDetails] = useState([]);
   const [error, setError] = useState("");
-  const [data, setData] = useState([]);
   const { userData } = useAuth();
+  const date = new Date().toISOString().split("T")[0];
 
   const fetchData = async () => {
     try {
-      const response = await fetch(
-        `https://signpostphonebook.in/data_entry_details.php?id=${userData.id}`
-      );
-      const result = await response.json();
-
-      if (result.status === "success") {
-        // Assuming the data is an array and has an "updated_at" field
-        const sortedData = result.data.sort(
-          (a, b) => new Date(b.updated_at) - new Date(a.updated_at)
-        );
-
-        // Fetch only the last updated record
-        const lastUpdatedRecord = sortedData[0];
-        setData(lastUpdatedRecord);
-      } else {
-        setError(result.message);
+      if (!userData?.id || !date) {
+        setError("Please provide a valid ID and Date.");
+        return;
       }
-    } catch (err) {
-      setError("Error fetching details. Please try again.", err);
+
+      const response = await fetch(
+        `https://signpostphonebook.in/data_entry_details.php?id=${userData.id}&date=${date}`
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP Error: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (data.status === "success") {
+        setDetails(data.data);
+        setError(""); // Clear any previous errors
+      } else {
+        setError(data.message || "Failed to fetch details.");
+      }
+    } catch (error) {
+      setError(error.message || "Something went wrong.");
     }
   };
-
   useEffect(() => {
     fetchData();
   });
-
   // const handleProfilePictureUpload = (event) => {
   //   const file = event.target.files[0];
   //   if (file) {
@@ -48,21 +51,21 @@ const UserProfile = () => {
 
   return (
     <div className="profile_Card_main">
-      <div className="card">
-        <div className="card-image">
+      <div className="Profile_card ">
+        {/* <div className="card-image">
           <img
             src="https://via.placeholder.com/150"
             alt="Profile"
             className="profile-img"
           />
-        </div>
+        </div> */}
         <div className="card-content">
-          <h2>{data.name}</h2>
-          <p></p>
+          <div className="name_card">
+            <h2>Profile Name :&nbsp;{details.name}</h2>
+          </div>
           <div className="card-stats">
-            <div>
-              <h3>{data.count}</h3>
-              <p>Counts</p>
+            <div className="name_card">
+              <h2>Counts :&nbsp;{details.count}</h2>
             </div>
           </div>
         </div>

@@ -70,6 +70,20 @@
     background-color: #0056b3;
   }
   
+  .radio-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 25px;
+   /* Adjust spacing between items */
+  }
+  
+  .radio-group label {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+   /* Adjust spacing between the radio button and text */
+  }
   
   .login-container {
     text-align: center;
