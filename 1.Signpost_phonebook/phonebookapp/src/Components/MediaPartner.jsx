@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../Css/MediaPartner.css";
-import { useAsyncError, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "./Auth";
 import axios from "axios";
 
@@ -17,8 +17,12 @@ const MediaPartner = () => {
   const [myprefix, setPrefix] = useState("");
   const [mymobileno, setMobileno] = useState("");
   const [isRegistered, setIsRegistered] = useState(false);
+  const [regName, setRegName] = useState("");
+  const [showPopup1, setShowPopup1] = useState(false);
+  const [regPrefix, setRegPrefix] = useState("");
   const { userData } = useAuth();
   const [message, setMessage] = useState("");
+  const [errors, setErrors] = useState({});
 
   const userName = userData?.businessname || "";
   const userId = userData?.id || "";
@@ -37,20 +41,12 @@ const MediaPartner = () => {
     setPrefix("");
     setMobileno("");
     setIsRegistered(false);
+    setErrors({});
   };
 
   useEffect(() => {
     setShowPopup(true);
   }, []);
-
-  const handleMobileno = (e) => {
-    const mobile = e.target.value;
-    if (mobile.length <= 10) {
-      setMobileno(mobile);
-    } else {
-      alert("Allowed 10 digits only");
-    }
-  };
 
   const checkMobileNumber = async (mobile) => {
     if (!mobile) return;
@@ -67,13 +63,24 @@ const MediaPartner = () => {
       const result = await response.json();
       if (result.registered) {
         setIsRegistered(true);
-        alert("This mobile number is already registered.");
+        setRegName(result.businessname);
+        setRegPrefix(result.prefix);
+        setShowPopup(false);
+        setShowPopup1(true);
         setMobileno("");
       } else {
         setIsRegistered(false);
       }
     } catch (error) {
       alert("Unable to verify mobile number.");
+    }
+  };
+  const handleMobileno = (e) => {
+    const mobile = e.target.value;
+    if (mobile.length <= 10) {
+      setMobileno(mobile);
+    } else {
+      alert("Allowed 10 digits only");
     }
   };
 
@@ -165,6 +172,10 @@ const MediaPartner = () => {
       alert("Error: " + error.message);
     }
   };
+  const handleClosePopup1 = () => {
+    setShowPopup1(false);
+    setShowPopup(true);
+  };
 
   return (
     <div>
@@ -178,6 +189,7 @@ const MediaPartner = () => {
                 type="number"
                 placeholder="Mobile Number"
                 value={mymobileno}
+                maxLength={10}
                 onChange={handleMobileno}
                 onBlur={() => checkMobileNumber(mymobileno)}
                 required
@@ -305,8 +317,59 @@ const MediaPartner = () => {
           </div>
         </div>
       )}
+      {/* Popup Modal */}
+      {showPopup1 && (
+        <div style={popupStyles.overlay}>
+          <div style={popupStyles.modal}>
+            <h3>Mobile Number Already Registered</h3>
+            <p>
+              <strong>In the Name of:</strong> {regPrefix}
+              {regName}
+            </p>
+            <button onClick={handleClosePopup1} style={popupStyles.closeButton}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
+};
+// Popup styles
+const popupStyles = {
+  error: {
+    color: "#EC2D01",
+  },
+  overlay: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 1000,
+  },
+  modal: {
+    backgroundColor: "#fff",
+    padding: "20px",
+    borderRadius: "8px",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    textAlign: "center",
+    maxWidth: "400px",
+    width: "80%",
+  },
+  closeButton: {
+    marginTop: "20px",
+    padding: "10px 20px",
+    backgroundColor: "#007BFF",
+    color: "#fff",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
+  },
 };
 
 export default MediaPartner;
