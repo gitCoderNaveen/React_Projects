@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FaSearch, FaWindowClose } from "react-icons/fa";
-import {
-  faPhone,
-  faMapMarkerAlt,
-  faEnvelope,
-} from "@fortawesome/free-solid-svg-icons";
-import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
-import MarqueeWithLink from "../Components/MarqueeWithLink";
 import { useAuth } from "./Auth";
 import { useNavigate } from "react-router-dom";
 import "../Css/Homepage.css";
