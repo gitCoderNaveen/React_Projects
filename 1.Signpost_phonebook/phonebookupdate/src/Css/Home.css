@@ -1,0 +1,47 @@
+.table-container {
+    width: 100%;
+    margin: 20px auto;
+    overflow-x: auto;
+  }
+  
+  .responsive-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    font-size: 1rem;
+    text-align: left;
+  }
+  
+  .responsive-table thead {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .responsive-table th,
+  .responsive-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+  }
+  
+  .responsive-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .responsive-table tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .responsive-table tfoot td {
+    text-align: center;
+    padding: 12px 15px;
+    font-style: italic;
+    color: #555;
+  }
+  
+  /* Responsive Design */
+  @media screen and (max-width: 768px) {
+    .responsive-table {
+      font-size: 0.9rem;
+    }
+  }
+  

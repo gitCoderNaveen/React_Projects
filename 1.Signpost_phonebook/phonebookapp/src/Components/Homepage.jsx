@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FaSearch, FaWindowClose } from "react-icons/fa";
 import { useAuth } from "./Auth";
 import { useNavigate } from "react-router-dom";
