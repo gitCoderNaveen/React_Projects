@@ -167,6 +167,15 @@ export default function Navigationpage() {
                   Categorywise Marketing
                 </NavLink>
               </li>
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link"
+                  to="/reference"
+                  onClick={toggleDrawer}
+                >
+                  Refer a Friend
+                </NavLink>
+              </li>
             </>
           ) : (
             <>

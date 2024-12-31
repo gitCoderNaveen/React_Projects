@@ -1,0 +1,117 @@
+/* Card Overlay Background */
+.card-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent dark background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999; /* Ensures it overlays everything */
+  }
+  
+  /* Card Container */
+  .card {
+    background: #fff; /* White background */
+    padding: 20px 30px;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+    width: 90%;
+    max-width: 500px; /* Responsive max width */
+    animation: fadeIn 0.3s ease-in-out; /* Subtle fade-in animation */
+  }
+  
+  /* Fade-in Animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Form Label */
+  .card form .form-label {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* Form Inputs */
+  .card form .form-control {
+    border-radius: 5px; /* Rounded inputs */
+    border: 1px solid #ddd; /* Light gray border */
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  
+  /* Form Inputs Focus */
+  .card form .form-control:focus {
+    border-color: #007bff; /* Bootstrap primary color */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Subtle blue glow */
+  }
+  
+  /* InputGroup */
+  .card .input-group {
+    display: flex;
+    align-items: center;
+  }
+  
+  .card .input-group .form-control {
+    flex-grow: 1;
+  }
+  
+  .card .input-group .dropdown-toggle {
+    border-radius: 0 5px 5px 0; /* Matches form controls */
+  }
+  
+  /* Submit Button */
+  .card form .btn-primary {
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 16px;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Submit Button Hover */
+  .card form .btn-primary:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  /* Mobile Responsiveness */
+  @media (max-width: 768px) {
+    .card {
+      padding: 15px 20px;
+      width: 95%;
+    }
+  
+    .card form .btn-primary {
+      font-size: 14px;
+      padding: 8px 12px;
+    }
+  }
+  
+#add-recipient-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 29px;
+    top: -5px; 
+ } 
+
+ .is-valid {
+  border-color: green !important;
+}
+
+.is-invalid {
+  border-color: red !important;
+}

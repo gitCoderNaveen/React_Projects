@@ -17,6 +17,7 @@ import SearchAndSendSMS from "./Components/SearchAndSendSMS";
 import PopupFilter from "./Components/PopupFilter";
 import Nearbypromotion from "./Components/Nearbypromotion";
 import TextAnimation from "./Components/TextAnimation";
+import Card from "./Components/Card";
 export default function App() {
   return (
     <div>
@@ -27,6 +28,7 @@ export default function App() {
             <Route path="/" element={<Homepage />} />
             <Route path="/NearbyPromotion" element={<NearbyPromotion />} />
             <Route path="/SearchandSendSms" element={<SearchAndSendSMS />} />
+            <Route path="/reference" element={<Card />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/profilePage" element={<UserProfile />} />
