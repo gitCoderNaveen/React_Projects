@@ -52,7 +52,11 @@ const Card = () => {
       if (result.success) {
         setMessage("Record Added Successfully");
 
-        const smsLink = `sms:${referNo}?body=Greetings... ${referName}, From Signpost, I am ${userData.businessname}. I refer you to use www.signpostphonebook.in`;
+        const smsBody = encodeURIComponent(
+          `Dear ${referName},\n\nI am using Signpost PHONE BOOK - a Portal for Mobile Number Finder & Dialer with Digital Marketing Assistant. I find it very useful, and you can also join. \n\nThe URL link is: www.signpostphonebook.in\nMention my mobile number, ${userData.mobileno}, as the Promocode while signing up.\n\nRegards,\n${userData.businessname}`
+        );
+        const smsLink = `sms:${referNo}?body=${smsBody}`;
+
         setTimeout(() => {
           window.location.href = smsLink;
         }, 2000);
@@ -78,18 +82,12 @@ const Card = () => {
             ×
           </button>
           <form onSubmit={handleSubmit} style={formStyles.container}>
-            <div style={formStyles.field}>
-              <label>
-                Your Name:
-                <p style={formStyles.label}>{userData.businessname}</p>
-              </label>
-            </div>
-            <div style={formStyles.field}>
-              <label>
-                Your Number:
-                <p style={formStyles.label}>{userData.mobileno}</p>
-              </label>
-            </div>
+            <label htmlFor="" style={formStyles.field}>
+              <strong>Refer Friends & Win : </strong> <br />
+              Fill Mobile number and Name of Friends, Relatives, Neighbors to
+              use this App. They will be sent a message with joining link. You
+              will get credit points, when they SIGNUP.
+            </label>
             <div style={formStyles.field}>
               <label style={formStyles.label}>
                 Refer Name:

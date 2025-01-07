@@ -146,35 +146,33 @@ const Signup = () => {
 
             <label>*Prefix:</label>
             <div className="radio-group" aria-required>
-
-                <label htmlFor="Mr">
-                  <input
-                    type="radio"
-                    value="Mr."
-                    checked={myprefix === "Mr."}
-                    onChange={(e) => setPrefix(e.target.value)}
-                  />
-                  &nbsp;Mr.
-                </label>
-                <label htmlFor="Mr">
-                  <input
-                    type="radio"
-                    value="Ms."
-                    checked={myprefix === "Ms."}
-                    onChange={(e) => setPrefix(e.target.value)}
-                  />
-                  &nbsp;Ms.
-                </label>
-                <label htmlFor="Mr">
-                  <input
-                    type="radio"
-                    value="M/s."
-                    checked={myprefix === "M/s."}
-                    onChange={(e) => setPrefix(e.target.value)}
-                  />
-                  &nbsp;Firm/Business
-                </label>
-
+              <label htmlFor="Mr">
+                <input
+                  type="radio"
+                  value="Mr."
+                  checked={myprefix === "Mr."}
+                  onChange={(e) => setPrefix(e.target.value)}
+                />
+                &nbsp;Mr.
+              </label>
+              <label htmlFor="Mr">
+                <input
+                  type="radio"
+                  value="Ms."
+                  checked={myprefix === "Ms."}
+                  onChange={(e) => setPrefix(e.target.value)}
+                />
+                &nbsp;Ms.
+              </label>
+              <label htmlFor="Mr">
+                <input
+                  type="radio"
+                  value="M/s."
+                  checked={myprefix === "M/s."}
+                  onChange={(e) => setPrefix(e.target.value)}
+                />
+                &nbsp;Firm/Business
+              </label>
             </div>
 
             <label>Address :</label>
@@ -235,11 +233,8 @@ const Signup = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
             <label>Promo-Code :</label>
-            <input
-              type="number"
-              placeholder="Your Promo-Code"
-              value={myemail}
-              onChange={(e) => setEmail(e.target.value)}
+            <input type="number" 
+            placeholder="Your Promo-Code" 
             />
           </form>
         </div>

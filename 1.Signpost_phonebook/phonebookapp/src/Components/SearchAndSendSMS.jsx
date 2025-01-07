@@ -125,7 +125,9 @@ export default function SearchAndSendSMS() {
   return (
     <div className="productCityMainDiv">
       <div className="productCityDiv" style={{ margin: "20px" }}>
-        <h2>Product and City Selection</h2>
+        <h2>
+          <strong>Categorywise Promotion </strong>
+        </h2>
         <div className="inputContainer">
           <div style={{ position: "relative", marginBottom: "20px" }}>
             <label htmlFor="product">Product:</label>

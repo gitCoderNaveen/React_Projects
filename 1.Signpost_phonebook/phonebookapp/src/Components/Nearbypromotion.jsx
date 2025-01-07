@@ -12,15 +12,8 @@ const Nearbypromotion = () => {
   const [customMessage, setCustomMessage] = useState(
     "I Saw Your Listing in SIGNPOST PHONE BOOK. I am Interested in your Products. Please Send Details/Call Me."
   );
-  const [prefixes, setPrefixes] = useState([]);
+  const [prefix, setPrefix] = useState("");
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    axios
-      .get("https://signpostphonebook.in/client_get_prefix.php")
-      .then((response) => setPrefixes(response.data))
-      .catch((error) => console.error("Error fetching prefixes:", error));
-  }, []);
 
   const handleSelectAllChange = () => {
     if (selectAll) {
@@ -54,7 +47,7 @@ const Nearbypromotion = () => {
   }, []);
 
   const fetchBusinesses = () => {
-    if (!pincodeInput || !selectedPrefix) {
+    if (!pincodeInput || !prefix) {
       alert("Please enter a valid pincode and select a prefix.");
       return;
     }
@@ -62,7 +55,7 @@ const Nearbypromotion = () => {
     setLoading(true);
     axios
       .get(
-        `https://signpostphonebook.in/testprefix.php?pincode=${pincodeInput}&prefix=${selectedPrefix}`
+        `https://signpostphonebook.in/testprefix.php?pincode=${pincodeInput}&prefix=${prefix}`
       )
       .then((response) => {
         setData(response.data);
@@ -113,30 +106,58 @@ const Nearbypromotion = () => {
     <div className="container">
       <div className="input-section">
         <div>
-          <label>Select Prefix : </label>
+          <label htmlFor="">
+            <strong>Message Box : </strong>
+          </label>
+          <textarea
+            className="message-box"
+            value={customMessage}
+            onChange={(e) => setCustomMessage(e.target.value)}
+            rows={4}
+          ></textarea>
+          <label>
+            <strong>Select Recipients Type :</strong>{" "}
+          </label>
           <div className="prefix-container">
-            {prefixes.map((prefix) => (
-              <div key={prefix.name} className="prefix-item">
-                <div>
-                  <input
-                    type="radio"
-                    id={prefix.name}
-                    name="prefix"
-                    value={prefix.name}
-                    onChange={() => setSelectedPrefix(prefix.name)}
-                    checked={selectedPrefix === prefix.name}
-                  />
-                </div>
-                &nbsp;
-                <div>
-                  <label htmlFor={prefix.name}>{prefix.name}</label>
-                </div>
-              </div>
-            ))}
+            <div className="radio-group" aria-required>
+              <label htmlFor="Mr">
+                <input
+                  type="radio"
+                  value="Mr."
+                  checked={prefix === "Mr."}
+                  onChange={(e) => setPrefix(e.target.value)}
+                />
+                &nbsp;Males
+              </label>
+            </div>
+            <div className="radio-group">
+              <label htmlFor="Mr">
+                <input
+                  type="radio"
+                  value="Ms."
+                  checked={prefix === "Ms."}
+                  onChange={(e) => setPrefix(e.target.value)}
+                />
+                &nbsp;Females
+              </label>
+            </div>
+            <div className="radio-group">
+              <label htmlFor="Mr">
+                <input
+                  type="radio"
+                  value="M/s."
+                  checked={prefix === "M/s."}
+                  onChange={(e) => setPrefix(e.target.value)}
+                />
+                &nbsp;Business Firms
+              </label>
+            </div>
           </div>
         </div>
         <div>
-          <label htmlFor="">Pincode : </label>
+          <label htmlFor="">
+            <strong>Type Pincode of Recipients</strong>{" "}
+          </label>
         </div>
         <div className="search_Container">
           <div className="input-wrapper">
@@ -147,22 +168,22 @@ const Nearbypromotion = () => {
               value={pincodeInput}
               onChange={(e) => setPincodeInput(e.target.value)}
             />
-            {clrBtn ? (
-              <button
-                className="btn btn-primary search_Button"
-                onClick={clearItems}
-              >
-                Clear
-              </button>
-            ) : (
-              <button
-                className="btn btn-primary search_Button"
-                onClick={fetchBusinesses}
-              >
-                Search
-              </button>
-            )}
           </div>
+          {clrBtn ? (
+            <button
+              className="btn btn-primary search_Button"
+              onClick={clearItems}
+            >
+              Clear
+            </button>
+          ) : (
+            <button
+              className="btn btn-primary search_Button"
+              onClick={fetchBusinesses}
+            >
+              Search
+            </button>
+          )}
         </div>
       </div>
 
@@ -171,9 +192,15 @@ const Nearbypromotion = () => {
       ) : (
         <div>
           <div className="result-header">
+            <label htmlFor="">
+              <strong>Select Recipients :</strong>
+            </label>
+            <br />
             <div className="selectAllSection">
               <div>
-                <label>Select All</label>
+                <label>
+                  <strong>Select All</strong>{" "}
+                </label>
               </div>
               <div>
                 <input
@@ -185,12 +212,19 @@ const Nearbypromotion = () => {
             </div>
             <div className="data_Controls">
               <div>
-                <p>Fetched: {datas.length},</p>
+                <p>
+                  <strong>Fetched:</strong> {datas.length},
+                </p>
               </div>
               <div>
-                <p>Selected: {selectedBusinesses.length}</p>
+                <p>
+                  <strong>Selected:</strong> {selectedBusinesses.length}
+                </p>
               </div>
             </div>
+            <button className="btn btn-primary mb-2" onClick={sendBatchSMS}>
+              Send SMS
+            </button>
           </div>
           <div className="scroll-container">
             {datas.length > 0 ? (
@@ -198,7 +232,9 @@ const Nearbypromotion = () => {
                 {datas.map((item) => (
                   <div className="card" key={item.id}>
                     <div className="card-details">
-                      <p className="heading-text">{item.businessname}</p>
+                      <p className="heading-text">
+                        <strong>{item.businessname}</strong>
+                      </p>
                       <p className="card-para">{item.product}</p>
                     </div>
                     <div className="checkbox">
@@ -219,16 +255,6 @@ const Nearbypromotion = () => {
           </div>
         </div>
       )}
-
-      <textarea
-        className="message-box"
-        value={customMessage}
-        onChange={(e) => setCustomMessage(e.target.value)}
-        rows={4}
-      ></textarea>
-      <button className="btn btn-primary" onClick={sendBatchSMS}>
-        Send SMS
-      </button>
     </div>
   );
 };

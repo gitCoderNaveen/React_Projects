@@ -68,7 +68,7 @@ export default function Navigationpage() {
                   </li>
                   <li className="nav-item">
                     <NavLink className="nav-link" to="/SearchandSendSms">
-                      Categorywise Marketing
+                      Categorywise Promotion
                     </NavLink>
                   </li>
                 </>
@@ -164,7 +164,7 @@ export default function Navigationpage() {
                   to="/SearchandSendSms"
                   onClick={toggleDrawer}
                 >
-                  Categorywise Marketing
+                  Categorywise Promotion
                 </NavLink>
               </li>
               <li className="nav-item">
