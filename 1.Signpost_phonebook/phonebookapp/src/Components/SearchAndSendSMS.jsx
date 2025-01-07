@@ -128,9 +128,20 @@ export default function SearchAndSendSMS() {
         <h2>
           <strong>Categorywise Promotion </strong>
         </h2>
+        <label htmlFor="">
+          <strong>Message Box : </strong>
+        </label>
+        <textarea
+          className="message-box"
+          value={customMessage}
+          onChange={(e) => setCustomMessage(e.target.value)}
+          rows={4}
+        ></textarea>
         <div className="inputContainer">
           <div style={{ position: "relative", marginBottom: "20px" }}>
-            <label htmlFor="product">Product:</label>
+            <label htmlFor="product">
+              <strong>Product:</strong>{" "}
+            </label>
             <input
               type="text"
               id="product"
@@ -177,7 +188,9 @@ export default function SearchAndSendSMS() {
           </div>
 
           <div style={{ position: "relative", marginBottom: "20px" }}>
-            <label htmlFor="city">City:</label>
+            <label htmlFor="city">
+              <strong>City:</strong>
+            </label>
             <input
               type="text"
               id="city"
@@ -225,12 +238,18 @@ export default function SearchAndSendSMS() {
         </div>
         <div className="controlSection">
           <div className="selectedList">
-            <p>Total Cards: {data.length}</p>
-            <p>Selected cards: {selectedClients.length}</p>
+            <p>
+              <strong>Total Cards:</strong> {data.length}
+            </p>
+            <p>
+              <strong>Selected cards:</strong> {selectedClients.length}
+            </p>
           </div>
           <div className="selectedList">
             <div className="selectionDiv">
-              <label>Select All</label>
+              <label>
+                <strong>Select All</strong>{" "}
+              </label>
               &nbsp;&nbsp;
               <div>
                 <input
@@ -251,7 +270,25 @@ export default function SearchAndSendSMS() {
             </div>
           </div>
 
-          <div></div>
+          <div>
+            <div className="sendButton">
+              <button
+                onClick={sendSMS}
+                style={{
+                  marginTop: "10px",
+                  padding: "10px 20px",
+                  border: "none",
+                  borderRadius: "5px",
+                  backgroundColor: "#007BFF",
+                  color: "#fff",
+                  cursor: "pointer",
+                  justifyContent: "left",
+                }}
+              >
+                Send SMS
+              </button>
+            </div>
+          </div>
         </div>
         <div className="card-containerMain">
           {data.length > 0 ? (
@@ -277,28 +314,6 @@ export default function SearchAndSendSMS() {
           ) : (
             <p>Loading...</p>
           )}
-        </div>
-        <textarea
-          className="message-box"
-          value={customMessage}
-          onChange={(e) => setCustomMessage(e.target.value)}
-          rows={4}
-        ></textarea>
-        <div className="sendButton">
-          <button
-            onClick={sendSMS}
-            style={{
-              marginTop: "10px",
-              padding: "10px 20px",
-              border: "none",
-              borderRadius: "5px",
-              backgroundColor: "#007BFF",
-              color: "#fff",
-              cursor: "pointer",
-            }}
-          >
-            Send SMS
-          </button>
         </div>
       </div>
     </div>

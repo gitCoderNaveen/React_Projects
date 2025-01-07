@@ -129,7 +129,6 @@
     }
     .sendButton{
       display: flex;
-      justify-content: center;
     }
     .controlSection{
       display: flex;
