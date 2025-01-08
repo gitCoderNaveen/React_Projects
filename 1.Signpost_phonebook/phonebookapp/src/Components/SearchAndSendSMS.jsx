@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../Css/SearchAndSendSms.css";
+import { FaPencilAlt } from "react-icons/fa";
 
 export default function SearchAndSendSMS() {
   const [data, setData] = useState([]);
@@ -14,6 +15,7 @@ export default function SearchAndSendSMS() {
   const [isCityDropdownVisible, setIsCityDropdownVisible] = useState(false);
   const [selectedClients, setSelectedClients] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
+  const maxLength = 290;
   const [customMessage, setCustomMessage] = useState(
     "I Saw Your Listing in SIGNPOST PHONE BOOK. I am Interested in your Products. Please Send Details/Call Me."
   );
@@ -90,10 +92,11 @@ export default function SearchAndSendSMS() {
     }
   };
 
-  useEffect(() => {
+  const handleSearch = (e) => {
+    e.preventDefault();
     if (productInput) fetchProductData(productInput);
     else fetchData();
-  }, [productInput]);
+  };
 
   const handleClear = () => {
     setProductInput("");
@@ -128,19 +131,60 @@ export default function SearchAndSendSMS() {
         <h2>
           <strong>Categorywise Promotion </strong>
         </h2>
+        <p>
+          <strong>CATEGORYWISE PROMOTION</strong>
+          <br />
+          {`Send Text messages to all Mobile Users dealing in a specific product / keyword,  all over the selected city`}{" "}
+          <br />
+          {`1) First edit / create message to be sent. Minimum 1 Count (145 characters), Maximum 2 counts (290 characters)`}
+        </p>
         <label htmlFor="">
-          <strong>Message Box : </strong>
+          <strong>
+            Edit / Create Message :{" "}
+            <span>
+              <FaPencilAlt
+                style={{
+                  marginLeft: "10px",
+                  cursor: "pointer",
+                  color: "#000000",
+                }}
+              />
+            </span>{" "}
+          </strong>
         </label>
-        <textarea
-          className="message-box"
-          value={customMessage}
-          onChange={(e) => setCustomMessage(e.target.value)}
-          rows={4}
-        ></textarea>
+        <div
+          className="message-box-container"
+          style={{ position: "relative", width: "100%" }}
+        >
+          <textarea
+            className="message-box"
+            value={customMessage}
+            onChange={(e) => setCustomMessage(e.target.value)}
+            rows={4}
+            placeholder="Type your message here..."
+            style={{
+              width: "100%",
+              padding: "10px",
+              boxSizing: "border-box",
+            }}
+          ></textarea>
+          <div
+            className="char-counter"
+            style={{
+              position: "absolute",
+              top: "2px",
+              right: "10px",
+              fontSize: "14px",
+              color: customMessage.length === maxLength ? "red" : "black",
+            }}
+          >
+            {maxLength - customMessage.length} / {maxLength}
+          </div>
+        </div>
         <div className="inputContainer">
           <div style={{ position: "relative", marginBottom: "20px" }}>
             <label htmlFor="product">
-              <strong>Product:</strong>{" "}
+              <strong>Category : </strong>{" "}
             </label>
             <input
               type="text"
@@ -235,11 +279,14 @@ export default function SearchAndSendSMS() {
               </ul>
             )}
           </div>
+          <button className="btn btn-primary" onClick={handleSearch}>
+            Search
+          </button>
         </div>
         <div className="controlSection">
           <div className="selectedList">
             <p>
-              <strong>Total Cards:</strong> {data.length}
+              <strong>Results Displayed :</strong> {data.length}
             </p>
             <p>
               <strong>Selected cards:</strong> {selectedClients.length}
@@ -296,7 +343,9 @@ export default function SearchAndSendSMS() {
               {data.map((item) => (
                 <div className="card" key={item.id}>
                   <div className="card-details">
-                    <p className="heading-text">{item.businessname}</p>
+                    <p className="heading-text">
+                      <strong>{item.businessname}</strong>
+                    </p>
                     <p className="card-para">{item.product}</p>
                   </div>
                   <div className="checkbox">
@@ -314,6 +363,31 @@ export default function SearchAndSendSMS() {
           ) : (
             <p>Loading...</p>
           )}
+        </div>
+        <div className="sendButton">
+          <button
+            onClick={sendSMS}
+            style={{
+              marginTop: "10px",
+              padding: "10px 20px",
+              border: "none",
+              borderRadius: "5px",
+              backgroundColor: "#007BFF",
+              color: "#fff",
+              cursor: "pointer",
+              justifyContent: "left",
+            }}
+          >
+            Send SMS
+          </button>
+          <p>
+            <strong>Selected cards:</strong> {selectedClients.length}
+          </p>
+          <p>
+            <strong>
+              For error free delivery, send in batches of 10nos each
+            </strong>
+          </p>
         </div>
       </div>
     </div>

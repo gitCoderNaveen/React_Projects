@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../Css/NearbyPromotion.css";
+import { FaPencilAlt } from "react-icons/fa";
 
 const Nearbypromotion = () => {
   const [pincodeInput, setPincodeInput] = useState("");
@@ -9,6 +10,7 @@ const Nearbypromotion = () => {
   const [datas, setData] = useState([]);
   const [selectedBusinesses, setSelectedBusinesses] = useState([]);
   const [selectedPrefix, setSelectedPrefix] = useState(null);
+  const maxLength = 290;
   const [customMessage, setCustomMessage] = useState(
     "I Saw Your Listing in SIGNPOST PHONE BOOK. I am Interested in your Products. Please Send Details/Call Me."
   );
@@ -94,6 +96,7 @@ const Nearbypromotion = () => {
         customMessage
       )}`;
       window.location.href = smsUri;
+      handleSelectAllChange();
     } catch (error) {
       console.error("Error opening SMS application:", error.message);
       window.alert(
@@ -106,15 +109,59 @@ const Nearbypromotion = () => {
     <div className="container">
       <div className="input-section">
         <div>
+          <p>
+            <strong>NEARBY PROMOTION</strong> <br />
+            {`Send Text messages to Mobile Users in desired Pincode Area`}{" "}
+            <br />
+            {`1) First edit / create message to be sent. Minimum 1 Count (145 characters), Maximum 2 counts (290 characters)`}
+            <br />
+            {`2) Select type of Recipient  (Males / Females / Business Firms)`}
+            <br />
+            {`3) Type Pincode Number of Targetted area for Promotion`}
+          </p>
           <label htmlFor="">
-            <strong>Message Box : </strong>
+            <strong>
+              Edit / Create Message :{" "}
+              <span>
+                <FaPencilAlt
+                  style={{
+                    marginLeft: "10px",
+                    cursor: "pointer",
+                    color: "#000000",
+                  }}
+                />
+              </span>{" "}
+            </strong>
           </label>
-          <textarea
-            className="message-box"
-            value={customMessage}
-            onChange={(e) => setCustomMessage(e.target.value)}
-            rows={4}
-          ></textarea>
+          <div
+            className="message-box-container"
+            style={{ position: "relative", width: "100%" }}
+          >
+            <textarea
+              className="message-box"
+              value={customMessage}
+              onChange={(e) => setCustomMessage(e.target.value)}
+              rows={4}
+              placeholder="Type your message here..."
+              style={{
+                width: "100%",
+                padding: "10px",
+                boxSizing: "border-box",
+              }}
+            ></textarea>
+            <div
+              className="char-counter"
+              style={{
+                position: "absolute",
+                top: "2px",
+                right: "10px",
+                fontSize: "14px",
+                color: customMessage.length === maxLength ? "red" : "black",
+              }}
+            >
+              {maxLength - customMessage.length} / {maxLength}
+            </div>
+          </div>
           <label>
             <strong>Select Recipients Type :</strong>{" "}
           </label>
@@ -185,8 +232,19 @@ const Nearbypromotion = () => {
             </button>
           )}
         </div>
+        <div className="data_Controls">
+          <div>
+            <p>
+              <strong>Results Displayed :</strong> {datas.length},
+            </p>
+          </div>
+          <div>
+            <p>
+              <strong>Selected:</strong> {selectedBusinesses.length}
+            </p>
+          </div>
+        </div>
       </div>
-
       {loading ? (
         <p>Loading...</p>
       ) : (
@@ -210,18 +268,7 @@ const Nearbypromotion = () => {
                 />
               </div>
             </div>
-            <div className="data_Controls">
-              <div>
-                <p>
-                  <strong>Fetched:</strong> {datas.length},
-                </p>
-              </div>
-              <div>
-                <p>
-                  <strong>Selected:</strong> {selectedBusinesses.length}
-                </p>
-              </div>
-            </div>
+
             <button className="btn btn-primary mb-2" onClick={sendBatchSMS}>
               Send SMS
             </button>
@@ -253,6 +300,9 @@ const Nearbypromotion = () => {
               <p>Loading...</p>
             )}
           </div>
+          <button className="btn btn-primary mt-2" onClick={sendBatchSMS}>
+            Send SMS
+          </button>
         </div>
       )}
     </div>
