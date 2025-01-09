@@ -149,6 +149,7 @@ const MediaPartner = () => {
       product: myproduct,
       landline: mylandLine,
       lcode: myLcode,
+      promocode: "MediaPartner",
     };
 
     try {

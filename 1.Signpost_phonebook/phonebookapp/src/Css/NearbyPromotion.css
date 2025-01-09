@@ -29,6 +29,12 @@
 .input-section, .result-container, .message-box {
   margin: 20px 0;
 }
+  
+.headingNearby{
+  color: #007bff;
+  font-size: larger;
+  font-weight: 520;
+}
 
 .prefix-container, .result-container {
   display: flex;
@@ -122,7 +128,10 @@ textarea.message-box {
   padding: 10px;
   font-size: 14px;
 }
-
+.defaultContainer{
+  border: 2px solid black;
+  text-align: center;
+}
 @keyframes fadeIn {
   from {
     opacity: 0;

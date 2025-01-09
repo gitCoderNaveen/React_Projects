@@ -12,6 +12,7 @@ export default function SearchAndSendSMS() {
   const [selectedCity, setSelectedCity] = useState("");
   const [isProductDropdownVisible, setIsProductDropdownVisible] =
     useState(false);
+  const [showresults, setShowresults] = useState(false);
   const [isCityDropdownVisible, setIsCityDropdownVisible] = useState(false);
   const [selectedClients, setSelectedClients] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
@@ -94,14 +95,17 @@ export default function SearchAndSendSMS() {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (productInput) fetchProductData(productInput);
-    else fetchData();
+    if (productInput) {
+      fetchProductData(productInput);
+      setShowresults(true);
+    } else fetchData();
   };
 
   const handleClear = () => {
     setProductInput("");
     setSelectAll(false);
     setSelectedClients("");
+    setShowresults(false);
   };
 
   const sendSMS = () => {
@@ -128,11 +132,10 @@ export default function SearchAndSendSMS() {
   return (
     <div className="productCityMainDiv">
       <div className="productCityDiv" style={{ margin: "20px" }}>
-        <h2>
-          <strong>Categorywise Promotion </strong>
-        </h2>
         <p>
-          <strong>CATEGORYWISE PROMOTION</strong>
+          <span className="headingCategory">
+            <strong>CATEGORYWISE PROMOTION</strong>
+          </span>
           <br />
           {`Send Text messages to all Mobile Users dealing in a specific product / keyword,  all over the selected city`}{" "}
           <br />
@@ -284,14 +287,16 @@ export default function SearchAndSendSMS() {
           </button>
         </div>
         <div className="controlSection">
-          <div className="selectedList">
-            <p>
-              <strong>Results Displayed :</strong> {data.length}
-            </p>
-            <p>
-              <strong>Selected cards:</strong> {selectedClients.length}
-            </p>
-          </div>
+          {showresults && (
+            <div className="selectedList">
+              <p>
+                <strong>Results Displayed :</strong> {data.length}
+              </p>
+              <p>
+                <strong>Selected cards:</strong> {selectedClients.length}
+              </p>
+            </div>
+          )}
           <div className="selectedList">
             <div className="selectionDiv">
               <label>
@@ -335,35 +340,48 @@ export default function SearchAndSendSMS() {
                 Send SMS
               </button>
             </div>
+            <p>
+              <strong>
+                For error free delivery, send in batches of 10nos each
+              </strong>
+            </p>
           </div>
         </div>
-        <div className="card-containerMain">
-          {data.length > 0 ? (
-            <>
-              {data.map((item) => (
-                <div className="card" key={item.id}>
-                  <div className="card-details">
-                    <p className="heading-text">
-                      <strong>{item.businessname}</strong>
-                    </p>
-                    <p className="card-para">{item.product}</p>
+        {showresults ? (
+          <div className="card-containerMain">
+            {data.length > 0 ? (
+              <>
+                {data.map((item) => (
+                  <div className="card" key={item.id}>
+                    <div className="card-details">
+                      <p className="heading-text">
+                        <strong>{item.businessname}</strong>
+                      </p>
+                      <p className="card-para">{item.product}</p>
+                    </div>
+                    <div className="checkbox">
+                      <p>{item.mobileno.slice(0, -5)}xxxxx</p>
+                      <input
+                        className="inputCheckbox"
+                        type="checkbox"
+                        checked={selectedClients.includes(item)}
+                        onChange={() => handleCheckboxChange(item)}
+                      />
+                    </div>
                   </div>
-                  <div className="checkbox">
-                    <p>{item.mobileno.slice(0, -5)}xxxxx</p>
-                    <input
-                      className="inputCheckbox"
-                      type="checkbox"
-                      checked={selectedClients.includes(item)}
-                      onChange={() => handleCheckboxChange(item)}
-                    />
-                  </div>
-                </div>
-              ))}
-            </>
-          ) : (
-            <p>Loading...</p>
-          )}
-        </div>
+                ))}
+              </>
+            ) : (
+              <p>Loading...</p>
+            )}
+          </div>
+        ) : (
+          <div className="container defaultContainer">
+            <p>
+              <strong>Your Result Will be Shown Here!!..</strong>
+            </p>
+          </div>
+        )}
         <div className="sendButton">
           <button
             onClick={sendSMS}
@@ -380,15 +398,15 @@ export default function SearchAndSendSMS() {
           >
             Send SMS
           </button>
-          <p>
-            <strong>Selected cards:</strong> {selectedClients.length}
-          </p>
-          <p>
-            <strong>
-              For error free delivery, send in batches of 10nos each
-            </strong>
-          </p>
         </div>
+        <p>
+          <strong>Selected cards:</strong> {selectedClients.length}
+        </p>
+        <p>
+          <strong>
+            For error free delivery, send in batches of 10nos each
+          </strong>
+        </p>
       </div>
     </div>
   );

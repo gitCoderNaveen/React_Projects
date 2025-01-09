@@ -8,6 +8,7 @@ const Nearbypromotion = () => {
   const [selectAll, setSelectAll] = useState(false);
   const [clrBtn, setClrBtn] = useState(false);
   const [datas, setData] = useState([]);
+  const [showresults, setShowresults] = useState(false);
   const [selectedBusinesses, setSelectedBusinesses] = useState([]);
   const [selectedPrefix, setSelectedPrefix] = useState(null);
   const maxLength = 290;
@@ -62,6 +63,7 @@ const Nearbypromotion = () => {
       .then((response) => {
         setData(response.data);
         setClrBtn(true);
+        setShowresults(true);
       })
       .catch((error) => console.error("Error fetching businesses:", error))
       .finally(() => setLoading(false));
@@ -82,6 +84,7 @@ const Nearbypromotion = () => {
     setSelectAll(false);
     setSelectedBusinesses([]);
     setClrBtn(!clrBtn);
+    setShowresults(false);
   };
   const sendBatchSMS = () => {
     if (selectedBusinesses.length === 0) {
@@ -110,7 +113,10 @@ const Nearbypromotion = () => {
       <div className="input-section">
         <div>
           <p>
-            <strong>NEARBY PROMOTION</strong> <br />
+            <span className="headingNearby">
+              <strong>NEARBY PROMOTION</strong>
+            </span>{" "}
+            <br />
             {`Send Text messages to Mobile Users in desired Pincode Area`}{" "}
             <br />
             {`1) First edit / create message to be sent. Minimum 1 Count (145 characters), Maximum 2 counts (290 characters)`}
@@ -232,18 +238,20 @@ const Nearbypromotion = () => {
             </button>
           )}
         </div>
-        <div className="data_Controls">
-          <div>
-            <p>
-              <strong>Results Displayed :</strong> {datas.length},
-            </p>
+        {showresults && (
+          <div className="data_Controls">
+            <div>
+              <p>
+                <strong>Results Displayed :</strong> {datas.length},
+              </p>
+            </div>
+            <div>
+              <p>
+                <strong>Selected:</strong> {selectedBusinesses.length}
+              </p>
+            </div>
           </div>
-          <div>
-            <p>
-              <strong>Selected:</strong> {selectedBusinesses.length}
-            </p>
-          </div>
-        </div>
+        )}
       </div>
       {loading ? (
         <p>Loading...</p>
@@ -272,37 +280,58 @@ const Nearbypromotion = () => {
             <button className="btn btn-primary mb-2" onClick={sendBatchSMS}>
               Send SMS
             </button>
+            <p>
+              <strong>
+                For error free delivery, send in batches of 10 nos each time
+              </strong>
+            </p>
           </div>
-          <div className="scroll-container">
-            {datas.length > 0 ? (
-              <>
-                {datas.map((item) => (
-                  <div className="card" key={item.id}>
-                    <div className="card-details">
-                      <p className="heading-text">
-                        <strong>{item.businessname}</strong>
-                      </p>
-                      <p className="card-para">{item.product}</p>
+          {showresults ? (
+            <div className="scroll-container">
+              {datas.length > 0 ? (
+                <>
+                  {datas.map((item) => (
+                    <div className="card" key={item.id}>
+                      <div className="card-details">
+                        <p className="heading-text">
+                          <strong>{item.businessname}</strong>
+                        </p>
+                        <p className="card-para">{item.product}</p>
+                      </div>
+                      <div className="checkbox">
+                        <p>{item.mobileno.slice(0, -5)}xxxxx</p>
+                        <input
+                          className="inputCheckbox"
+                          type="checkbox"
+                          checked={selectedBusinesses.includes(item)}
+                          onChange={() => handleCheckboxChange(item)}
+                        />
+                      </div>
                     </div>
-                    <div className="checkbox">
-                      <p>{item.mobileno.slice(0, -5)}xxxxx</p>
-                      <input
-                        className="inputCheckbox"
-                        type="checkbox"
-                        checked={selectedBusinesses.includes(item)}
-                        onChange={() => handleCheckboxChange(item)}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </>
-            ) : (
-              <p>Loading...</p>
-            )}
-          </div>
+                  ))}
+                </>
+              ) : (
+                <p>Loading...</p>
+              )}
+            </div>
+          ) : (
+            <div className="container defaultContainer">
+              <p>
+                <strong>Your Result Will be Shown Here!!..</strong>
+              </p>
+            </div>
+          )}
           <button className="btn btn-primary mt-2" onClick={sendBatchSMS}>
             Send SMS
           </button>
+          <p>
+            <strong>Selected:</strong> {selectedBusinesses.length}
+          </p>
+          <p>
+            <strong>
+              For error free delivery, send in batches of 10 nos each time
+            </strong>
+          </p>
         </div>
       )}
     </div>

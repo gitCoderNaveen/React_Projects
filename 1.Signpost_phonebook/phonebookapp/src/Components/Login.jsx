@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import { useAuth } from "./Auth"; // Correctly import the useAuth hook
 import { useNavigate } from "react-router-dom";
 import "../Css/Login.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 const Login = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(true);
   const [mobileno, setMobileNo] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
   const { Login } = useAuth(); // Correct usage of context
 
   const navigate = useNavigate();
@@ -23,7 +26,7 @@ const Login = () => {
   const handlePassword = (e) => {
     setPassword(e.target.value);
   };
-  
+
   const handleLogin = (e) => {
     e.preventDefault();
     Login(mobileno, password);
@@ -54,15 +57,24 @@ const Login = () => {
                 />
               </div>
               <div className="input-group">
-                <label htmlFor="password">Password</label>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  value={password}
-                  onChange={handlePassword}
-                  required
-                />
+                <label>Password</label>
+                <div className="password-wrapper">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    id="password"
+                    name="password"
+                    value={password}
+                    onChange={handlePassword}
+                    required
+                  />
+                  {password && (
+                    <FontAwesomeIcon
+                      icon={showPassword ? faEyeSlash : faEye}
+                      className="toggle-password"
+                      onClick={() => setShowPassword(!showPassword)}
+                    />
+                  )}
+                </div>
               </div>
               <button type="submit" className="login-button">
                 Login

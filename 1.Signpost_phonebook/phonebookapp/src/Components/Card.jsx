@@ -83,7 +83,10 @@ const Card = () => {
           </button>
           <form onSubmit={handleSubmit} style={formStyles.container}>
             <label htmlFor="" style={formStyles.field}>
-              <strong>Refer Friends & Win : </strong> <br />
+              <span style={formStyles.referHeading}>
+                <strong>REFER A FRIEND & WIN : </strong>
+              </span>{" "}
+              <br />
               Fill Mobile number and Name of Friends, Relatives, Neighbors to
               use this App. They will be sent a message with joining link. You
               will get credit points, when they SIGNUP.
@@ -105,7 +108,7 @@ const Card = () => {
             </div>
             <div style={formStyles.field}>
               <label style={formStyles.label}>
-                Refer Number:
+                Refer Mobile Number :
                 <input
                   type="number"
                   name="mobile2"
@@ -189,6 +192,11 @@ const styles = {
 const formStyles = {
   container: {
     padding: "20px",
+  },
+  referHeading: {
+    color: "royalblue",
+    fontSize: "15px",
+    fontWeight: "600",
   },
   field: {
     marginBottom: "16px",

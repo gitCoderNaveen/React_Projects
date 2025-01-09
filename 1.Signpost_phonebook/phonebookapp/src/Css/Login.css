@@ -44,6 +44,7 @@
     color: #EC2D01;
   }
   
+  
   .input-group {
     margin-bottom: 15px;
   }
@@ -93,4 +94,22 @@
     background: none;
     border: none;
     color: #007bff;
+  }
+  .password-wrapper {
+    position: relative;
+    width: 100%;
+  }
+  .password-wrapper input{
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-70%);
+    cursor: pointer;
   }

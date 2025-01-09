@@ -85,6 +85,11 @@
    /* Adjust spacing between the radio button and text */
   }
   
+  .helptext{
+    color:red;
+    font-size: small;
+  }
+  
   .login-container {
     text-align: center;
     margin-top: 20px;
