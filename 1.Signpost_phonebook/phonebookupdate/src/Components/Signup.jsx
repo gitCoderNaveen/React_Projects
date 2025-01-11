@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../Css/Signup.css"; // Import the CSS file for styling
+import { findAllInRenderedTree } from "react-dom/test-utils";
 
 function Signup() {
   const [mypromoCode, setPromoCode] = useState("");
@@ -14,6 +15,10 @@ function Signup() {
   const [myemail, setEmail] = useState("");
   const [myprefix, setPrefix] = useState("");
   const [mymobileno, setMobileno] = useState("");
+  const [showNametext, setShowNameText] = useState(false);
+  const [showbusinesstext, setShowBusinesstext] = useState(false);
+  const [showPersonName, setShowPersonName] = useState(false);
+  const [showprefixtext, setShowPrefixText] = useState(false);
   const mypriority = "0";
   const myfieldOne = "Column";
   const myfieldTwo = "Column";
@@ -100,6 +105,27 @@ function Signup() {
     }
   };
 
+  const handleNameHelptext = () => {
+    setShowNameText(true);
+    setShowBusinesstext(false);
+    setShowPersonName(false);
+  };
+
+  const handleBusinessHelptext = () => {
+    setShowBusinesstext(true);
+    setShowNameText(false);
+    setShowPersonName(false);
+  };
+  const handlePersonHelptext = () => {
+    setShowPersonName(true);
+    setShowBusinesstext(false);
+    setShowNameText(false);
+  };
+  const handleRadio = () => {
+    setShowPersonName(false);
+    setShowBusinesstext(false);
+    setShowNameText(false);
+  };
   return (
     <div className="form-container">
       <form className="form">
@@ -111,6 +137,7 @@ function Signup() {
             id="mobile"
             name="mobile"
             value={mymobileno}
+            onClick={handleNameHelptext}
             onChange={(e) => {
               setMobileno(e.target.value);
             }}
@@ -121,6 +148,9 @@ function Signup() {
             }}
             required
           />
+          {showNametext && (
+            <p className="helptext">{`Type 10 digits with get Country code (+91), without gap Don't Type Land Line`}</p>
+          )}
         </div>
         <div className="form-group">
           <label htmlFor="name">Firm/Business Name:</label>
@@ -129,11 +159,15 @@ function Signup() {
             id="name"
             name="name"
             value={mybusinessname}
+            onClick={handleBusinessHelptext}
             onChange={(e) => {
               setBusinessname(e.target.value);
             }}
             required
           />
+          {showbusinesstext && (
+            <p className="helptext">{`Type Mobile Owner Name Person or Firm`}</p>
+          )}
         </div>
         <div className="form-group">
           <label htmlFor="name">Person Name:</label>
@@ -142,11 +176,15 @@ function Signup() {
             id="name"
             name="name"
             value={myperson}
+            onClick={handlePersonHelptext}
             onChange={(e) => {
               setPerson(e.target.value);
             }}
             required
           />
+          {showPersonName && (
+            <p className="helptext">{`Type Initial at the end`}</p>
+          )}
         </div>
         <div className="form-group">
           <label>Prefix:</label>
@@ -157,6 +195,7 @@ function Signup() {
                 name="title"
                 value="Mr."
                 checked={myprefix === "Mr."}
+                onClick={handleRadio}
                 onChange={(e) => {
                   setPrefix(e.target.value);
                 }}
@@ -168,6 +207,7 @@ function Signup() {
                 type="radio"
                 name="title"
                 value="Ms."
+                onClick={handleRadio}
                 checked={myprefix === "Ms."}
                 onChange={(e) => {
                   setPrefix(e.target.value);
@@ -175,6 +215,9 @@ function Signup() {
               />
               Ms.
             </label>
+            {showprefixtext && (
+              <p className="helptext">{`Type Mobile Owner Name Person or Firm`}</p>
+            )}
           </div>
         </div>
         <div className="form-group">

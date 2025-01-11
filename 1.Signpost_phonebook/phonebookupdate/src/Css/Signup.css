@@ -58,6 +58,11 @@ body {
     font-weight: normal;
     display: flex;
   }
+
+  .helptext {
+    color: red;
+    font-size: small;
+  }
   
   .submit-button {
     width: 100%;

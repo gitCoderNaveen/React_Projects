@@ -1,0 +1,136 @@
+/* General Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .home-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('../assets/images/pongalfest.jpg');
+  background-size: cover; /* Scale the image to cover the entire container */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+  background-position: center; /* Center the image */
+    position: relative;
+    overflow: hidden;
+  }
+  .scrolled{
+    background: linear-gradient(135deg, #F1CF5A, #fbc104);
+  }
+  
+  .book {
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .phone {
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .title {
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-align: center;
+  }
+  
+  .about-container {
+    position: relative;
+    padding: 2rem;
+    background-color: #f4f4f4;
+    text-align: center;
+    height: 100vh;
+  }
+  
+  .about-container h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .about-container p {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+  }
+  .carousel-container {
+    
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 50%; /* Adjust carousel width */
+    margin: 0 auto;
+  }
+.carousel-container p{
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 3rem; 
+}
+  
+  .carousel-slide {
+    outline: none;
+    transition: transform 0.5s;    
+  }
+  
+  .carousel-slide img {   
+    width: 50%;
+    border-radius: 15px;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  
+  .slick-center img {
+    transform: scale(10);
+    opacity: 1;
+  }
+  
+  .slick-slide {
+    opacity: 1; /* Reduce opacity for non-center images */
+    transform: scale(0.1); /* Slightly shrink non-center images */
+  }
+  .slick-prev,
+  .slick-next {
+    background-color: #ff4d4d;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+    z-index: 1;
+  }
+  
+  .slick-prev::before,
+  .slick-next::before {
+    font-size: 20px;
+    color: white;
+  }
+  
+  .slick-dots {
+    bottom: -30px;
+  }
+  
+  .slick-dots li button::before {
+    font-size: 10px;
+    color: #ff4d4d;
+  }
+  .formField{
+    display: flex;
+    top: 10%;
+    margin-top: 5%;
+  }
+  .formField label{
+    text-wrap: nowrap;
+  }
+  .searchForm{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    gap: 15px;
+    margin: 10px;
+  }
