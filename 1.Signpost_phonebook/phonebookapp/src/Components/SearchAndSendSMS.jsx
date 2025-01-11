@@ -140,6 +140,10 @@ export default function SearchAndSendSMS() {
           {`Send Text messages to all Mobile Users dealing in a specific product / keyword,  all over the selected city`}{" "}
           <br />
           {`1) First edit / create message to be sent. Minimum 1 Count (145 characters), Maximum 2 counts (290 characters)`}
+          <br />
+          {`2) Type specific Category / product / keyword `}
+          <br />
+          {`3) For error free delivery of messages,  send in batches 10 each time.`}
         </p>
         <label htmlFor="">
           <strong>
@@ -340,11 +344,6 @@ export default function SearchAndSendSMS() {
                 Send SMS
               </button>
             </div>
-            <p>
-              <strong>
-                For error free delivery, send in batches of 10nos each
-              </strong>
-            </p>
           </div>
         </div>
         {showresults ? (
@@ -376,7 +375,7 @@ export default function SearchAndSendSMS() {
             )}
           </div>
         ) : (
-          <div className="container defaultContainer">
+          <div className="container defaultContainer mt-2">
             <p>
               <strong>Your Result Will be Shown Here!!..</strong>
             </p>
@@ -401,11 +400,6 @@ export default function SearchAndSendSMS() {
         </div>
         <p>
           <strong>Selected cards:</strong> {selectedClients.length}
-        </p>
-        <p>
-          <strong>
-            For error free delivery, send in batches of 10nos each
-          </strong>
         </p>
       </div>
     </div>

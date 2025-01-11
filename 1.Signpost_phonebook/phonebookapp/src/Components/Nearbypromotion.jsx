@@ -79,6 +79,7 @@ const Nearbypromotion = () => {
 
   const clearItems = () => {
     setPincodeInput("");
+    setPrefix("");
     setSelectedPrefix(null);
     fetchData();
     setSelectAll(false);
@@ -124,6 +125,8 @@ const Nearbypromotion = () => {
             {`2) Select type of Recipient  (Males / Females / Business Firms)`}
             <br />
             {`3) Type Pincode Number of Targetted area for Promotion`}
+            <br />
+            {`4) For error free delivery of messages,  send in batches of 10 nos. each time`}
           </p>
           <label htmlFor="">
             <strong>
@@ -215,7 +218,7 @@ const Nearbypromotion = () => {
         <div className="search_Container">
           <div className="input-wrapper">
             <input
-              type="text"
+              type="number"
               placeholder="Enter Pincode"
               maxLength={6}
               value={pincodeInput}
@@ -280,11 +283,6 @@ const Nearbypromotion = () => {
             <button className="btn btn-primary mb-2" onClick={sendBatchSMS}>
               Send SMS
             </button>
-            <p>
-              <strong>
-                For error free delivery, send in batches of 10 nos each time
-              </strong>
-            </p>
           </div>
           {showresults ? (
             <div className="scroll-container">
@@ -315,7 +313,7 @@ const Nearbypromotion = () => {
               )}
             </div>
           ) : (
-            <div className="container defaultContainer">
+            <div className="container defaultContainer mt-2">
               <p>
                 <strong>Your Result Will be Shown Here!!..</strong>
               </p>
@@ -326,11 +324,6 @@ const Nearbypromotion = () => {
           </button>
           <p>
             <strong>Selected:</strong> {selectedBusinesses.length}
-          </p>
-          <p>
-            <strong>
-              For error free delivery, send in batches of 10 nos each time
-            </strong>
           </p>
         </div>
       )}
