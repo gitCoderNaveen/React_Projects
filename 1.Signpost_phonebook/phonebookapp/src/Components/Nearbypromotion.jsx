@@ -13,7 +13,7 @@ const Nearbypromotion = () => {
   const [selectedPrefix, setSelectedPrefix] = useState(null);
   const maxLength = 290;
   const [customMessage, setCustomMessage] = useState(
-    "I Saw Your Listing in SIGNPOST PHONE BOOK. I am Interested in your Products. Please Send Details/Call Me."
+    "I Saw Your Listing in SIGNPOST PHONE BOOK. I am Interested in your Products. Please Send Details/Call Me. (Sent Thro Signpost PHONE BOOK)"
   );
   const [prefix, setPrefix] = useState("");
   const [loading, setLoading] = useState(false);

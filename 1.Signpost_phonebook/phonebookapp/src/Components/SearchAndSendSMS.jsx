@@ -18,7 +18,7 @@ export default function SearchAndSendSMS() {
   const [selectAll, setSelectAll] = useState(false);
   const maxLength = 290;
   const [customMessage, setCustomMessage] = useState(
-    "I Saw Your Listing in SIGNPOST PHONE BOOK. I am Interested in your Products. Please Send Details/Call Me."
+    "I Saw Your Listing in SIGNPOST PHONE BOOK. I am Interested in your Products. Please Send Details/Call Me. (Sent Thro Signpost PHONE BOOK)"
   );
 
   const handleProductChange = (value) => {

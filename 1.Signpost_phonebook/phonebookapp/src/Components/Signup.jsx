@@ -26,6 +26,7 @@ const Signup = () => {
   const [stdCodeHelpText, setstdCodeHelpText] = useState(false);
   const [emailHelpText, setemailHelpText] = useState(false);
   const [promoCodeHelpText, setPromoCodeHelpText] = useState(false);
+  const [showPopup, setShowPopup] = useState(false); // For popup visibility
 
   const navigate = useNavigate();
 
@@ -102,9 +103,7 @@ const Signup = () => {
       const jsonResponse = await response.json();
 
       if (jsonResponse.Message) {
-        alert(jsonResponse.Message);
-        navigate("/login");
-        resetFields();
+        setShowPopup(true); // Show success modal
       } else {
         alert("Unexpected response from server.");
       }
@@ -271,6 +270,13 @@ const Signup = () => {
     setstdCodeHelpText(false);
     setemailHelpText(false);
     setPromoCodeHelpText(true);
+  };
+
+  const handlePopup = (e) => {
+    e.preventDefault();
+    setShowPopup(false);
+    navigate("/login");
+    resetFields();
   };
 
   return (
@@ -471,6 +477,27 @@ const Signup = () => {
             </button>
           </p>
         </div>
+        {/* Success Modal */}
+        {/* Popup Card */}
+        {showPopup && (
+          <div className="popup">
+            <div className="popup-content">
+              <p>You are successfully registered in the portal -</p>
+              <h4>
+                <strong>Signpost PHONE BOOK</strong>
+              </h4>
+              <p>Your access Credintials are :</p>
+              <p>
+                User Name : <strong>{mymobileno},</strong>{" "}
+              </p>
+              <p>
+                Password : <strong>Signpost</strong>{" "}
+              </p>
+
+              <button onClick={handlePopup}>OK</button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
