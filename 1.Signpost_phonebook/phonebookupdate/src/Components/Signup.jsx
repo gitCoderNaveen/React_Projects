@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "../Css/Signup.css"; // Import the CSS file for styling
-import { findAllInRenderedTree } from "react-dom/test-utils";
 
 function Signup() {
   const [mypromoCode, setPromoCode] = useState("");
@@ -153,40 +152,6 @@ function Signup() {
           )}
         </div>
         <div className="form-group">
-          <label htmlFor="name">Firm/Business Name:</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={mybusinessname}
-            onClick={handleBusinessHelptext}
-            onChange={(e) => {
-              setBusinessname(e.target.value);
-            }}
-            required
-          />
-          {showbusinesstext && (
-            <p className="helptext">{`Type Mobile Owner Name Person or Firm`}</p>
-          )}
-        </div>
-        <div className="form-group">
-          <label htmlFor="name">Person Name:</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={myperson}
-            onClick={handlePersonHelptext}
-            onChange={(e) => {
-              setPerson(e.target.value);
-            }}
-            required
-          />
-          {showPersonName && (
-            <p className="helptext">{`Type Initial at the end`}</p>
-          )}
-        </div>
-        <div className="form-group">
           <label>Prefix:</label>
           <div className="radio-group">
             <label>
@@ -215,11 +180,57 @@ function Signup() {
               />
               Ms.
             </label>
+            <label>
+              <input
+                type="radio"
+                name="title"
+                value="M/s."
+                onClick={handleRadio}
+                checked={myprefix === "M/s."}
+                onChange={(e) => {
+                  setPrefix(e.target.value);
+                }}
+              />
+              M/s.
+            </label>
             {showprefixtext && (
               <p className="helptext">{`Type Mobile Owner Name Person or Firm`}</p>
             )}
           </div>
         </div>
+        <div className="form-group">
+          <label htmlFor="name">Firm/Business Name:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={mybusinessname}
+            onClick={handleBusinessHelptext}
+            onChange={(e) => {
+              setBusinessname(e.target.value);
+            }}
+          />
+          {showbusinesstext && (
+            <p className="helptext">{`Type Mobile Owner Name Person or Firm`}</p>
+          )}
+        </div>
+        <div className="form-group">
+          <label htmlFor="name">Person Name:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={myperson}
+            onClick={handlePersonHelptext}
+            onChange={(e) => {
+              setPerson(e.target.value);
+            }}
+          />
+          {showPersonName && (
+            <p className="helptext">{`Type Initial at the end`}</p>
+          )}
+        </div>
+
         <div className="form-group">
           <label htmlFor="address">Address:</label>
           <textarea
@@ -273,7 +284,6 @@ function Signup() {
             onChange={(e) => {
               setProduct(e.target.value);
             }}
-            required
           />
         </div>
         <div className="form-group">
@@ -310,7 +320,6 @@ function Signup() {
             onChange={(e) => {
               setEmail(e.target.value);
             }}
-            required
           />
         </div>
         <div className="form-group">

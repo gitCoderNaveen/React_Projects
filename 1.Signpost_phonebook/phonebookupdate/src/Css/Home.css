@@ -1,43 +1,123 @@
-.table-container {
-    width: 100%;
-    margin: 20px auto;
-    overflow-x: auto;
-  }
-  
-  .responsive-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 0 auto;
-    font-size: 1rem;
-    text-align: left;
-  }
-  
-  .responsive-table thead {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .responsive-table th,
-  .responsive-table td {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-  }
-  
-  .responsive-table tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
-  .responsive-table tbody tr:hover {
-    background-color: #f1f1f1;
-  }
-  
-  .responsive-table tfoot td {
-    text-align: center;
-    padding: 12px 15px;
-    font-style: italic;
-    color: #555;
-  }
-  
+.search-container {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+
+.search-box {
+  width: 90%;
+  max-width: 400px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.card-headings {
+  color: #EC2D01; /* Heading text color */
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.card-container {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  width: 30%;
+  margin: 10px auto;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-left {
+  flex: 1;
+  text-align: left;
+}
+
+.card-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.card-location {
+  font-size: 14px;
+  color: #555;
+  margin: 4px 0 0;
+}
+
+.card-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.phone-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.phone-icon {
+  margin-right: 8px;
+  font-size: 18px;
+}
+
+.phone-number {
+  font-size: 16px;
+  color: #333;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-group {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+.button-group a{
+  text-decoration: none;
+  color:#ffffff;
+}
+
+.mybtn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.call-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+.call-btn:hover {
+  background-color: #45a049;
+}
+
+.more-btn {
+  background-color: #008cba;
+  color: white;
+}
+
+.more-btn:hover {
+  background-color: #007bb5;
+}
+
   /* Responsive Design */
   @media screen and (max-width: 768px) {
     .responsive-table {
@@ -45,3 +125,30 @@
     }
   }
   
+  @media screen and (max-width:480px){
+    .contactcard-div{
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .card-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px;
+      width: 100%;
+      margin: 1px auto;
+      background-color: #f9f9f9;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+  .contact-card {
+    font-size: 0.9em;
+  }
+  .search-container{
+      display: flex;
+      flex-direction: column;
+  }
+  }

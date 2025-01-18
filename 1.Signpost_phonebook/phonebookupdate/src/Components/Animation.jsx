@@ -5,7 +5,6 @@ import Slider from "react-slick";
 import image from "../assets/images/img.jpeg";
 import image1 from "../assets/images/img1.jpeg";
 import image2 from "../assets/images/img2.jpeg";
-import Navigationpage from "./Navigationpage";
 
 const Animations = () => {
   const [isScrolled, setIsScrolled] = useState(false);
