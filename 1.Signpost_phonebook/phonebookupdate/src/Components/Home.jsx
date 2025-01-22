@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "../Css/Home.css"; // Import CSS for styling
 import Card from "./Cards";
+import axios from "axios";
+import Carousel from "./Carousel";
 
 export default function Home() {
   const [data, setData] = useState([]);
   const [firmName, setFirmName] = useState("");
+  const [priorityClients, setPriorityClients] = useState([]);
   const [productName, setProductName] = useState("");
 
   const fetchData = async () => {
@@ -25,10 +28,29 @@ export default function Home() {
     }
   };
 
-  const fetchFirmData = async (name) => {
-    if (!name) {
-      return;
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "https://signpostphonebook.in/subscription_for_new_databse.php",
+        {
+          dateTime: new Date().toISOString(), // Current date and time
+        }
+      );
+
+      if (response.data.success) {
+        alert("Subscription successful!");
+      } else {
+        alert("Subscription failed: " + response.data.message);
+      }
+    } catch (error) {
+      console.error("Error subscribing:", error);
+      alert("An error occurred. Please try again.");
     }
+  };
+
+  const fetchFirmData = async (name) => {
+    if (!name) return;
     try {
       const response = await fetch(
         `https://signpostphonebook.in/client_fetch_byname_and_byperson.php?searchname=${name}`
@@ -40,7 +62,14 @@ export default function Home() {
 
       const jsonResponse = await response.json();
       if (Array.isArray(jsonResponse)) {
-        setData(jsonResponse);
+        const priorityData = jsonResponse.filter(
+          (item) => Number(item.priority) === 1
+        );
+        const nonPriorityData = jsonResponse.filter(
+          (item) => Number(item.priority) !== 1
+        );
+        setPriorityClients(priorityData);
+        setData([...priorityData, ...nonPriorityData]);
       } else {
         window.alert("Unexpected response from server.");
       }
@@ -74,6 +103,7 @@ export default function Home() {
 
   return (
     <div>
+      
       <div className="search-container">
         <label>Firm/Person: </label>
         <input
@@ -93,6 +123,9 @@ export default function Home() {
           onSelect={() => setFirmName("")}
           value={productName}
         />
+      </div>
+      <div onClick={handleSubscribe}>
+        <button className="btn btn-primary">Subscribe</button>
       </div>
 
       <div className="contactcard-div">
@@ -118,7 +151,9 @@ export default function Home() {
                   {firmName &&
                   item.person.toLowerCase().includes(firmName.toLowerCase())
                     ? toTitleCase(item.person)
-                    : toTitleCase(item.businessname)}
+                    : toTitleCase(
+                        item.businessname ? item.businessname : item.person
+                      )}
                 </h3>
                 <p className="card-location">
                   {productName ? (

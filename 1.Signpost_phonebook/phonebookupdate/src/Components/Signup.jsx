@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../Css/Signup.css"; // Import the CSS file for styling
 
 function Signup() {
@@ -14,16 +14,54 @@ function Signup() {
   const [myemail, setEmail] = useState("");
   const [myprefix, setPrefix] = useState("");
   const [mymobileno, setMobileno] = useState("");
-  const [showNametext, setShowNameText] = useState(false);
+  const [showMobiletext, setshowMobiletext] = useState(false);
   const [showbusinesstext, setShowBusinesstext] = useState(false);
   const [showPersonName, setShowPersonName] = useState(false);
   const [showprefixtext, setShowPrefixText] = useState(false);
+  const [showAddressText, setshowAddressText] = useState(false);
+  const [showCityText, setshowCityText] = useState(false);
+  const [showPincodeText, setshowPincodeText] = useState(false);
+  const [showProductText, setshowProductText] = useState(false);
+  const [showLandlineText, setshowLandlineText] = useState(false);
+  const [showStdText, setshowStdText] = useState(false);
+  const [showEmailText, setshowEmailText] = useState(false);
+  const [showPromoText, setshowPromoText] = useState(false);
   const mypriority = "0";
-  const myfieldOne = "Column";
-  const myfieldTwo = "Column";
+  const dataTime = new Date().toString();
   const mydiscount = "10";
   const mydescription = "Update Soon";
   const cmpanyPrefix = "M/s.";
+
+  const [dateTime, setDateTime] = useState("");
+
+  const updateDateTime = () => {
+    const now = new Date();
+
+    // Format date
+    const options = { year: "numeric", month: "numeric", day: "numeric" };
+    const formattedDate = now.toLocaleDateString(undefined, options);
+
+    // Format time
+    let hours = now.getHours();
+    const minutes = now.getMinutes();
+    const ampm = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12 || 12; // Convert to 12-hour format
+    const formattedTime = `${hours}:${
+      minutes < 10 ? "0" + minutes : minutes
+    } ${ampm}`;
+
+    // Combine date and time
+    setDateTime(`${formattedDate} ${formattedTime}`);
+  };
+
+  useEffect(() => {
+    updateDateTime();
+    const interval = setInterval(updateDateTime, 1000); // Update every second
+    return () => clearInterval(interval); // Cleanup interval on unmount
+  }, []);
+
+  console.log(typeof dateTime);
+  console.log(dateTime);
 
   const resetForm = () => {
     setBusinessname("");
@@ -41,16 +79,28 @@ function Signup() {
     setPromoCode("");
   };
 
+  const handleBusinessName = (e) => {
+    const businessName = e.target.value;
+    if (/^[a-zA-Z\s]*$/.test(businessName)) {
+      setBusinessname(businessName);
+    }
+  };
+  const handlePersonName = (e) => {
+    const personName = e.target.value;
+    if (/^[a-zA-Z\s]*$/.test(personName)) {
+      setPerson(personName);
+    }
+  };
+  const handleCityName = (e) => {
+    const cityName = e.target.value;
+    if (/^[a-zA-Z\s]*$/.test(cityName)) {
+      setCity(cityName);
+    }
+  };
+
   const insertRecord = async (e) => {
     e.preventDefault();
-    if (
-      !mybusinessname ||
-      !myaddress ||
-      !mycity ||
-      !mypincode ||
-      !myprefix ||
-      !mymobileno
-    ) {
+    if (!myaddress || !mycity || !mypincode || !myprefix || !mymobileno) {
       alert("Please enter all required fields.");
       return;
     }
@@ -72,8 +122,7 @@ function Signup() {
       promocode: mypromoCode,
       discount: mydiscount,
       description: mydescription,
-      fieldone: myfieldOne,
-      fieldtwo: myfieldTwo,
+      subscription_date: dateTime,
     };
 
     try {
@@ -104,26 +153,174 @@ function Signup() {
     }
   };
 
-  const handleNameHelptext = () => {
-    setShowNameText(true);
-    setShowBusinesstext(false);
+  const handleMobileHelptext = () => {
+    setshowMobiletext(true);
     setShowPersonName(false);
+    setShowPrefixText(false);
+    setshowAddressText(false);
+    setShowBusinesstext(false);
+    setshowCityText(false);
+    setshowPincodeText(false);
+    setshowProductText(false);
+    setshowLandlineText(false);
+    setshowStdText(false);
+    setshowEmailText(false);
+    setshowPromoText(false);
   };
 
   const handleBusinessHelptext = () => {
     setShowBusinesstext(true);
-    setShowNameText(false);
+    setshowMobiletext(false);
     setShowPersonName(false);
+    setShowPrefixText(false);
+    setshowAddressText(false);
+    setshowCityText(false);
+    setshowPincodeText(false);
+    setshowProductText(false);
+    setshowLandlineText(false);
+    setshowStdText(false);
+    setshowEmailText(false);
+    setshowPromoText(false);
   };
   const handlePersonHelptext = () => {
     setShowPersonName(true);
     setShowBusinesstext(false);
-    setShowNameText(false);
+    setshowMobiletext(false);
+    setShowPrefixText(false);
+    setshowAddressText(false);
+    setshowCityText(false);
+    setshowPincodeText(false);
+    setshowProductText(false);
+    setshowLandlineText(false);
+    setshowStdText(false);
+    setshowEmailText(false);
+    setshowPromoText(false);
   };
   const handleRadio = () => {
     setShowPersonName(false);
     setShowBusinesstext(false);
-    setShowNameText(false);
+    setshowMobiletext(false);
+    setShowPrefixText(true);
+    setshowAddressText(false);
+    setshowCityText(false);
+    setshowPincodeText(false);
+    setshowProductText(false);
+    setshowLandlineText(false);
+    setshowStdText(false);
+    setshowEmailText(false);
+    setshowPromoText(false);
+  };
+  const handleAddress = () => {
+    setshowAddressText(true);
+    setShowPersonName(false);
+    setShowBusinesstext(false);
+    setshowMobiletext(false);
+    setShowPrefixText(false);
+    setshowCityText(false);
+    setshowPincodeText(false);
+    setshowProductText(false);
+    setshowLandlineText(false);
+    setshowStdText(false);
+    setshowEmailText(false);
+    setshowPromoText(false);
+  };
+  const handleCity = () => {
+    setshowAddressText(false);
+    setShowPersonName(false);
+    setShowBusinesstext(false);
+    setshowMobiletext(false);
+    setShowPrefixText(false);
+    setshowCityText(true);
+    setshowPincodeText(false);
+    setshowProductText(false);
+    setshowLandlineText(false);
+    setshowStdText(false);
+    setshowEmailText(false);
+    setshowPromoText(false);
+  };
+  const handlePincode = () => {
+    setshowAddressText(false);
+    setShowPersonName(false);
+    setShowBusinesstext(false);
+    setshowMobiletext(false);
+    setShowPrefixText(false);
+    setshowCityText(false);
+    setshowPincodeText(true);
+    setshowProductText(false);
+    setshowLandlineText(false);
+    setshowStdText(false);
+    setshowEmailText(false);
+    setshowPromoText(false);
+  };
+  const handleProduct = () => {
+    setshowAddressText(false);
+    setShowPersonName(false);
+    setShowBusinesstext(false);
+    setshowMobiletext(false);
+    setShowPrefixText(false);
+    setshowCityText(false);
+    setshowPincodeText(false);
+    setshowProductText(true);
+    setshowLandlineText(false);
+    setshowStdText(false);
+    setshowEmailText(false);
+    setshowPromoText(false);
+  };
+  const handleLandLine = () => {
+    setshowAddressText(false);
+    setShowPersonName(false);
+    setShowBusinesstext(false);
+    setshowMobiletext(false);
+    setShowPrefixText(false);
+    setshowCityText(false);
+    setshowPincodeText(false);
+    setshowProductText(false);
+    setshowLandlineText(true);
+    setshowStdText(false);
+    setshowEmailText(false);
+    setshowPromoText(false);
+  };
+  const handleStdCode = () => {
+    setshowAddressText(false);
+    setShowPersonName(false);
+    setShowBusinesstext(false);
+    setshowMobiletext(false);
+    setShowPrefixText(false);
+    setshowCityText(false);
+    setshowPincodeText(false);
+    setshowProductText(false);
+    setshowLandlineText(false);
+    setshowStdText(true);
+    setshowEmailText(false);
+    setshowPromoText(false);
+  };
+  const handleEmail = () => {
+    setshowAddressText(false);
+    setShowPersonName(false);
+    setShowBusinesstext(false);
+    setshowMobiletext(false);
+    setShowPrefixText(false);
+    setshowCityText(false);
+    setshowPincodeText(false);
+    setshowProductText(false);
+    setshowLandlineText(false);
+    setshowStdText(false);
+    setshowEmailText(true);
+    setshowPromoText(false);
+  };
+  const handlePromoCode = () => {
+    setshowAddressText(false);
+    setShowPersonName(false);
+    setShowBusinesstext(false);
+    setshowMobiletext(false);
+    setShowPrefixText(false);
+    setshowCityText(false);
+    setshowPincodeText(false);
+    setshowProductText(false);
+    setshowLandlineText(false);
+    setshowStdText(false);
+    setshowEmailText(false);
+    setshowPromoText(true);
   };
   return (
     <div className="form-container">
@@ -136,7 +333,7 @@ function Signup() {
             id="mobile"
             name="mobile"
             value={mymobileno}
-            onClick={handleNameHelptext}
+            onClick={handleMobileHelptext}
             onChange={(e) => {
               setMobileno(e.target.value);
             }}
@@ -147,8 +344,22 @@ function Signup() {
             }}
             required
           />
-          {showNametext && (
+          {showMobiletext && (
             <p className="helptext">{`Type 10 digits with get Country code (+91), without gap Don't Type Land Line`}</p>
+          )}
+        </div>
+        <div className="form-group">
+          <label htmlFor="name">Person Name:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={myperson}
+            onClick={handlePersonHelptext}
+            onChange={handlePersonName}
+          />
+          {showPersonName && (
+            <p className="helptext">{`Type Initial at the end`}</p>
           )}
         </div>
         <div className="form-group">
@@ -180,23 +391,10 @@ function Signup() {
               />
               Ms.
             </label>
-            <label>
-              <input
-                type="radio"
-                name="title"
-                value="M/s."
-                onClick={handleRadio}
-                checked={myprefix === "M/s."}
-                onChange={(e) => {
-                  setPrefix(e.target.value);
-                }}
-              />
-              M/s.
-            </label>
-            {showprefixtext && (
-              <p className="helptext">{`Type Mobile Owner Name Person or Firm`}</p>
-            )}
           </div>
+          {showprefixtext && (
+            <p className="helptext">{`Select Mr. For Gents and Ms. for Ladies`}</p>
+          )}
         </div>
         <div className="form-group">
           <label htmlFor="name">Firm/Business Name:</label>
@@ -206,28 +404,10 @@ function Signup() {
             name="name"
             value={mybusinessname}
             onClick={handleBusinessHelptext}
-            onChange={(e) => {
-              setBusinessname(e.target.value);
-            }}
+            onChange={handleBusinessName}
           />
           {showbusinesstext && (
-            <p className="helptext">{`Type Mobile Owner Name Person or Firm`}</p>
-          )}
-        </div>
-        <div className="form-group">
-          <label htmlFor="name">Person Name:</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={myperson}
-            onClick={handlePersonHelptext}
-            onChange={(e) => {
-              setPerson(e.target.value);
-            }}
-          />
-          {showPersonName && (
-            <p className="helptext">{`Type Initial at the end`}</p>
+            <p className="helptext">{`Type Your FirmName or BusinessName`}</p>
           )}
         </div>
 
@@ -237,11 +417,15 @@ function Signup() {
             id="address"
             name="address"
             value={myaddress}
+            onClick={handleAddress}
             onChange={(e) => {
               setAddress(e.target.value);
             }}
             required
           ></textarea>
+          {showAddressText && (
+            <p className="helptext">{`Type Door Number, Street, Flat No, Appartment Name, Landmark, Area Name etc.`}</p>
+          )}
         </div>
         <div className="form-group">
           <label htmlFor="city">City:</label>
@@ -250,11 +434,13 @@ function Signup() {
             id="city"
             name="city"
             value={mycity}
-            onChange={(e) => {
-              setCity(e.target.value);
-            }}
+            onClick={handleCity}
+            onChange={handleCityName}
             required
           />
+          {showCityText && (
+            <p className="helptext">{`Type City Name. Don't Use Petnames (Kovai Etc.)`}</p>
+          )}
         </div>
         <div className="form-group">
           <label htmlFor="pincode">Pincode:</label>
@@ -266,6 +452,7 @@ function Signup() {
             onChange={(e) => {
               setPincode(e.target.value);
             }}
+            onClick={handlePincode}
             maxLength={6}
             onInput={(e) => {
               if (e.target.value.length > 6)
@@ -273,42 +460,59 @@ function Signup() {
             }}
             required
           />
+          {showPincodeText && (
+            <p className="helptext">{`Type 6 Digits Continioulsy Without Gap`}</p>
+          )}
         </div>
-        <div className="form-group">
-          <label htmlFor="productService">Product/Service:</label>
-          <input
-            type="text"
-            id="productService"
-            name="productService"
-            value={myproduct}
-            onChange={(e) => {
-              setProduct(e.target.value);
-            }}
-          />
-        </div>
+        {mybusinessname && (
+          <div className="form-group">
+            <label htmlFor="productService">Product/Service:</label>
+            <input
+              type="text"
+              id="productService"
+              name="productService"
+              value={myproduct}
+              onChange={(e) => {
+                setProduct(e.target.value);
+              }}
+              onClick={handleProduct}
+            />
+            {showProductText && (
+              <p className="helptext">{`Type Correct & Specific Name of Product/Service offered. Sepparate Each Keyword By Comma. For `}</p>
+            )}
+          </div>
+        )}
         <div className="form-group">
           <label htmlFor="landline">Landline No:</label>
           <input
-            type="text"
+            type="number"
             id="landline"
             name="landline"
             value={mylandLine}
+            onClick={handleLandLine}
             onChange={(e) => {
               setLandLine(e.target.value);
             }}
           />
+          {showLandlineText && (
+            <p className="helptext">{`Type Only Landline, if Available. Don't Type Mobile Number here.`}</p>
+          )}
         </div>
         <div className="form-group">
           <label htmlFor="stdCode">STD Code:</label>
           <input
-            type="text"
+            type="number"
             id="stdCode"
             name="stdCode"
             value={myLcode}
+            onClick={handleStdCode}
             onChange={(e) => {
               setLcode(e.target.value);
             }}
           />
+          {showStdText && (
+            <p className="helptext">{`Type Only Landline, if Available. Don't Type Mobile Number here.`}</p>
+          )}
         </div>
         <div className="form-group">
           <label htmlFor="email">Email:</label>
@@ -320,7 +524,11 @@ function Signup() {
             onChange={(e) => {
               setEmail(e.target.value);
             }}
+            onClick={handleEmail}
           />
+          {showEmailText && (
+            <p className="helptext">{`Type Correctly, Only If Available`}</p>
+          )}
         </div>
         <div className="form-group">
           <label htmlFor="promoCode">Promo Code:</label>
@@ -329,10 +537,14 @@ function Signup() {
             id="promoCode"
             name="promoCode"
             value={mypromoCode}
+            onClick={handlePromoCode}
             onChange={(e) => {
               setPromoCode(e.target.value);
             }}
           />
+          {showPromoText && (
+            <p className="helptext">{`Mobile Number of Person, Who Refered you Here. Leave Blank if Not Refer`}</p>
+          )}
         </div>
         <button onClick={insertRecord} className="submit-button">
           Submit

@@ -1,0 +1,32 @@
+.mycarouseldiv{   
+    background:  linear-gradient(45deg, #ff7e5f, #feb47b);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.mycarousel {
+    width: 30%;
+    max-width: 800px;
+    overflow: hidden;
+    margin: 3px auto;
+    position: relative;
+  }
+  
+  .mycarousel-inner {
+    display: flex;
+    width: 100%;
+  }
+  
+  .mycarousel-image {
+    width: 100%;
+    flex-shrink: 0;
+  }
+  
+@media screen and (max-width:480px){
+    .mycarousel {
+        width: 80%;
+        max-width: 800px;
+        overflow: hidden;
+        margin: 3px auto;
+        position: relative;
+      }
+}
