@@ -3,6 +3,7 @@ import { FaSearch } from "react-icons/fa";
 import { useAuth } from "./Auth";
 import { useNavigate } from "react-router-dom";
 import "../Css/Homepage.css";
+import Landingpage from "./Landingpage";
 
 export default function Homepage() {
   const [data, setData] = useState([]);
@@ -175,6 +176,7 @@ export default function Homepage() {
 
   return (
     <div>
+      <Landingpage />
       <div className="mycontainer container-fluid">
         <div className="sticky-container">
           {/* Search Bars */}

@@ -9,6 +9,7 @@ const Subscription = () => {
   const [mobileNo, setMobileNo] = useState("");
   const [myname, setName] = useState("");
   const [mysubscriptionPlan, setSubscriptionPlan] = useState("");
+  const [mysubscriptionValue, setSubscriptionValue] = useState("");
   const { userData } = useAuth();
   const navigate = useNavigate();
 
@@ -44,6 +45,26 @@ const Subscription = () => {
     setMobileNo("");
     setSubscriptionPlan("");
   };
+
+  const handleSubcription = (e) => {
+    setSubscriptionPlan(e.target.value);
+    if (e.target.value === "one year") {
+      setSubscriptionValue("Rs.2000/-");
+    }
+    if (e.target.value === "3 months") {
+      setSubscriptionValue("Rs.600/-");
+    }
+    if (e.target.value === "1 month") {
+      setSubscriptionValue("Rs.200/-");
+    }
+    if (e.target.value === "1 week") {
+      setSubscriptionValue("Rs.20/-");
+    }
+  };
+
+  console.log(mysubscriptionPlan);
+
+  console.log(mysubscriptionValue);
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!mobileNo || !myname) {
@@ -54,6 +75,7 @@ const Subscription = () => {
       name: myname,
       subscriptionplan: mysubscriptionPlan,
       date: dateTime,
+      value: mysubscriptionValue,
       username: userData.businessname,
     };
     try {
@@ -74,11 +96,10 @@ const Subscription = () => {
       if (jsonResponse.message) {
         alert(jsonResponse.message);
 
-        const smsBody = encodeURIComponent(`
-        Dear ${myname}, We Acknowledge your order for Subscription for Signpost PHONE BOOK for ${mysubscriptionPlan}.
-        Your subscription will start from tomorrow. You can avail our NEARBY PROMOTION and CATEGORYWISE PROMOTION Facilities. 
-        For any help Contact
-        Signpost Celfon Team`);
+        const smsBody =
+          encodeURIComponent(`Dear ${myname}, We Acknowledge your order for Subscription for Signpost PHONE BOOK for ${mysubscriptionPlan}.Your subscription will start from tomorrow. You can avail our NEARBY PROMOTION and CATEGORYWISE PROMOTION Facilities. 
+For any help Contact 
+Signpost Celfon Team`);
 
         const smsLink = `sms:${mobileNo}?body=${smsBody}`;
 
@@ -136,9 +157,7 @@ const Subscription = () => {
                 name=""
                 id="dropdown"
                 value={mysubscriptionPlan}
-                onChange={(e) => {
-                  setSubscriptionPlan(e.target.value);
-                }}
+                onChange={handleSubcription}
               >
                 <option value="">Select your Plan</option>
                 <option value="one year">One Year Pack</option>
@@ -146,6 +165,10 @@ const Subscription = () => {
                 <option value="1 month">One Month Pack</option>
                 <option value="1 week">One Week (Trial Pack)</option>
               </select>
+            </div>
+            <div className="sform-group">
+              <label htmlFor="value">Value</label>
+              {mysubscriptionValue}
             </div>
             <button type="submit" className="ssubmit-button">
               Submit
