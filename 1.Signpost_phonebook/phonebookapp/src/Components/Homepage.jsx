@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaSearch, FaWindowClose } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 import { useAuth } from "./Auth";
 import { useNavigate } from "react-router-dom";
 import "../Css/Homepage.css";
@@ -272,7 +272,9 @@ export default function Homepage() {
               </div>
             ))
           ) : (
-            <p className="loading_text"><strong>Loading... Please Wait...</strong></p>
+            <p className="loading_text">
+              <strong>Loading... Please Wait...</strong>
+            </p>
           )}
         </div>
 

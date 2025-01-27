@@ -176,6 +176,17 @@ export default function Navigationpage() {
                   Refer a Friend
                 </NavLink>
               </li>
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link"
+                  to="/subscriptionpage"
+                  onClick={toggleDrawer}
+                >
+                  <button className="btn btn-danger">
+                    Subscription Booking
+                  </button>
+                </NavLink>
+              </li>
             </>
           ) : (
             <>

@@ -353,7 +353,11 @@ const Signup = () => {
                 &nbsp;Firm/Business
               </label>
             </div>
-            {prefixHelpText && <p className="helptext">Select Your prefix</p>}
+            {prefixHelpText && (
+              <p className="helptext">
+                Select Mr. for Gents and Ms. for ladies
+              </p>
+            )}
 
             <label>Address :</label>
             <textarea
@@ -362,7 +366,12 @@ const Signup = () => {
               onClick={helpTextAddress}
               onChange={(e) => setDoorno(e.target.value)}
             />
-            {addressHelpText && <p className="helptext">Enter your Address</p>}
+            {addressHelpText && (
+              <p className="helptext">
+                Type Door No, Street, Flat No, Appartment Name, Land Mark, Area
+                Name
+              </p>
+            )}
 
             <label>City :</label>
             <input
@@ -372,11 +381,15 @@ const Signup = () => {
               onClick={helpTextCity}
               onChange={(e) => setCity(e.target.value)}
             />
-            {cityHelpText && <p className="helptext">Enter Your City Hear</p>}
+            {cityHelpText && (
+              <p className="helptext">
+                Type City Name, Don't use Petnames (Kovai etc)
+              </p>
+            )}
 
             <label>Pincode :</label>
             <input
-              type="text"
+              type="number"
               placeholder="Pincode"
               maxLength={6}
               onClick={helpTextPincode}
@@ -385,7 +398,9 @@ const Signup = () => {
               onChange={(e) => setPincode(e.target.value)}
             />
             {pincodeHelpText && (
-              <p className="helptext">Enter Your Area Pincode</p>
+              <p className="helptext">
+                Type 6 Digits, Continiously Without Gap.
+              </p>
             )}
 
             <label>Product / Service :</label>
@@ -399,7 +414,7 @@ const Signup = () => {
             />
             {prodcutHelpText && (
               <p className="helptext">
-                Enter Your Firm Product or your Personnel Designation
+                Type Correct & Specific Name of Product/Service offered.
               </p>
             )}
 
@@ -412,7 +427,9 @@ const Signup = () => {
               onChange={(e) => setLandLine(e.target.value)}
             />
             {landlineHelpText && (
-              <p className="helptext">Enter Your Companies Landline number</p>
+              <p className="helptext">
+                Type Only Available Landline only Don't Type Mobile Number Here
+              </p>
             )}
 
             <label>STD Code :</label>
@@ -424,7 +441,9 @@ const Signup = () => {
               onChange={(e) => setLcode(e.target.value)}
             />
             {stdCodeHelpText && (
-              <p className="helptext">Enter Your Area STD Code</p>
+              <p className="helptext">
+                Type this Only the Landline is Typed above.
+              </p>
             )}
 
             <label>Email :</label>
@@ -436,7 +455,7 @@ const Signup = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
             {emailHelpText && (
-              <p className="helptext">Enter Your full email Address</p>
+              <p className="helptext">Type Correctly, Only is Available.</p>
             )}
             <label>Promo-Code :</label>
             <input
@@ -449,7 +468,7 @@ const Signup = () => {
             />
             {promoCodeHelpText && (
               <p className="helptext">
-                Enter the Number Refered you to this Website
+                Enter the Number Refered you to use this Website
               </p>
             )}
           </form>

@@ -11,13 +11,10 @@ import Auth from "./Components/Auth";
 import MediaPartner from "./Components/MediaPartner";
 import UserProfile from "./Components/UserProfile ";
 import NearbyPromotion from "./Components/Nearbypromotion";
-import NavbarWithDrawer from "./Components/NavbarWithDrawer ";
-import EditableDropdowns from "./Components/EditableDropdowns";
 import SearchAndSendSMS from "./Components/SearchAndSendSMS";
-import PopupFilter from "./Components/PopupFilter";
-import Nearbypromotion from "./Components/Nearbypromotion";
-import TextAnimation from "./Components/TextAnimation";
+
 import Card from "./Components/Card";
+import Subscription from "./Components/Subscription";
 export default function App() {
   return (
     <div>
@@ -35,6 +32,7 @@ export default function App() {
             <Route path="/about" element={<Aboutpage />} />
             <Route path="/contactus" element={<Contactus />} />
             <Route path="/MediaPartner" element={<MediaPartner />} />
+            <Route path="/subscriptionpage" element={<Subscription />} />
           </Routes>
         </Auth>
       </div>
