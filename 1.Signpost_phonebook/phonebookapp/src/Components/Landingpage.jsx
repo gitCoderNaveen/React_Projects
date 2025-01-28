@@ -3,8 +3,11 @@ import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import { Pagination } from "swiper/modules";
+import { Pagination, Autoplay } from "swiper/modules";
 import "../Css/Landingpage.css";
+import carousel1 from "../assets/images/carosel.jpg";
+import carousel from "../assets/images/carousel.jpg";
+import carousel2 from "../assets/images/carouselthree.jpg";
 
 const Landingpage = () => {
   const fadeIn = {
@@ -22,9 +25,9 @@ const Landingpage = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1 }}
         >
-          <span className="blue">Creative</span>{" "}
-          <span className="red">Landing</span>{" "}
-          <span className="green">Page</span>
+          <span className="blue">Promote</span>{" "}
+          <span className="red">Your</span>{" "}
+          <span className="green">Business</span>
         </motion.h1>
         <motion.p
           className="subheading"
@@ -32,8 +35,8 @@ const Landingpage = () => {
           initial="hidden"
           animate="visible"
         >
-          Discover a world of innovation and creativity with this sleek landing
-          page design.
+          Discover your customers near by you, Attract them with your offers &
+          Discounts.
         </motion.p>
       </div>
 
@@ -49,13 +52,14 @@ const Landingpage = () => {
           <div className="mobile-screen">
             <Swiper
               pagination={{ clickable: true }}
-              modules={[Pagination]}
+              autoplay={{ delay: 2000 }} // Set timeout for 2000ms
+              modules={[Pagination, Autoplay]}
               loop={true}
               className="swiper-container"
             >
               <SwiperSlide>
                 <motion.img
-                  src="https://via.placeholder.com/300x500"
+                  src={carousel1}
                   alt="Slide 1"
                   className="slide-image"
                   variants={fadeIn}
@@ -65,7 +69,7 @@ const Landingpage = () => {
               </SwiperSlide>
               <SwiperSlide>
                 <motion.img
-                  src="https://via.placeholder.com/300x500"
+                  src={carousel}
                   alt="Slide 2"
                   className="slide-image"
                   variants={fadeIn}
@@ -75,7 +79,7 @@ const Landingpage = () => {
               </SwiperSlide>
               <SwiperSlide>
                 <motion.img
-                  src="https://via.placeholder.com/300x500"
+                  src={carousel2}
                   alt="Slide 3"
                   className="slide-image"
                   variants={fadeIn}

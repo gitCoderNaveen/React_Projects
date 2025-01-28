@@ -12,6 +12,8 @@ const Subscription = () => {
   const [mysubscriptionValue, setSubscriptionValue] = useState("");
   const { userData } = useAuth();
   const navigate = useNavigate();
+  const adminNo = 9843657564;
+  const phoneNumbers = [mobileNo, adminNo];
 
   const togglePopup = () => {
     navigate("/");
@@ -44,27 +46,13 @@ const Subscription = () => {
     setName("");
     setMobileNo("");
     setSubscriptionPlan("");
+    setSubscriptionValue("");
   };
 
   const handleSubcription = (e) => {
     setSubscriptionPlan(e.target.value);
-    if (e.target.value === "one year") {
-      setSubscriptionValue("Rs.2000/-");
-    }
-    if (e.target.value === "3 months") {
-      setSubscriptionValue("Rs.600/-");
-    }
-    if (e.target.value === "1 month") {
-      setSubscriptionValue("Rs.200/-");
-    }
-    if (e.target.value === "1 week") {
-      setSubscriptionValue("Rs.20/-");
-    }
   };
 
-  console.log(mysubscriptionPlan);
-
-  console.log(mysubscriptionValue);
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!mobileNo || !myname) {
@@ -75,7 +63,7 @@ const Subscription = () => {
       name: myname,
       subscriptionplan: mysubscriptionPlan,
       date: dateTime,
-      value: mysubscriptionValue,
+      subscriptionvalue: mysubscriptionValue,
       username: userData.businessname,
     };
     try {
@@ -97,11 +85,11 @@ const Subscription = () => {
         alert(jsonResponse.message);
 
         const smsBody =
-          encodeURIComponent(`Dear ${myname}, We Acknowledge your order for Subscription for Signpost PHONE BOOK for ${mysubscriptionPlan}.Your subscription will start from tomorrow. You can avail our NEARBY PROMOTION and CATEGORYWISE PROMOTION Facilities. 
+          encodeURIComponent(`Dear ${myname}, We Acknowledge your order for Subscription for Signpost PHONE BOOK for ${mysubscriptionPlan} of Value Rs.${mysubscriptionValue}.Your subscription will start from tomorrow. You can avail our NEARBY PROMOTION and CATEGORYWISE PROMOTION Facilities. 
 For any help Contact 
 Signpost Celfon Team`);
 
-        const smsLink = `sms:${mobileNo}?body=${smsBody}`;
+        const smsLink = `sms:${phoneNumbers.join(",")}?body=${smsBody}`;
 
         setTimeout(() => {
           window.location.href = smsLink;
@@ -126,11 +114,11 @@ Signpost Celfon Team`);
           <h2 className="spopup-title">Subscription Form</h2>
           <form onSubmit={handleSubmit}>
             <div className="sform-group">
-              <label htmlFor="number">Mobile Number</label>
+              <label htmlFor="number">Subscribers Mobile Number</label>
               <input
                 type="number"
                 id="number"
-                placeholder="Enter your number"
+                placeholder="Enter Subscribers Mobile Number"
                 value={mobileNo}
                 onChange={(e) => {
                   setMobileNo(e.target.value);
@@ -139,11 +127,11 @@ Signpost Celfon Team`);
               />
             </div>
             <div className="sform-group">
-              <label htmlFor="name">Person Name</label>
+              <label htmlFor="name">Subscribers Name</label>
               <input
                 type="text"
                 id="name"
-                placeholder="Enter your name"
+                placeholder="Enter Subscribers Name name"
                 value={myname}
                 onChange={(e) => {
                   setName(e.target.value);
@@ -168,7 +156,15 @@ Signpost Celfon Team`);
             </div>
             <div className="sform-group">
               <label htmlFor="value">Value</label>
-              {mysubscriptionValue}
+              <input
+                type="number"
+                name=""
+                id=""
+                placeholder="Enter Pack Value in Rs."
+                value={mysubscriptionValue}
+                required
+                onChange={(e) => setSubscriptionValue(e.target.value)}
+              />
             </div>
             <button type="submit" className="ssubmit-button">
               Submit

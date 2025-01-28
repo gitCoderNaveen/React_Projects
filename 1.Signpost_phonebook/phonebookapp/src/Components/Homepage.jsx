@@ -176,7 +176,6 @@ export default function Homepage() {
 
   return (
     <div>
-      <Landingpage />
       <div className="mycontainer container-fluid">
         <div className="sticky-container">
           {/* Search Bars */}

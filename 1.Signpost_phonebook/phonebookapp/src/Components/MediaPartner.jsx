@@ -84,6 +84,34 @@ const MediaPartner = () => {
     }
   };
 
+  const insertbusinessName = async () => {
+    const dataName = {
+      name: userName,
+      date: new Date().toISOString().split("T")[0],
+      dataentry_name: mybusinessname,
+    };
+
+    try {
+      const response = await axios.post(
+        "https://signpostphonebook.in/dataentry_name_details.php",
+        dataName,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.data.success) {
+        console.log("Success", response.message);
+      } else {
+        console.log(response.message);
+      }
+    } catch (error) {
+      console.log("unable to reach server", error);
+    }
+  };
+
   const insertCount = async () => {
     const dataEntry = {
       name: userName,
@@ -164,7 +192,7 @@ const MediaPartner = () => {
       const jsonResponse = await response.json();
       if (jsonResponse.Message) {
         alert("Success: " + jsonResponse.Message);
-        await insertCount();
+        await insertCount(), insertbusinessName();
         resetForm();
       } else {
         alert("Unexpected response from server.");
