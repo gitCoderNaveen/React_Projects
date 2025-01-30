@@ -558,6 +558,7 @@ function Signup() {
   const [showEmailText, setshowEmailText] = useState(false);
   const [showPromoText, setshowPromoText] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [showPopup1, setShowPopup1] = useState(false);
   const mypriority = "0";
   const mydiscount = "10";
   const mydescription = "Update Soon";
@@ -629,6 +630,11 @@ function Signup() {
     navigate("/login");
     resetForm();
   };
+
+  const handleClosePopup1 = (e) => {
+    e.preventDefault();
+    setShowPopup1(false);
+  };
   const handleCityName = (e) => {
     const cityName = e.target.value;
     if (/^[a-zA-Z\s]*$/.test(cityName)) {
@@ -649,34 +655,36 @@ function Signup() {
       );
       const result = await response.json();
       if (result.registered) {
-        console.log(result);
-        setRegBusinessName(result.businessName);
+        console.log(result.data);
+        setRegBusinessName(result.businessname);
         setRegBusinessPrefix(result.prefix);
         setRegName(result.person);
         setRegPrefix(result.personprefix);
         setIsRegistered(true);
+        setShowPopup1(true);
         setMobileno("");
       } else {
         setIsRegistered(false);
+        setShowPopup1(false);
       }
     } catch (error) {
       alert("Unable to verify mobile number.");
       console.log(error);
     }
   };
-  console.log(regBusinessName, regBusinessPrefix, regName, regPrefix);
 
   const insertRecord = async (e) => {
     e.preventDefault();
-    if (isRegistered) {
-      alert("Mobile number is already registered.");
-      return;
-    }
+
     if (!myaddress || !mycity || !mypincode || !myprefix || !mymobileno) {
       alert("Please enter all required fields.");
       return;
     }
 
+    if (isRegistered) {
+      alert("Mobile number is already registered.");
+      return;
+    }
     const Data = {
       businessname: mybusinessname,
       prefix: cmpanyPrefix,
@@ -754,6 +762,7 @@ function Signup() {
     setshowPromoText(false);
   };
   const handlePersonHelptext = () => {
+    checkMobileNumber(mymobileno);
     setShowPersonName(true);
     setShowBusinesstext(false);
     setshowMobiletext(false);
@@ -917,7 +926,6 @@ function Signup() {
                 if (e.target.value.length > 10)
                   e.target.value = e.target.value.slice(0, 10);
               }}
-              onBlur={() => checkMobileNumber(mymobileno)}
               required
             />
             {showMobiletext && (
@@ -1155,9 +1163,80 @@ function Signup() {
             </div>
           </div>
         )}
+        {/* Popup Modal */}
+        {showPopup1 && (
+          <div style={popupStyles.overlay}>
+            <div style={popupStyles.modal}>
+              <h3>Mobile Number Already Registered</h3>
+              <div>
+                {regBusinessName ? (
+                  <div>
+                    <p>
+                      In the Name of{" "}
+                      <strong>
+                        {regBusinessPrefix} {regBusinessName}
+                      </strong>
+                    </p>
+                  </div>
+                ) : (
+                  <div>
+                    <p>
+                      In the name of{" "}
+                      <strong>
+                        {regPrefix} {regName}
+                      </strong>
+                    </p>
+                  </div>
+                )}
+              </div>
+              <button
+                onClick={handleClosePopup1}
+                style={popupStyles.closeButton}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
 }
+
+const popupStyles = {
+  error: {
+    color: "#EC2D01",
+  },
+  overlay: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 1000,
+  },
+  modal: {
+    backgroundColor: "#fff",
+    padding: "20px",
+    borderRadius: "8px",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    textAlign: "center",
+    maxWidth: "400px",
+    width: "80%",
+  },
+  closeButton: {
+    marginTop: "20px",
+    padding: "10px 20px",
+    backgroundColor: "#007BFF",
+    color: "#fff",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
+  },
+};
 
 export default Signup;
