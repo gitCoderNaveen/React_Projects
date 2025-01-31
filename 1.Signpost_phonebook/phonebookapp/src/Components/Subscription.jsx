@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "../Css/Subscription.css"; // Import the CSS file
 import { useAuth } from "./Auth";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 
 const Subscription = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const [dateTime, setDateTime] = useState("");
   const [mobileNo, setMobileNo] = useState("");
   const [myname, setName] = useState("");
   const [mysubscriptionPlan, setSubscriptionPlan] = useState("");
   const [mysubscriptionValue, setSubscriptionValue] = useState("");
+  const [orderedNo, setOrderedNo] = useState("");
+  const [orderedDate, setOrderedDate] = useState("");
   const { userData } = useAuth();
   const navigate = useNavigate();
   const adminNo = 9843657564;
@@ -83,11 +84,12 @@ const Subscription = () => {
       const jsonResponse = await response.json();
       if (jsonResponse.message) {
         alert(jsonResponse.message);
+        setOrderedNo(jsonResponse.ordered_no);
+        setOrderedDate(jsonResponse.date);
 
-        const smsBody =
-          encodeURIComponent(`Dear ${myname}, We Acknowledge your order for Subscription for Signpost PHONE BOOK for ${mysubscriptionPlan} of Value Rs.${mysubscriptionValue}.Your subscription will start from tomorrow. You can avail our NEARBY PROMOTION and CATEGORYWISE PROMOTION Facilities. 
-For any help Contact 
-Signpost Celfon Team`);
+        const smsBody = encodeURIComponent(
+          `Dear ${myname}, \n We Acknowledge your order for Subscription for Signpost PHONE BOOK for ${mysubscriptionPlan}. \n Refer Ordered Number : ${orderedNo} \n Dated : ${orderedDate} \n of Value Rs.${mysubscriptionValue}.Your subscription will start from tomorrow. You can avail our NEARBY PROMOTION and CATEGORYWISE PROMOTION Facilities. \n For any help Contact \n Signpost Celfon Team`
+        );
 
         const smsLink = `sms:${phoneNumbers.join(",")}?body=${smsBody}`;
 
@@ -122,6 +124,10 @@ Signpost Celfon Team`);
                 value={mobileNo}
                 onChange={(e) => {
                   setMobileNo(e.target.value);
+                }}
+                onInput={(e) => {
+                  if (e.target.value.length > 10)
+                    e.target.value = e.target.value.slice(0, 10);
                 }}
                 required
               />

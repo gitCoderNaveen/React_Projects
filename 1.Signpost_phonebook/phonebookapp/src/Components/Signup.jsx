@@ -722,7 +722,6 @@ function Signup() {
 
       if (jsonResponse.Message) {
         setShowPopup(true);
-        window.location.reload();
       } else {
         alert("Unexpected response from server.");
       }
@@ -926,6 +925,7 @@ function Signup() {
                 if (e.target.value.length > 10)
                   e.target.value = e.target.value.slice(0, 10);
               }}
+              onBlur={() => checkMobileNumber(mymobileno)}
               required
             />
             {showMobiletext && (
@@ -1123,7 +1123,7 @@ function Signup() {
         </div>
         <div className="submit-Button">
           <button
-            className="btn btn-primary"
+            className="btn btn-primary mt-2"
             type="button"
             onClick={insertRecord}
           >
@@ -1132,7 +1132,7 @@ function Signup() {
         </div>
         <div className="login-container">
           <p>
-            Already Have an Account?{" "}
+            If You have already registered, Please{" "}
             <button
               type="button"
               className="signupButton"
@@ -1140,7 +1140,7 @@ function Signup() {
                 navigate("/login");
               }}
             >
-              Login
+              <strong>Login</strong>
             </button>
           </p>
         </div>

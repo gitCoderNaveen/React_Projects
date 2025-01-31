@@ -26,6 +26,10 @@
     cursor: pointer;
     color: black;
   }
+  .signupButton{
+    background: none;
+    color: red;
+  }
   
   .header-text {
     text-align: center;
