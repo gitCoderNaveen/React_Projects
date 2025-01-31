@@ -274,7 +274,7 @@ export default function Homepage() {
             ))
           ) : (
             <p className="loading_text">
-              <strong>Loading... Please Wait...</strong>
+              <strong>Downloading... Please Wait...</strong>
             </p>
           )}
         </div>

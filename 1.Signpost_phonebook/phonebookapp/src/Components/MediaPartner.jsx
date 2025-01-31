@@ -439,7 +439,6 @@ function MediaPartner() {
   const [isRegistered, setIsRegistered] = useState(false);
   const [showStdText, setshowStdText] = useState(false);
   const [showEmailText, setshowEmailText] = useState(false);
-  const [showPromoText, setshowPromoText] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [showPopup1, setShowPopup1] = useState(false);
   const mypriority = "0";
@@ -656,7 +655,6 @@ function MediaPartner() {
       product: myproduct,
       landline: mylandLine,
       lcode: myLcode,
-      promocode: mypromoCode,
       discount: mydiscount,
       description: mydescription,
     };
@@ -700,7 +698,6 @@ function MediaPartner() {
     setshowLandlineText(false);
     setshowStdText(false);
     setshowEmailText(false);
-    setshowPromoText(false);
   };
 
   const handleBusinessHelptext = () => {
@@ -715,7 +712,6 @@ function MediaPartner() {
     setshowLandlineText(false);
     setshowStdText(false);
     setshowEmailText(false);
-    setshowPromoText(false);
   };
   const handlePersonHelptext = () => {
     checkMobileNumber(mymobileno);
@@ -730,7 +726,6 @@ function MediaPartner() {
     setshowLandlineText(false);
     setshowStdText(false);
     setshowEmailText(false);
-    setshowPromoText(false);
   };
   const handleRadio = () => {
     setShowPersonName(false);
@@ -744,7 +739,6 @@ function MediaPartner() {
     setshowLandlineText(false);
     setshowStdText(false);
     setshowEmailText(false);
-    setshowPromoText(false);
   };
   const handleAddress = () => {
     setshowAddressText(true);
@@ -758,7 +752,6 @@ function MediaPartner() {
     setshowLandlineText(false);
     setshowStdText(false);
     setshowEmailText(false);
-    setshowPromoText(false);
   };
   const handleCity = () => {
     setshowAddressText(false);
@@ -772,7 +765,6 @@ function MediaPartner() {
     setshowLandlineText(false);
     setshowStdText(false);
     setshowEmailText(false);
-    setshowPromoText(false);
   };
   const handlePincode = () => {
     setshowAddressText(false);
@@ -786,7 +778,6 @@ function MediaPartner() {
     setshowLandlineText(false);
     setshowStdText(false);
     setshowEmailText(false);
-    setshowPromoText(false);
   };
   const handleProduct = () => {
     setshowAddressText(false);
@@ -800,7 +791,6 @@ function MediaPartner() {
     setshowLandlineText(false);
     setshowStdText(false);
     setshowEmailText(false);
-    setshowPromoText(false);
   };
   const handleLandLine = () => {
     setshowAddressText(false);
@@ -814,7 +804,6 @@ function MediaPartner() {
     setshowLandlineText(true);
     setshowStdText(false);
     setshowEmailText(false);
-    setshowPromoText(false);
   };
   const handleStdCode = () => {
     setshowAddressText(false);
@@ -828,7 +817,6 @@ function MediaPartner() {
     setshowLandlineText(false);
     setshowStdText(true);
     setshowEmailText(false);
-    setshowPromoText(false);
   };
   const handleEmail = () => {
     setshowAddressText(false);
@@ -842,21 +830,6 @@ function MediaPartner() {
     setshowLandlineText(false);
     setshowStdText(false);
     setshowEmailText(true);
-    setshowPromoText(false);
-  };
-  const handlePromoCode = () => {
-    setshowAddressText(false);
-    setShowPersonName(false);
-    setShowBusinesstext(false);
-    setshowMobiletext(false);
-    setShowPrefixText(false);
-    setshowCityText(false);
-    setshowPincodeText(false);
-    setshowProductText(false);
-    setshowLandlineText(false);
-    setshowStdText(false);
-    setshowEmailText(false);
-    setshowPromoText(true);
   };
   return (
     <div className="signup-container">
@@ -1060,21 +1033,6 @@ function MediaPartner() {
             />
             {showEmailText && (
               <p className="helptext">{`Type Correctly, Only If Available`}</p>
-            )}
-
-            <label htmlFor="promoCode">Promo Code:</label>
-            <input
-              type="text"
-              id="promoCode"
-              name="promoCode"
-              value={mypromoCode}
-              onClick={handlePromoCode}
-              onChange={(e) => {
-                setPromoCode(e.target.value);
-              }}
-            />
-            {showPromoText && (
-              <p className="helptext">{`Mobile Number of Person, Who Refered you Here. Leave Blank if Not Refer`}</p>
             )}
           </form>
         </div>

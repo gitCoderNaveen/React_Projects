@@ -593,9 +593,6 @@ function Signup() {
     return () => clearInterval(interval); // Cleanup interval on unmount
   }, []);
 
-  console.log(typeof dateTime);
-  console.log(dateTime);
-
   const resetForm = () => {
     setBusinessname("");
     setMobileno("");
