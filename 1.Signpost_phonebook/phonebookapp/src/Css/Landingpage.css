@@ -17,6 +17,48 @@ body {
     border-radius: 10px;
   }
  
+  .Landing_page_card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 10px;
+    background-color: #fefe52;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    flex-direction: row;
+    width: 100%;
+  }
+  
+  .on_left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .on_left h3{
+    font-size: large;
+  }
+  
+  .on_right {
+    position: relative;
+    flex: 0 0 100px;
+    text-align: right;
+    right: 0;
+  }
+  
+  @media (max-width: 600px) {
+    .Landing_page_card {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .on_right {
+      text-align: right;
+      margin-top: 10px;
+    }
+  }
+  
 
   
   @media (min-width: 768px) {
@@ -67,16 +109,7 @@ body {
   .feature-cards.right {
     right: -30%;
   }
-  
-  .card {
-    background-color: blue;
-    padding: 16px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    
-  }
+
   
   .icon {
     font-size: 24px;
@@ -145,8 +178,7 @@ body {
 
   .left-section input{
    width: 90%;    
-   position: sticky;
-   top: 20%; 
+   position: sticky; 
    z-index: 1000;
   }
 
@@ -198,29 +230,6 @@ body {
     height: 100%;
     border-radius: 10px;
   }
-  .contactcard-div {
-    max-height: 600px; /* Set a maximum height */
-    overflow-y: auto; /* Enable vertical scrolling */
-    padding: 10px;
-    border: 1px solid #ddd; /* Optional: add a border for better visibility */
-    background-color: #f9f9f9; /* Optional background */
-    scrollbar-width: thin; /* Firefox: make the scrollbar thinner */
-    scrollbar-color: #888 #f0f0f0; /* Firefox: scrollbar styling */
-  }
-  
-  /* Optional for custom scrollbars in WebKit browsers (Chrome, Edge, Safari) */
-  .contactcard-div::-webkit-scrollbar {
-    width: 8px;
-  }
-  .contactcard-div::-webkit-scrollbar-track {
-    background: #f0f0f0;
-  }
-  .contactcard-div::-webkit-scrollbar-thumb {
-    background-color: #888;
-    border-radius: 4px;
-    border: 2px solid #f0f0f0;
-  }
-  
   
   .row_am {
     padding: 50px 0;
@@ -295,16 +304,6 @@ body {
   right: -30%;
 }
 
-.card {
-  background-color: blue;
-  padding: 16px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  
-}
-
 .icon {
   font-size: 24px;
   color: #007bff;
@@ -334,13 +333,6 @@ body {
   height: 100%;
   object-fit: cover;
 }
-.contactcard-div{
-  display: flex;
-  flex-direction: column;
-  width: fit-content;
-  
-}
-
 /* ============================= About container section with counts  =====================*/
 /* Container Styling */
 .about_text {
@@ -362,22 +354,7 @@ body {
   margin-bottom: 30px;
 }
 
-/* Buttons */
-.btn {
-  display: inline-block;
-  padding: 12px 20px;
-  background-color: #6a1b9a;
-  color: white;
-  font-size: 16px;
-  text-decoration: none;
-  border-radius: 8px;
-  transition: all 0.3s ease-in-out;
-}
 
-.btn:hover {
-  background-color: #4a148c;
-  transform: translateY(-5px);
-}
 
 /* List Styles */
 .app_statstic {

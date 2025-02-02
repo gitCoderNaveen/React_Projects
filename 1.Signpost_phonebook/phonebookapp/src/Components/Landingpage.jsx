@@ -222,40 +222,18 @@ const Landingpage = () => {
             )}
             <div className="mobile-screen">
               {searchTerm ? (
-                <div className="contactcard-div">
+                <div className="landingcontactcard-div">
                   {data.length > 0 ? (
                     data.map((item) => (
-                      <div className="card-container" key={item.id}>
-                        <div className="card-left">
-                          <h3 className="card-name">
-                            {toTitleCase(item.businessname)}
+                      <div className="Landing_page_card" key={item.id}>
+                        <div className="on_left">
+                          <h3>
+                            <strong>{toTitleCase(item.businessname)}</strong>
                           </h3>
-                          <p className="card-location">
-                            {item.product
-                              ? item.product
-                              : `${item.city}, ${item.pincode}`}
-                          </p>
+                          <p>{item.city}</p>
                         </div>
-                        <div className="card-right">
-                          <div className="phone-section">
-                            <p className="phone-number">
-                              {maskMobileNumber(item.mobileno)}
-                            </p>
-                          </div>
-                          <div className="button-group">
-                            <button
-                              className="mybtn call-btn"
-                              onClick={() => alert("Updated Soon")}
-                            >
-                              Call
-                            </button>
-                            <button
-                              className="mybtn more-btn"
-                              onClick={() => alert("Updated Soon")}
-                            >
-                              More
-                            </button>
-                          </div>
+                        <div className="on_right">
+                          <p>{maskMobileNumber(item.mobileno)}</p>
                         </div>
                       </div>
                     ))
