@@ -15,14 +15,17 @@ import SearchAndSendSMS from "./Components/SearchAndSendSMS";
 
 import Card from "./Components/Card";
 import Subscription from "./Components/Subscription";
+import Landingpage from "./Components/Landingpage";
 export default function App() {
   return (
     <div>
       <div>
         <Auth>
           <Navigationpage />
+
           <Routes>
-            <Route path="/" element={<Homepage />} />
+            <Route path="/" element={<Landingpage />} />
+            <Route path="/home" element={<Homepage />} />
             <Route path="/NearbyPromotion" element={<NearbyPromotion />} />
             <Route path="/SearchandSendSms" element={<SearchAndSendSMS />} />
             <Route path="/reference" element={<Card />} />

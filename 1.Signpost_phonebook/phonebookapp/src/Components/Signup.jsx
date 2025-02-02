@@ -1104,7 +1104,7 @@ function Signup() {
 
             <label htmlFor="promoCode">Promo Code:</label>
             <input
-              type="number"
+              type="text"
               id="promoCode"
               name="promoCode"
               value={mypromoCode}

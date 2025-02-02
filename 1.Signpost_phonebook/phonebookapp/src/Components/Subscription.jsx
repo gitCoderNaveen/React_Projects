@@ -84,8 +84,8 @@ const Subscription = () => {
       const jsonResponse = await response.json();
       if (jsonResponse.message) {
         alert(jsonResponse.message);
-        setOrderedNo(jsonResponse.ordered_no);
-        setOrderedDate(jsonResponse.date);
+        const orderedNo = jsonResponse.ordered_no;
+        const orderedDate = jsonResponse.date;
 
         const smsBody = encodeURIComponent(
           `Dear ${myname}, \n We Acknowledge your order for Subscription for Signpost PHONE BOOK for ${mysubscriptionPlan}. \n Refer Ordered Number : ${orderedNo} \n Dated : ${orderedDate} \n of Value Rs.${mysubscriptionValue}.Your subscription will start from tomorrow. You can avail our NEARBY PROMOTION and CATEGORYWISE PROMOTION Facilities. \n For any help Contact \n Signpost Celfon Team`

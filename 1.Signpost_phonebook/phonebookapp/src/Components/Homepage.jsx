@@ -3,7 +3,6 @@ import { FaSearch } from "react-icons/fa";
 import { useAuth } from "./Auth";
 import { useNavigate } from "react-router-dom";
 import "../Css/Homepage.css";
-import Landingpage from "./Landingpage";
 
 export default function Homepage() {
   const [data, setData] = useState([]);
@@ -15,10 +14,12 @@ export default function Homepage() {
     "I Saw Your Listing in SIGNPOST PHONE BOOK. I am Interested in your Products. Please Send Details/Call Me."
   );
   const encodedMessage = encodeURIComponent(messageTemplate);
+  const [progress, setProgress] = useState(0);
 
   const { user } = useAuth();
 
   const navigate = useNavigate();
+
   const fetchData = async () => {
     try {
       const response = await fetch(
@@ -36,6 +37,19 @@ export default function Homepage() {
       alert("Failed to load data: " + error.message);
     }
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          return 100;
+        }
+        return prev + 1;
+      });
+    }, 50);
+    return () => clearInterval(interval);
+  }, []);
 
   function toTitleCase(str) {
     return str
@@ -273,9 +287,20 @@ export default function Homepage() {
               </div>
             ))
           ) : (
-            <p className="loading_text">
-              <strong>Downloading... Please Wait...</strong>
-            </p>
+            <div className="download-container">
+              <div className="loader-wrapper">
+                <div className="status-text">
+                  {progress < 100 ? "Downloading..." : "Completed!"}
+                </div>
+                {progress < 100 && <div className="spinner"></div>}
+              </div>
+              <div className="progress-bar">
+                <div
+                  className="progress-fill"
+                  style={{ width: `${progress}%` }}
+                ></div>
+              </div>
+            </div>
           )}
         </div>
 

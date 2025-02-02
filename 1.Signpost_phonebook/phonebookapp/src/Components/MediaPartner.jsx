@@ -446,6 +446,9 @@ function MediaPartner() {
   const mydescription = "Update Soon";
   const cmpanyPrefix = "M/s.";
   const navigate = useNavigate();
+  const smsBody = encodeURIComponent(
+    `Dear sir, \n Signpost PHONE BOOK,  is a portal for  Mobile Number Finder and & Dialerwith Digital Marketing. Please kindly view and verify the correctness of details on your firm, at the earliest. \n URL :- www.signpostphonebook.in \n User name :-  your mobile number \n Password  :- Signpost \n You can use the PHONE BOOK for your business promotion in any desired (Pincode) area so Entire Coimbatore`
+  );
 
   const { userData } = useAuth();
 
@@ -507,8 +510,22 @@ function MediaPartner() {
   const handlePopup = (e) => {
     e.preventDefault();
     setShowPopup(false);
+    const smsBody = encodeURIComponent(
+      `Dear sir,  
+Signpost PHONE BOOK,  is a portal for  Mobile Number Finder and & Dialer with Digital Marketing. Please kindly view and verify the correctness of details on your firm, at the earliest.
+
+URL :- www.signpostphonebook.in
+User name :-  Your mobile number 
+Password  :- Signpost
+
+You can use the PHONE BOOK for your business promotion in any desired (Pincode) area so Entire Coimbatore`
+    );
+    const smsLink = `sms:${mymobileno}?body=${smsBody}`;
+
+    setTimeout(() => {
+      window.location.href = smsLink;
+    }, 2000);
     resetForm();
-    sendMessage();
   };
 
   const handleClosePopup1 = (e) => {
@@ -520,17 +537,6 @@ function MediaPartner() {
     if (/^[a-zA-Z\s]*$/.test(cityName)) {
       setCity(cityName);
     }
-  };
-  const sendMessage = () => {
-    const smsBody = encodeURIComponent(
-      `Dear sir, \n Signpost PHONE BOOK,  is a portal for  Mobile Number Finder and & Dialerwith Digital Marketing. Please kindly view and verify the correctness of details on your firm, at the earliest. \n URL :- www.signpostphonebook.in \n User name :-  your mobile number \n Password  :- Signpost \n You can use the PHONE BOOK for your business promotion in any desired (Pincode) area so Entire Coimbatore`
-    );
-
-    const smsLink = `sms:${mymobileno}?body:${smsBody}`;
-
-    setTimeout(() => {
-      window.location.href = smsLink;
-    }, 1000);
   };
   const checkMobileNumber = async (mobile) => {
     try {
@@ -834,7 +840,7 @@ function MediaPartner() {
   return (
     <div className="signup-container">
       <div className="signup-content">
-        <button className="close-button" onClick={() => navigate("/")}>
+        <button className="close-button" onClick={() => navigate("/home")}>
           &times;{" "}
         </button>
         <h2 className="header-text">Media Partner</h2>

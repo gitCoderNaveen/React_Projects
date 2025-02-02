@@ -55,7 +55,7 @@ export default function Navigationpage() {
           <div className="collapse navbar-collapse">
             <ul className="navbar-nav ms-auto">
               <li className="nav-item">
-                <NavLink className="nav-link" to="/">
+                <NavLink className="nav-link" to="/home">
                   Home
                 </NavLink>
               </li>
