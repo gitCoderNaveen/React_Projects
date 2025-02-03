@@ -8,6 +8,7 @@ const UserProfile = () => {
   const { userData } = useAuth();
   const date = new Date().toISOString().split("T")[0];
 
+  console.log(userData.id);
   const fetchData = async () => {
     try {
       if (!userData?.id || !date) {
@@ -16,7 +17,7 @@ const UserProfile = () => {
       }
 
       const response = await fetch(
-        `https://signpostphonebook.in/data_entry_details.php?id=${userData.id}&date=${date}`
+        `https://signpostphonebook.in/data_entry_details.php?userid=${userData.id}&date=${date}`
       );
 
       if (!response.ok) {

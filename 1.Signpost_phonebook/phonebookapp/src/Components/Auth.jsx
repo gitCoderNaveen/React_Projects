@@ -31,16 +31,16 @@ export default function Auth({ children }) {
     }
     try {
       const response = await axios.post(
-        "https://signpostphonebook.in/test.php",
+        "https://signpostphonebook.in/test_auth_for_new_database.php",
         { mobileno: username }
       );
 
       if (response.data.valid) {
-        setUser(response.data.businessname);
+        setUser(response.data.businessname || response.data.person);
         setUserData(response.data);
         localStorage.setItem(
           "user",
-          JSON.stringify(response.data.businessname)
+          JSON.stringify(response.data.businessname || response.data.person)
         );
         localStorage.setItem("userData", JSON.stringify(response.data));
         navigate("/");

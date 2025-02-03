@@ -572,7 +572,7 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
 
   const insertCount = async () => {
     const dataCount = {
-      name: userData.businessname,
+      name: userData.businessname || userData.person,
       userid: userData.id,
       date: new Date().toISOString().split("T")[0],
       count: 1, //Default count is 1 if mycount is not set
@@ -609,7 +609,7 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
 
   const insertbusinessName = async () => {
     const dataName = {
-      name: userData.businessname,
+      name: userData.businessname || userData.person,
       date: new Date().toISOString().split("T")[0],
       dataentry_name: mybusinessname || myperson,
     };
@@ -846,7 +846,7 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
         <h2 className="header-text">Media Partner</h2>
         <div className="form-container">
           <form className="scrollable-form">
-            <label htmlFor="mobile">Mobile Number:</label>
+            <label htmlFor="mobile">Mobile Number:*</label>
             <input
               type="number"
               id="mobile"
@@ -927,7 +927,7 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
               <p className="helptext">{`Type Your FirmName or BusinessName`}</p>
             )}
 
-            <label htmlFor="address">Address:</label>
+            <label htmlFor="address">Address*:</label>
             <textarea
               id="address"
               name="address"
@@ -942,7 +942,7 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
               <p className="helptext">{`Type Door Number, Street, Flat No, Appartment Name, Landmark, Area Name etc.`}</p>
             )}
 
-            <label htmlFor="city">City:</label>
+            <label htmlFor="city">City:*</label>
             <input
               type="text"
               id="city"
@@ -979,7 +979,7 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
 
             {mybusinessname && (
               <div>
-                <label htmlFor="productService">Product/Service:</label>
+                <label htmlFor="productService">Product/Service:*</label>
                 <input
                   type="text"
                   id="productService"

@@ -69,7 +69,7 @@
 
 
   /* Home page Card  */
-  .card-container {
+  .home_card-container {
     display: flex;
     gap: 3px;
     align-items: center;
@@ -82,12 +82,12 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
-  .card-left {
+  .home_card-left {
     flex: 1;
     text-align: left;
   }
   
-  .card-name {
+  .home_card-name {
     font-size: 18px;
     font-weight: bold;
     margin: 0;
@@ -99,7 +99,7 @@
     margin: 4px 0 0;
   }
   
-  .card-right {
+  .home_card-right {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -162,6 +162,26 @@
   
   .more-btn:hover {
     background-color: #007bb5;
+  }
+
+  .priority_card{
+    position: relative; /* Enables positioning of the badge */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffdc72; /* Card background color */
+    border: none;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 20px auto;
+  }
+
+  .priority_card-headings {
+    color: #EC2D01; /* Heading text color */
+    font-size: 1.5rem;
+    margin: 0;
   }
 
   /* More button Popup */
@@ -236,7 +256,7 @@
   
 
   /* Contact Card */
-  .contactcard-div{
+  .home_contactcard-div{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -384,13 +404,13 @@
     }
     
 
-    .contactcard-div{
+    .home_contactcard-div{
         display: flex;
         flex-direction: column;
         gap: 10px;
       }
   
-      .card-container {
+      .home_card-container {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -481,6 +501,54 @@
   height: 100%;
   background: #3498db;
   transition: width 0.3s ease;
+}
+.priority_card{
+  position: relative; /* Enables positioning of the badge */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffdc72; /* Card background color */
+  border: none;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.priority_card-headings {
+  color: #EC2D01; /* Heading text color */
+  font-size: 1.5rem;
+  margin: 0;
+}
+.Prime_badge{
+  position: absolute;
+    top:-10px;
+    left: 2px;
+    background-color: #1563d8; /* Badge background color */
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.prime_call-button {
+  background-color: #2ecc71; /* Call button color */
+  color: #fff;
+}
+
+.prime_call-button:hover {
+  background-color: #27ae60;
+}
+
+.prime_more-button {
+  background-color: #e74c3c; /* More button color */
+  color: #fff;
+}
+
+.prime_more-button:hover {
+  background-color: #c0392b;
 }
   
   }

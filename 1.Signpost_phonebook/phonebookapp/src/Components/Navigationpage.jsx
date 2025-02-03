@@ -143,7 +143,7 @@ export default function Navigationpage() {
         </span>
         <ul className="navbar-nav p-3">
           <li className="nav-item">
-            <NavLink className="nav-link" to="/" onClick={toggleDrawer}>
+            <NavLink className="nav-link" to="/home" onClick={toggleDrawer}>
               Home
             </NavLink>
           </li>

@@ -88,7 +88,7 @@
  /* Adjust spacing between the radio button and text */
 }
 
-.card {
+.promotioncard {
   background-color: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -121,6 +121,10 @@
   border-radius: 4px;
 }
 
+.checkbox{
+  right: -10%;
+}
+
 textarea.message-box {
   width: 100%;
   border: 1px solid #ddd;
@@ -147,4 +151,16 @@ textarea.message-box {
   .card {
     width: 100%;
   }
+  .card-details{
+
+  }
+  .checkbox{
+    display: flex;
+    justify-content: center;
+  }
+  .checkbox input{
+    position: absolute;
+    left: 30%;
+  }
+
 }

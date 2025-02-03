@@ -10,20 +10,21 @@ export default function Homepage() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [firmName, setFirmName] = useState("");
   const [productName, setProductName] = useState("");
+  const [priorityClients, setPriorityClients] = useState([]);
   const [messageTemplate] = useState(
     "I Saw Your Listing in SIGNPOST PHONE BOOK. I am Interested in your Products. Please Send Details/Call Me."
   );
   const encodedMessage = encodeURIComponent(messageTemplate);
   const [progress, setProgress] = useState(0);
 
-  const { user } = useAuth();
+  const { user, userData } = useAuth();
 
   const navigate = useNavigate();
 
   const fetchData = async () => {
     try {
       const response = await fetch(
-        "https://signpostphonebook.in/client_fetch.php"
+        "https://signpostphonebook.in/client_fetch_for_new_database.php"
       );
       if (!response.ok)
         throw new Error(`HTTP Error! Status: ${response.status}`);
@@ -78,12 +79,10 @@ export default function Homepage() {
       : mobileNumber;
 
   const fetchFirmData = async (name) => {
-    if (!name) {
-      return;
-    }
+    if (!name) return;
     try {
       const response = await fetch(
-        `https://signpostphonebook.in/client_fetch_byname.php?businessname=${name}`
+        `https://signpostphonebook.in/client_fetch_byname_and_byperson.php?searchname=${name}`
       );
 
       if (!response.ok) {
@@ -92,7 +91,14 @@ export default function Homepage() {
 
       const jsonResponse = await response.json();
       if (Array.isArray(jsonResponse)) {
-        setData(jsonResponse);
+        const priorityData = jsonResponse.filter(
+          (item) => Number(item.priority) === 1
+        );
+        const nonPriorityData = jsonResponse.filter(
+          (item) => Number(item.priority) !== 1
+        );
+        setPriorityClients(priorityData);
+        setData([...priorityData, ...nonPriorityData]);
       } else {
         window.alert("Unexpected response from server.");
       }
@@ -108,7 +114,7 @@ export default function Homepage() {
     }
     try {
       const response = await fetch(
-        `https://signpostphonebook.in/client_fetch_product.php?product=${name}`
+        `http://signpostphonebook.in/client_fetch_byproduct_for_new_database.php?searchname=${name}`
       );
 
       if (!response.ok) {
@@ -117,7 +123,14 @@ export default function Homepage() {
 
       const jsonResponse = await response.json();
       if (Array.isArray(jsonResponse)) {
-        setData(jsonResponse);
+        const priorityData = jsonResponse.filter(
+          (item) => Number(item.priority) === 1
+        );
+        const nonPriorityData = jsonResponse.filter(
+          (item) => Number(item.priority) !== 1
+        );
+        setPriorityClients(priorityData);
+        setData([...priorityData, ...nonPriorityData]);
       } else {
         window.alert("Unexpected response from server.");
       }
@@ -245,13 +258,34 @@ export default function Homepage() {
           )}
         </div>
         {/* Contact Cards */}
-        <div className="contactcard-div">
+        <div className="home_contactcard-div">
           {data.length > 0 ? (
             data.map((item) => (
-              <div className="card-container" key={item.id}>
-                <div className="card-left">
-                  <h3 className="card-name">
-                    {toTitleCase(item.businessname)}
+              <div
+                className={`home_card-container ${
+                  Number(item.priority) === 1 ? "priority_card" : ""
+                }`}
+                key={item.id}
+              >
+                {Number(item.priority) === 1 ? (
+                  <div className="Prime_badge">Prime</div>
+                ) : (
+                  ""
+                )}
+                <div className="home_card-left">
+                  <h3
+                    className={`home_card-name ${
+                      Number(item.priority) === 1
+                        ? "priority_card-headings"
+                        : ""
+                    }`}
+                  >
+                    {firmName &&
+                    item.person.toLowerCase().includes(firmName.toLowerCase())
+                      ? toTitleCase(item.person)
+                      : toTitleCase(
+                          item.businessname ? item.businessname : item.person
+                        )}
                   </h3>
                   <p className="card-location">
                     {productName ? (
@@ -263,7 +297,7 @@ export default function Homepage() {
                     )}
                   </p>
                 </div>
-                <div className="card-right">
+                <div className="home_card-right">
                   <div className="phone-section">
                     <p className="phone-number">
                       {maskMobileNumber(item.mobileno)}
@@ -271,13 +305,17 @@ export default function Homepage() {
                   </div>
                   <div className="button-group">
                     <button
-                      className="mybtn call-btn"
+                      className={`mybtn call-btn ${
+                        Number(item.priority) === 1 ? "prime_call-button" : ""
+                      }`}
                       onClick={() => handleCallClick(item)}
                     >
                       Call
                     </button>
                     <button
-                      className="mybtn more-btn"
+                      className={`mybtn more-btn ${
+                        Number(item.priority) === 1 ? "prime_more-button" : ""
+                      }`}
                       onClick={() => handleMoreClick(item)}
                     >
                       More
@@ -290,7 +328,7 @@ export default function Homepage() {
             <div className="download-container">
               <div className="loader-wrapper">
                 <div className="status-text">
-                  {progress < 100 ? "Downloading..." : "Completed!"}
+                  {progress < 100 ? "Loading..." : "Completed!"}
                 </div>
                 {progress < 100 && <div className="spinner"></div>}
               </div>

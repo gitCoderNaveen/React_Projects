@@ -155,7 +155,7 @@ const Landingpage = () => {
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 2,
           slidesToScroll: 1,
         },
       },
@@ -294,6 +294,7 @@ const Landingpage = () => {
           </motion.div>
         </div>
       </div>
+
       <section className="row_am trusted_section">
         <div className="container-fluid">
           <div
