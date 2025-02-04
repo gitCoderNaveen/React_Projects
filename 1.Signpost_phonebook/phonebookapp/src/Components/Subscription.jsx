@@ -48,6 +48,8 @@ const Subscription = () => {
     setMobileNo("");
     setSubscriptionPlan("");
     setSubscriptionValue("");
+    setOrderedNo("");
+    setOrderedDate("");
   };
 
   const handleSubcription = (e) => {
@@ -65,7 +67,9 @@ const Subscription = () => {
       subscriptionplan: mysubscriptionPlan,
       date: dateTime,
       subscriptionvalue: mysubscriptionValue,
-      username: userData.businessname,
+      username: userData.businessname || userData.person,
+      orderno: orderedNo,
+      orderdate: orderedDate,
     };
     try {
       const response = await fetch(
@@ -84,11 +88,9 @@ const Subscription = () => {
       const jsonResponse = await response.json();
       if (jsonResponse.message) {
         alert(jsonResponse.message);
-        const orderedNo = jsonResponse.ordered_no;
-        const orderedDate = jsonResponse.date;
 
         const smsBody = encodeURIComponent(
-          `Dear ${myname}, \n We Acknowledge your order for Subscription for Signpost PHONE BOOK for ${mysubscriptionPlan}. \n Refer Ordered Number : ${orderedNo} \n Dated : ${orderedDate} \n of Value Rs.${mysubscriptionValue}.Your subscription will start from tomorrow. You can avail our NEARBY PROMOTION and CATEGORYWISE PROMOTION Facilities. \n For any help Contact \n Signpost Celfon Team`
+          `Dear ${myname}, \n We Acknowledge your order for Subscription for Signpost PHONE BOOK for ${mysubscriptionPlan},of Value Rs.${mysubscriptionValue}. \n Refer Ordered Number : ${orderedNo} \n Dated : ${orderedDate} \n .Your subscription will start from tomorrow. You can avail our NEARBY PROMOTION and CATEGORYWISE PROMOTION Facilities. \n For any help Contact \n Signpost Celfon Team`
         );
 
         const smsLink = `sms:${phoneNumbers.join(",")}?body=${smsBody}`;
@@ -170,6 +172,30 @@ const Subscription = () => {
                 value={mysubscriptionValue}
                 required
                 onChange={(e) => setSubscriptionValue(e.target.value)}
+              />
+            </div>
+            <div className="sform-group">
+              <label htmlFor="value">Order No :</label>
+              <input
+                type="number"
+                name=""
+                id=""
+                placeholder="Enter Order No."
+                value={orderedNo}
+                required
+                onChange={(e) => setOrderedNo(e.target.value)}
+              />
+            </div>
+            <div className="sform-group">
+              <label htmlFor="value">Order Date : </label>
+              <input
+                type="date"
+                name=""
+                id=""
+                placeholder=""
+                value={orderedDate}
+                required
+                onChange={(e) => setOrderedDate(e.target.value)}
               />
             </div>
             <button type="submit" className="ssubmit-button">

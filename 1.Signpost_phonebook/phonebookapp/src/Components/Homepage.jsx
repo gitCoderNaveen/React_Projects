@@ -92,13 +92,16 @@ export default function Homepage() {
       const jsonResponse = await response.json();
       if (Array.isArray(jsonResponse)) {
         const priorityData = jsonResponse.filter(
-          (item) => Number(item.priority) === 1
+          (item) => Number(item.priority) === "1"
         );
         const nonPriorityData = jsonResponse.filter(
-          (item) => Number(item.priority) !== 1
+          (item) => Number(item.priority) !== "0"
         );
-        setPriorityClients(priorityData);
-        setData([...priorityData, ...nonPriorityData]);
+        if (priorityData) {
+          setData([...priorityData, ...nonPriorityData]);
+        } else {
+          setData(jsonResponse);
+        }
       } else {
         window.alert("Unexpected response from server.");
       }
@@ -109,12 +112,11 @@ export default function Homepage() {
   };
 
   const fetchProductData = async (name) => {
-    if (!name) {
-      return;
-    }
+    if (!name) return;
+
     try {
       const response = await fetch(
-        `http://signpostphonebook.in/client_fetch_byproduct_for_new_database.php?searchname=${name}`
+        `http://signpostphonebook.in/client_fetch_product.php?product=${name}`
       );
 
       if (!response.ok) {
@@ -122,15 +124,20 @@ export default function Homepage() {
       }
 
       const jsonResponse = await response.json();
+
+      // Ensure the response is an array
       if (Array.isArray(jsonResponse)) {
         const priorityData = jsonResponse.filter(
-          (item) => Number(item.priority) === 1
+          (item) => Number(item.priority) === "1"
         );
         const nonPriorityData = jsonResponse.filter(
-          (item) => Number(item.priority) !== 1
+          (item) => Number(item.priority) !== "0"
         );
-        setPriorityClients(priorityData);
-        setData([...priorityData, ...nonPriorityData]);
+        if (priorityData) {
+          setData([...priorityData, ...nonPriorityData]);
+        } else {
+          setData(jsonResponse);
+        }
       } else {
         window.alert("Unexpected response from server.");
       }
@@ -350,6 +357,12 @@ export default function Homepage() {
                 &times;
               </button>
               <h2>{selectedItem.businessname}</h2>
+              {selectedItem.person && (
+                <h3>
+                  {selectedItem.personprefix}
+                  {selectedItem.person}
+                </h3>
+              )}
               <p>
                 <strong>Mobile:</strong>{" "}
                 {maskMobileNumber(selectedItem.mobileno)}
@@ -359,7 +372,7 @@ export default function Homepage() {
                 {selectedItem.product}
               </p>
               <p>
-                <strong>Address:</strong> {selectedItem.doorno},{" "}
+                <strong>Address:</strong> {selectedItem.address},{" "}
                 {selectedItem.city}, {selectedItem.pincode}
               </p>
               <div className="button-group">
@@ -371,14 +384,16 @@ export default function Homepage() {
                 >
                   WhatsApp
                 </a>
-                <a
-                  href={`mailto:${
-                    selectedItem.email || "business@example.com"
-                  }`}
-                  className="popup-btn mail-btn"
-                >
-                  Mail
-                </a>
+                {selectedItem.email && (
+                  <a
+                    href={`mailto:${
+                      selectedItem.email || "business@example.com"
+                    }`}
+                    className="popup-btn mail-btn"
+                  >
+                    Mail
+                  </a>
+                )}
                 <a
                   href={`tel:${selectedItem.mobileno}`}
                   className="popup-btn call-btn"

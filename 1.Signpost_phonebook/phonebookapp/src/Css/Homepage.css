@@ -223,6 +223,10 @@
   .popup-content h2{
     margin-top: 40px;
   }
+
+  .popup-content h3{
+    color: red;
+  }
   
   .button-group {
     display: flex;
