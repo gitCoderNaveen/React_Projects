@@ -867,7 +867,6 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
             {showMobiletext && (
               <p className="helptext">{`Type 10 digits with get Country code (+91), without gap Don't Type Land Line`}</p>
             )}
-
             <label htmlFor="name">Person Name:</label>
             <input
               type="text"
@@ -880,7 +879,6 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
             {showPersonName && (
               <p className="helptext">{`Type Initial at the end`}</p>
             )}
-
             <label>Prefix:</label>
             <div className="radio-group">
               <label>
@@ -913,7 +911,6 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
             {showprefixtext && (
               <p className="helptext">{`Select Mr. For Gents and Ms. for Ladies`}</p>
             )}
-
             <label htmlFor="name">Firm/Business Name:</label>
             <input
               type="text"
@@ -926,7 +923,6 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
             {showbusinesstext && (
               <p className="helptext">{`Type Your FirmName or BusinessName`}</p>
             )}
-
             <label htmlFor="address">Address*:</label>
             <textarea
               id="address"
@@ -941,7 +937,6 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
             {showAddressText && (
               <p className="helptext">{`Type Door Number, Street, Flat No, Appartment Name, Landmark, Area Name etc.`}</p>
             )}
-
             <label htmlFor="city">City:*</label>
             <input
               type="text"
@@ -955,7 +950,6 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
             {showCityText && (
               <p className="helptext">{`Type City Name. Don't Use Petnames (Kovai Etc.)`}</p>
             )}
-
             <label htmlFor="pincode">Pincode:</label>
             <input
               type="number"
@@ -977,25 +971,22 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
               <p className="helptext">{`Type 6 Digits Continioulsy Without Gap`}</p>
             )}
 
-            {mybusinessname && (
-              <div>
-                <label htmlFor="productService">Product/Service:*</label>
-                <input
-                  type="text"
-                  id="productService"
-                  name="productService"
-                  value={myproduct}
-                  onChange={(e) => {
-                    setProduct(e.target.value);
-                  }}
-                  onClick={handleProduct}
-                />
-                {showProductText && (
-                  <p className="helptext">{`Type Correct & Specific Name of Product/Service offered. Sepparate Each Keyword By Comma. For `}</p>
-                )}
-              </div>
-            )}
-
+            <div>
+              <label htmlFor="productService">Product/Service:*</label>
+              <input
+                type="text"
+                id="productService"
+                name="productService"
+                value={myproduct}
+                onChange={(e) => {
+                  setProduct(e.target.value);
+                }}
+                onClick={handleProduct}
+              />
+              {showProductText && (
+                <p className="helptext">{`Type Correct & Specific Name of Product/Service offered. Sepparate Each Keyword By Comma. For `}</p>
+              )}
+            </div>
             <label htmlFor="landline">Landline No:</label>
             <input
               type="number"
@@ -1010,7 +1001,6 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
             {showLandlineText && (
               <p className="helptext">{`Type Only Landline, if Available. Don't Type Mobile Number here.`}</p>
             )}
-
             <label htmlFor="stdCode">STD Code:</label>
             <input
               type="number"
@@ -1025,7 +1015,6 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
             {showStdText && (
               <p className="helptext">{`Type Only Landline, if Available. Don't Type Mobile Number here.`}</p>
             )}
-
             <label htmlFor="email">Email:</label>
             <input
               type="email"

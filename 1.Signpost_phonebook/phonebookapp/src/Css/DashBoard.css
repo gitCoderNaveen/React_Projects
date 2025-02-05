@@ -1,0 +1,66 @@
+.admin-container{
+position: absolute;
+top: 20%;
+}
+.table-grid{
+    display: grid;
+    position: absolute;
+    top: 37%;
+ }
+
+
+@media (max-width: 575.98px) {  
+    .admin-container{
+        position: absolute;
+        top: 20%;
+        width: 100%;
+        }
+   .table-grid{
+      position: relative;
+      top: 1vh;
+   }
+ }
+
+@media (max-width: 767.98px) {  
+   .table-grid{
+      position:relative;
+
+   }
+
+   /* .total-entry-table{
+      background-color: aqua;
+   } */
+}
+
+@media (max-width: 991.98px) {  
+   .table-grid{
+      position: relative;
+      top: 2vh;
+   }
+ }
+
+@media (max-width: 1199.98px) { 
+
+   .table-grid{
+      position: relative;
+      top: 2vh;
+   }
+  }
+
+@media (max-width: 1399.98px) {  
+
+   .table-grid{
+      position: relative;
+      top: 2vh;
+   }
+ }
+
+ /* @media (min-width: 1400px) { 
+   .table-grid{
+      position: relative;
+      top: -39vh;
+   }
+  } */
+
+
+ 

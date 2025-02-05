@@ -10,6 +10,8 @@ export default function Auth({ children }) {
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
 
+  
+
   // Persist user data in localStorage
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -25,7 +27,7 @@ export default function Auth({ children }) {
       alert("Please Enter your Mobile Registered number");
       return;
     }
-    if (password !== "Signpost") {
+    if (password !== "signpost") {
       alert("Invalid Password");
       return;
     }
@@ -63,7 +65,9 @@ export default function Auth({ children }) {
   };
 
   return (
-    <Authcontext.Provider value={{ user, userData, Login, Logout }}>
+    <Authcontext.Provider
+      value={{ user, userData, Login, Logout }}
+    >
       {children}
     </Authcontext.Provider>
   );

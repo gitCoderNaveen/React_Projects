@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { NavLink } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
@@ -7,9 +7,20 @@ import { useAuth } from "./Auth";
 import "../Css/Navbar.css";
 
 export default function Navigationpage() {
-  const { user, Logout, Login } = useAuth();
+  const { user, Logout, Login, userData } = useAuth();
   const navigate = useNavigate();
   const [isDrawerOpen, setDrawerOpen] = useState(false);
+  const [isAdminUser, setIsAdminUser] = useState(false);
+  const adminUser = ["9843657564", "8344508070", "6383965890", "8838491311"];
+  const checkAdminUser = adminUser.includes(userData?.mobileno);
+
+  useEffect(() => {
+    if (checkAdminUser) {
+      setIsAdminUser(true);
+    } else {
+      setIsAdminUser(false);
+    }
+  }, [checkAdminUser]);
 
   const toggleDrawer = () => {
     setDrawerOpen(!isDrawerOpen);
@@ -71,6 +82,13 @@ export default function Navigationpage() {
                       Categorywise Promotion
                     </NavLink>
                   </li>
+                  {isAdminUser && (
+                    <li className="nav-item">
+                      <NavLink className="nav-link" to="/admin">
+                        Admin
+                      </NavLink>
+                    </li>
+                  )}
                 </>
               ) : (
                 <>
@@ -176,6 +194,17 @@ export default function Navigationpage() {
                   Refer a Friend
                 </NavLink>
               </li>
+              {isAdminUser && (
+                <li className="nav-item">
+                  <NavLink
+                    className="nav-link"
+                    to="/admin"
+                    onClick={toggleDrawer}
+                  >
+                    Admin
+                  </NavLink>
+                </li>
+              )}
               <li className="nav-item">
                 <NavLink
                   className="nav-link"

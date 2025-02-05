@@ -7,7 +7,7 @@ import Aboutpage from "./Components/Aboutpage";
 import Contactus from "./Components/Contactus";
 import "../src/App.css";
 import Signup from "./Components/Signup";
-import Auth from "./Components/Auth";
+import Auth, { useAuth } from "./Components/Auth";
 import MediaPartner from "./Components/MediaPartner";
 import UserProfile from "./Components/UserProfile ";
 import NearbyPromotion from "./Components/Nearbypromotion";
@@ -16,16 +16,23 @@ import SearchAndSendSMS from "./Components/SearchAndSendSMS";
 import Card from "./Components/Card";
 import Subscription from "./Components/Subscription";
 import Landingpage from "./Components/Landingpage";
+import Admin from "./Components/Admin";
+import DashBoard from "./Components/Dashboard";
+import Edit from "./Components/Edit";
+import Counttable from "./Components/Counttable";
 export default function App() {
   return (
     <div>
       <div>
         <Auth>
           <Navigationpage />
-
           <Routes>
             <Route path="/" element={<Landingpage />} />
             <Route path="/home" element={<Homepage />} />
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/dashboard" element={<DashBoard />} />
+            <Route path="/edit" element={<Edit />} />
+            <Route path="/counts" element={<Counttable />} />
             <Route path="/NearbyPromotion" element={<NearbyPromotion />} />
             <Route path="/SearchandSendSms" element={<SearchAndSendSMS />} />
             <Route path="/reference" element={<Card />} />

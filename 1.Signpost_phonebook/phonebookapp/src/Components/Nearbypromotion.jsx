@@ -58,7 +58,7 @@ const Nearbypromotion = () => {
     setLoading(true);
     axios
       .get(
-        `https://signpostphonebook.in/testprefix.php?pincode=${pincodeInput}&prefix=${prefix}`
+        `https://signpostphonebook.in/get_details_based_on_prefix_pincode.php?pincode=${pincodeInput}&prefix=${prefix}`
       )
       .then((response) => {
         setData(response.data);
@@ -292,7 +292,7 @@ const Nearbypromotion = () => {
                     <div className="card" key={item.id}>
                       <div className="card-details">
                         <p className="heading-text">
-                          <strong>{item.businessname}</strong>
+                          <strong>{item.businessname || item.person}</strong>
                         </p>
                         <p className="card-para">{item.product}</p>
                       </div>

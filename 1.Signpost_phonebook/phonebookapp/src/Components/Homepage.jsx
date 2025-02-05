@@ -10,7 +10,6 @@ export default function Homepage() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [firmName, setFirmName] = useState("");
   const [productName, setProductName] = useState("");
-  const [priorityClients, setPriorityClients] = useState([]);
   const [messageTemplate] = useState(
     "I Saw Your Listing in SIGNPOST PHONE BOOK. I am Interested in your Products. Please Send Details/Call Me."
   );
@@ -91,17 +90,7 @@ export default function Homepage() {
 
       const jsonResponse = await response.json();
       if (Array.isArray(jsonResponse)) {
-        const priorityData = jsonResponse.filter(
-          (item) => Number(item.priority) === "1"
-        );
-        const nonPriorityData = jsonResponse.filter(
-          (item) => Number(item.priority) !== "0"
-        );
-        if (priorityData) {
-          setData([...priorityData, ...nonPriorityData]);
-        } else {
-          setData(jsonResponse);
-        }
+        setData(jsonResponse);
       } else {
         window.alert("Unexpected response from server.");
       }
@@ -116,7 +105,7 @@ export default function Homepage() {
 
     try {
       const response = await fetch(
-        `http://signpostphonebook.in/client_fetch_product.php?product=${name}`
+        `https://signpostphonebook.in/client_fetch_byproduct_for_new_database.php?searchname=${name}`
       );
 
       if (!response.ok) {
@@ -127,17 +116,7 @@ export default function Homepage() {
 
       // Ensure the response is an array
       if (Array.isArray(jsonResponse)) {
-        const priorityData = jsonResponse.filter(
-          (item) => Number(item.priority) === "1"
-        );
-        const nonPriorityData = jsonResponse.filter(
-          (item) => Number(item.priority) !== "0"
-        );
-        if (priorityData) {
-          setData([...priorityData, ...nonPriorityData]);
-        } else {
-          setData(jsonResponse);
-        }
+        setData(jsonResponse);
       } else {
         window.alert("Unexpected response from server.");
       }

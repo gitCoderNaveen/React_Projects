@@ -1,0 +1,223 @@
+/* General styles for the page */
+.team-container {
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    max-width: 1100px;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+  
+  .team-title {
+    text-align: center;
+    color: #333;
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  
+  .team-table-container {
+    overflow-y: auto;  /* Enables vertical scroll */
+    max-height: 560px;  /*Set a fixed height for scrolling*/
+  }
+  
+  .team-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .team-table th, .team-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .team-table th {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+    position: sticky; /* Make the header sticky */
+    top: 0; /* Stick it to the top */
+    z-index: 2; /* Ensure it appears above the table body */
+    background-color: #4CAF50; /* Background to prevent transparency */
+  }
+  
+  .team-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .team-table tr:hover {
+    background-color: #ddd;
+  }
+  
+  .add-member-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-member-button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Action Button: '>' inside a rounded circle */
+  .row-action-button {
+    padding: 8px 12px;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    border-radius: 50%; /* Makes the button round */
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 40px; /* Set fixed size */
+    height: 40px; /* Set fixed size */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .row-action-button:hover {
+    background-color: #007b8c;
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .team-title {
+        font-size: 1.5em;
+    }
+  
+    .team-table {
+        font-size: 14px;
+    }
+  
+    .team-table th, .team-table td {
+        padding: 10px;
+    }
+  
+    .add-member-button {
+        width: 100%;
+        padding: 12px;
+        position: relative;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .team-title {
+        font-size: 1.2em;
+    }
+  
+    .team-table {
+        font-size: 12px;
+    }
+  
+    .team-table th, .team-table td {
+        padding: 8px;
+    }
+  
+    .add-member-button {
+        width: 100%;
+        padding: 15px;
+        position: relative;
+    }
+  }
+  
+  /* Modal Overlay and Content */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 900px;
+    text-align: center;
+    overflow: auto;
+  }
+  
+  .close-modal-button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .fullcalendar {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  
+  /* Scrollable Team Table */
+  .team-table-wrapper {
+    
+    max-height: 500px; /* Adjust this value based on your needs */
+    overflow-y: auto;
+    display: block;
+  }
+  
+  /* Additional Styling */
+  button {
+    margin-top: 10px;
+  }
+  
+  .clsbtn {
+    /* margin-top: 20px; */
+    padding: 1px 12px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .clsbtn:hover {
+    background: #0056b3;
+  }
+  
+  
+  
+  
+  
+  .MuiSvgIcon-root{
+    background-color: none;
+    color: green;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  
+  }
+  
+  
+  
+  
+  
+  
+  
+   

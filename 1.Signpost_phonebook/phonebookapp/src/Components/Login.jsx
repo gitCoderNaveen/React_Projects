@@ -24,7 +24,7 @@ const Login = () => {
   };
 
   const handlePassword = (e) => {
-    setPassword(e.target.value);
+    setPassword(e.target.value.toLowerCase());
   };
 
   const handleLogin = (e) => {
