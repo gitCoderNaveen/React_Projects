@@ -354,7 +354,7 @@ export default function SearchAndSendSMS() {
                   <div className="card" key={item.id}>
                     <div className="card-details">
                       <p className="heading-text">
-                        <strong>{item.businessname}</strong>
+                        <strong>{item.businessname || item.person}</strong>
                       </p>
                       <p className="card-para">{item.product}</p>
                     </div>

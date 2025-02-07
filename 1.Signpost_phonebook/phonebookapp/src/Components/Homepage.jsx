@@ -253,10 +253,8 @@ export default function Homepage() {
                 }`}
                 key={item.id}
               >
-                {Number(item.priority) === 1 ? (
-                  <div className="Prime_badge">Prime</div>
-                ) : (
-                  ""
+                {item.discount && (
+                  <div className="discount_badge">Discount</div>
                 )}
                 <div className="home_card-left">
                   <h3

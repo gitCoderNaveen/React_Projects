@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../Css/NearbyPromotion.css";
 import { FaPencilAlt } from "react-icons/fa";
+import { faL } from "@fortawesome/free-solid-svg-icons";
 
 const Nearbypromotion = () => {
   const [pincodeInput, setPincodeInput] = useState("");
@@ -9,6 +10,7 @@ const Nearbypromotion = () => {
   const [clrBtn, setClrBtn] = useState(false);
   const [datas, setData] = useState([]);
   const [showresults, setShowresults] = useState(false);
+  const [noRecord, setNoRecord] = useState(false);
   const [selectedBusinesses, setSelectedBusinesses] = useState([]);
   const [selectedPrefix, setSelectedPrefix] = useState(null);
   const maxLength = 290;
@@ -61,9 +63,16 @@ const Nearbypromotion = () => {
         `https://signpostphonebook.in/get_details_based_on_prefix_pincode.php?pincode=${pincodeInput}&prefix=${prefix}`
       )
       .then((response) => {
-        setData(response.data);
-        setClrBtn(true);
-        setShowresults(true);
+        if (response.data?.[0] === "No records found.") {
+          setNoRecord(true);
+          setClrBtn(true);
+          setData([]);
+          setShowresults(false);
+        } else {
+          setData(response.data);
+          setClrBtn(true);
+          setShowresults(true);
+        }
       })
       .catch((error) => console.error("Error fetching businesses:", error))
       .finally(() => setLoading(false));
@@ -86,6 +95,7 @@ const Nearbypromotion = () => {
     setSelectedBusinesses([]);
     setClrBtn(!clrBtn);
     setShowresults(false);
+    setNoRecord(false);
   };
   const sendBatchSMS = () => {
     if (selectedBusinesses.length === 0) {
@@ -315,7 +325,11 @@ const Nearbypromotion = () => {
           ) : (
             <div className="container defaultContainer mt-2">
               <p>
-                <strong>Your Result Will be Shown Here!!..</strong>
+                {noRecord ? (
+                  <strong>No Records found</strong>
+                ) : (
+                  <strong>Your Result Will be Shown Here!!..</strong>
+                )}
               </p>
             </div>
           )}
