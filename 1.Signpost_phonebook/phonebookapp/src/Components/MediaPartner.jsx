@@ -442,12 +442,14 @@ function MediaPartner() {
   const [showPopup, setShowPopup] = useState(false);
   const [showPopup1, setShowPopup1] = useState(false);
   const mypriority = "0";
-  const mydiscount = "0";
+  const mydiscount = "";
   const mydescription = "Update Soon";
   const cmpanyPrefix = "M/s.";
   const navigate = useNavigate();
   const smsBody = encodeURIComponent(
-    `Dear sir, \n Signpost PHONE BOOK,  is a portal for  Mobile Number Finder and & Dialerwith Digital Marketing. Please kindly view and verify the correctness of details on your firm, at the earliest. \n URL :- www.signpostphonebook.in \n User name :-  your mobile number \n Password  :- Signpost \n You can use the PHONE BOOK for your business promotion in any desired (Pincode) area so Entire Coimbatore`
+    `Dear ${
+      mybusinessname ? `M/s.${mybusinessname}` : (myprefix, myperson)
+    }, \n Signpost PHONE BOOK,  is a portal for  Mobile Number Finder and & Dialerwith Digital Marketing. Please kindly view and verify the correctness of details on your firm, at the earliest. \n URL :- www.signpostphonebook.in \n User name :-  your mobile number \n Password  :- Signpost \n You can use the PHONE BOOK for your business promotion in any desired (Pincode) area so Entire Coimbatore`
   );
 
   const { userData } = useAuth();
@@ -511,7 +513,7 @@ function MediaPartner() {
     e.preventDefault();
     setShowPopup(false);
     const smsBody = encodeURIComponent(
-      `Dear sir,  
+      `Dear ${mybusinessname ? `M/s.${mybusinessname}` : (myprefix, myperson)}  
 Signpost PHONE BOOK,  is a portal for  Mobile Number Finder and & Dialer with Digital Marketing. Please kindly view and verify the correctness of details on your firm, at the earliest.
 
 URL :- www.signpostphonebook.in
