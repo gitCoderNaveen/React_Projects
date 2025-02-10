@@ -88,6 +88,10 @@ textarea {
   border-radius: 5px;
 }
 
+.red-star{
+  color: #EC2D01;
+}
+
 .radio-group {
   display: flex;
   align-items: center;
@@ -119,6 +123,10 @@ textarea {
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     position: relative;
+  }
+
+  .red-star{
+    color: #EC2D01;
   }
   
   .animate-slide-in {

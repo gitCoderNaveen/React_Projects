@@ -409,6 +409,7 @@ import "../Css/Signup.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "./Auth";
+import { AlternateEmail } from "@mui/icons-material";
 
 function MediaPartner() {
   const [mypromoCode, setPromoCode] = useState("");
@@ -448,7 +449,7 @@ function MediaPartner() {
   const navigate = useNavigate();
   const smsBody = encodeURIComponent(
     `Dear ${
-      mybusinessname ? `M/s.${mybusinessname}` : (myprefix, myperson)
+      mybusinessname ? `M/s.${mybusinessname}` : `${myprefix}.${myperson}`
     }, \n Signpost PHONE BOOK,  is a portal for  Mobile Number Finder and & Dialerwith Digital Marketing. Please kindly view and verify the correctness of details on your firm, at the earliest. \n URL :- www.signpostphonebook.in \n User name :-  your mobile number \n Password  :- Signpost \n You can use the PHONE BOOK for your business promotion in any desired (Pincode) area so Entire Coimbatore`
   );
 
@@ -513,14 +514,20 @@ function MediaPartner() {
     e.preventDefault();
     setShowPopup(false);
     const smsBody = encodeURIComponent(
-      `Dear ${mybusinessname ? `M/s.${mybusinessname}` : (myprefix, myperson)}  
+      `Dear ${
+        mybusinessname
+          ? `${myprefix} ${myperson}, M/s.${mybusinessname}`
+          : `${myprefix} ${myperson}`
+      }  
 Signpost PHONE BOOK,  is a portal for  Mobile Number Finder and & Dialer with Digital Marketing. Please kindly view and verify the correctness of details on your firm, at the earliest.
 
 URL :- www.signpostphonebook.in
 User name :-  Your mobile number 
 Password  :- Signpost
+You are registered Under the Category
+${myproduct}
 
-You can use the PHONE BOOK for your business promotion in any desired (Pincode) area so Entire Coimbatore`
+You can use the PHONE BOOK for your business promotion in any desired (Pincode) area or Entire Coimbatore`
     );
     const smsLink = `sms:${mymobileno}?body=${smsBody}`;
 
@@ -528,6 +535,22 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
       window.location.href = smsLink;
     }, 2000);
     resetForm();
+  };
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+
+    // Allow only numbers
+    if (/^\d*$/.test(value)) {
+      setMobileno(value);
+      // Validation: Check for length and starting digit
+      if (value.length > 10) {
+        alert("The number should not exceed 10 digits.");
+      } else if (value.length === 10 && !/^[6-9]/.test(value)) {
+        alert("Enter a Valid number");
+        setMobileno("");
+      }
+    }
   };
 
   const handleClosePopup1 = (e) => {
@@ -855,9 +878,7 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
               name="mobile"
               value={mymobileno}
               onClick={handleMobileHelptext}
-              onChange={(e) => {
-                setMobileno(e.target.value);
-              }}
+              onChange={handleChange}
               maxLength={10}
               onInput={(e) => {
                 if (e.target.value.length > 10)
@@ -867,9 +888,9 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
               required
             />
             {showMobiletext && (
-              <p className="helptext">{`Type 10 digits with get Country code (+91), without gap Don't Type Land Line`}</p>
+              <p className="helptext">{`Type 10 digits without Country code (+91), without gap Don't Type Land Line`}</p>
             )}
-            <label htmlFor="name">Person Name:</label>
+            <label htmlFor="name">Person Name*:</label>
             <input
               type="text"
               id="name"
@@ -877,6 +898,12 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
               value={myperson}
               onClick={handlePersonHelptext}
               onChange={handlePersonName}
+              onSelect={() => {
+                if (mymobileno.length < 10) {
+                  alert("Enter Vaid Mobile Number");
+                  setMobileno("");
+                }
+              }}
             />
             {showPersonName && (
               <p className="helptext">{`Type Initial at the end`}</p>
@@ -913,7 +940,7 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
             {showprefixtext && (
               <p className="helptext">{`Select Mr. For Gents and Ms. for Ladies`}</p>
             )}
-            <label htmlFor="name">Firm/Business Name:</label>
+            <label htmlFor="name">Firm/Business Name*:</label>
             <input
               type="text"
               id="name"
@@ -921,11 +948,19 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
               value={mybusinessname}
               onClick={handleBusinessHelptext}
               onChange={handleBusinessName}
+              onSelect={() => {
+                if (mymobileno.length < 10) {
+                  alert("Enter Vaid Mobile Number");
+                  setMobileno("");
+                }
+              }}
             />
             {showbusinesstext && (
               <p className="helptext">{`Type Your FirmName or BusinessName`}</p>
             )}
-            <label htmlFor="address">Address*:</label>
+            <label htmlFor="address">
+              Address<span className="red-star">*</span>:
+            </label>
             <textarea
               id="address"
               name="address"
@@ -939,7 +974,9 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
             {showAddressText && (
               <p className="helptext">{`Type Door Number, Street, Flat No, Appartment Name, Landmark, Area Name etc.`}</p>
             )}
-            <label htmlFor="city">City:*</label>
+            <label htmlFor="city">
+              City<span className="red-star">*</span>:
+            </label>
             <input
               type="text"
               id="city"
@@ -952,7 +989,9 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
             {showCityText && (
               <p className="helptext">{`Type City Name. Don't Use Petnames (Kovai Etc.)`}</p>
             )}
-            <label htmlFor="pincode">Pincode:</label>
+            <label htmlFor="pincode">
+              Pincode<span className="red-star">*</span>:
+            </label>
             <input
               type="number"
               id="pincode"

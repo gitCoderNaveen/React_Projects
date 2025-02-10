@@ -88,6 +88,10 @@
     align-items: center;
    
   }
+
+  .red-star{
+    color: #EC2D01;
+  }
   
   .helptext{
     color:red;
