@@ -560,7 +560,7 @@ function Signup() {
   const [showPopup, setShowPopup] = useState(false);
   const [showPopup1, setShowPopup1] = useState(false);
   const mypriority = "0";
-  const mydiscount = "10";
+  const mydiscount = "";
   const mydescription = "Update Soon";
   const cmpanyPrefix = "M/s.";
   const navigate = useNavigate();
