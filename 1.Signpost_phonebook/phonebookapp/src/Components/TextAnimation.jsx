@@ -1,48 +1,80 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { useAuth } from "./Auth";
+import React, { useState, useEffect } from "react";
 
-export default function TextAnimation() {
-  const [response, setResponse] = useState(null);
-  const { userData } = useAuth();
-  const username = userData.businessname;
-  const userid = userData.id;
-  const mycount = 1;
-  const mydate = new Date().toISOString().split("T")[0];
+function TextAnimation() {
+  const [firmName, setFirmName] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = {
-      id: userid,
-      name: username,
-      date: mydate,
-      count: mycount,
+  useEffect(() => {
+    const fetchData = async () => {
+      if (firmName.trim() === "") {
+        setSuggestions([]);
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          `https://signpostphonebook.in/client_fetch_byname_and_byperson.php?searchname=${firmName}`
+        );
+
+        if (!response.ok) {
+          throw new Error(`HTTP Error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (Array.isArray(data)) {
+          const sortedData = data
+            .filter(
+              (item) =>
+                item.businessname
+                  .toLowerCase()
+                  .includes(firmName.toLowerCase()) ||
+                item.personname.toLowerCase().includes(firmName.toLowerCase())
+            )
+            .sort((a, b) => {
+              const nameA =
+                a.businessname.toLowerCase() || a.personname.toLowerCase();
+              const nameB =
+                b.businessname.toLowerCase() || b.personname.toLowerCase();
+              return nameA.localeCompare(nameB);
+            });
+
+          setSuggestions(sortedData);
+        } else {
+          setSuggestions([]);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     };
 
-    try {
-      const res = await axios.post(
-        "https://signpostphonebook.in/data_enty_insert.php",
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      setResponse(res.data);
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      setResponse({
-        success: false,
-        message: "An error occurred. Please try again.",
-      });
-    }
-  };
+    fetchData();
+  }, [firmName]);
 
   return (
-    <div>
-      <button onClick={handleSubmit}>Click to submit</button>
-      {response}
+    <div className="p-4">
+      <label htmlFor="firmName" className="block mb-2 font-semibold">
+        Firm Name
+      </label>
+      <input
+        type="text"
+        id="firmName"
+        value={firmName}
+        onChange={(e) => setFirmName(e.target.value)}
+        className="border p-2 w-full rounded"
+        placeholder="Type a firm or business name"
+      />
+      {suggestions.length > 0 && (
+        <ul className="mt-2 border rounded shadow-lg bg-white max-h-48 overflow-y-auto">
+          {suggestions.map((item, index) => (
+            <li key={index} className="p-2 hover:bg-gray-100 cursor-pointer">
+              {item.businessname || item.personname}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
+
+export default TextAnimation;

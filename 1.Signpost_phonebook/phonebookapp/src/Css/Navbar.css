@@ -1,7 +1,9 @@
-
+.navbar{
+  background: url('../assets/images/background.jpg') no-repeat center center/cover; 
+}
 .nav-brand{
   text-decoration: none;
-  color: #EC2D01;
+  color: #ffffff;
   font-size: x-large;
   font-weight: 700;
 }

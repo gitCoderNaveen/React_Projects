@@ -1,19 +1,24 @@
-/* General Reset */  
+General Reset  
+*{
+  background: url('../assets/images/background.jpg') no-repeat center center/cover; 
+}
 .mycontainer {
     text-align: center;
     width: 100%;
     padding: 10px;
-    box-sizing: border-box;    
+    box-sizing: border-box; 
+    background: url('../assets/images/background.jpg') no-repeat center center/cover; 
+      
   }
   /* Sticky Container */
   .sticky-container {
     position: sticky;
-    top: 55px; /* Distance from the top of the viewport */
+    top: 14%; /* Distance from the top of the viewport */
     z-index: 1000; /* Ensures it stays above other content */
-    background-color: #fff; /* Matches the page background */
     padding: 10px;
     margin: 4px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional for visual separation */
+    background: linear-gradient(to right, rgb(147, 15, 147), rgb(57, 57, 232));
   }
   
   
@@ -399,13 +404,54 @@
     }
     .sticky-container {
       position: sticky;
-      top: 55px; /* Distance from the top of the viewport */
+      top: 13%; /* Distance from the top of the viewport */
       z-index: 1000; /* Ensures it stays above other content */
-      background-color: #fff; /* Matches the page background */
+      background: linear-gradient(to right, rgb(147, 15, 147), rgb(57, 57, 232)); 
       padding: auto;
       margin: 4px auto;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
       width: 100%; /* Optional for visual separation */
+      border-radius: 10px;
+    }
+    .sticky-container .input-container {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+    }
+    .input-container .input-box {
+      height: 40px;
+      font-size: 16px;
+      padding: 5px;
+      transition: width 0.3s ease-in-out;
+    }
+    
+    .input-container .expanded {
+      width: 80%;
+    }
+    
+    .input-container .shrunken {
+      width: 20%;
+    }
+
+    .input-container .clear-button{
+      position: absolute;
+      right:25%;
+      background: none;
+      border: none;
+      background-color: gray;
+      top: -13.5%;
+      border-radius: 5px;
+      padding: 4px;
+    }
+    .input-container .personclear-button{
+      position: absolute;
+      right:1%;
+      background: none;
+      border: none;
+      background-color: gray;
+      top: -13.5%;
+      border-radius: 5px;
+      padding: 4px;
     }
     
 

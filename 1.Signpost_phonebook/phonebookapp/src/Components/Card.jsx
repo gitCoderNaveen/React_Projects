@@ -26,7 +26,7 @@ const Card = () => {
     }
 
     const data = {
-      From_Name: userData.businessname,
+      From_Name: userData.businessname || userData.person,
       From_MobileNo: userData.mobileno,
       To_Name: referName,
       To_MobileNo: referNo,

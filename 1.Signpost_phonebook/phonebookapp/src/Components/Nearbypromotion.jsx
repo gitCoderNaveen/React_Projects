@@ -110,7 +110,7 @@ const Nearbypromotion = () => {
         customMessage
       )}`;
       window.location.href = smsUri;
-      handleSelectAllChange();
+      setSelectedBusinesses([]);
     } catch (error) {
       console.error("Error opening SMS application:", error.message);
       window.alert(

@@ -53,10 +53,10 @@ export default function Navigationpage() {
       <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top">
         <div className="container-fluid">
           <NavLink className="nav-brand" to="/">
-            Signpost Phone Book
+            Signpost PHONE BOOK
           </NavLink>
           <button
-            className="navbar-toggler"
+            className="navbar-toggler bg-light"
             type="button"
             onClick={toggleDrawer}
             aria-label="Toggle navigation"
@@ -66,25 +66,31 @@ export default function Navigationpage() {
           <div className="collapse navbar-collapse">
             <ul className="navbar-nav ms-auto">
               <li className="nav-item">
-                <NavLink className="nav-link" to="/home">
+                <NavLink className="nav-link text-light" to="/home">
                   Home
                 </NavLink>
               </li>
               {user ? (
                 <>
                   <li className="nav-item">
-                    <NavLink className="nav-link" to="/NearbyPromotion">
+                    <NavLink
+                      className="nav-link text-light"
+                      to="/NearbyPromotion"
+                    >
                       Nearby Promotion
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink className="nav-link" to="/SearchandSendSms">
+                    <NavLink
+                      className="nav-link text-light"
+                      to="/SearchandSendSms"
+                    >
                       Categorywise Promotion
                     </NavLink>
                   </li>
                   {isAdminUser && (
                     <li className="nav-item">
-                      <NavLink className="nav-link" to="/admin">
+                      <NavLink className="nav-link text-light" to="/admin">
                         Admin
                       </NavLink>
                     </li>
@@ -107,11 +113,11 @@ export default function Navigationpage() {
             </ul>
             {user ? (
               <div className="userfn-btn">
-                <span className="navbar-text d-block m-2 userlogin-name">
+                <span className="navbar-text d-block m-2 userlogin-name text-light">
                   Welcome,{" "}
                   {user ? (
                     <button className="user_btn" onClick={handleProfile}>
-                      <strong>{user}</strong>
+                      <strong className="text-light">{user}</strong>
                     </button>
                   ) : (
                     <strong>Guest</strong>

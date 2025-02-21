@@ -1,56 +1,134 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { useAuth } from "./Auth";
 import { useNavigate } from "react-router-dom";
+import { ThreeDot } from "react-loading-indicators";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 import "../Css/Homepage.css";
+import "../Css/Phonescreen.css";
+import { color } from "framer-motion";
 
 export default function Homepage() {
   const [data, setData] = useState([]);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 480);
   const [selectedItem, setSelectedItem] = useState(null);
   const [firmName, setFirmName] = useState("");
   const [productName, setProductName] = useState("");
-  const [messageTemplate] = useState(
-    "I Saw Your Listing in SIGNPOST PHONE BOOK. I am Interested in your Products. Please Send Details/Call Me."
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [activeInput, setActiveInput] = useState(1);
+  const [fetchError, setFetchError] = useState(null);
+  const [isFetching, setIsFetching] = useState(false);
+  const [debouncedFirmName, setDebouncedFirmName] = useState(firmName);
+  const itemsPerPage = 10;
+
+  const messageTemplate =
+    "I Saw Your Listing in SIGNPOST PHONE BOOK. I am Interested in your Products. Please Send Details/Call Me.";
+  const encodedMessage = useMemo(
+    () => encodeURIComponent(messageTemplate),
+    [messageTemplate]
   );
-  const encodedMessage = encodeURIComponent(messageTemplate);
-  const [progress, setProgress] = useState(0);
 
-  const { user, userData } = useAuth();
-
+  const { user } = useAuth();
   const navigate = useNavigate();
 
-  const fetchData = async () => {
+  // Debounce the firmName input to prevent rapid API calls
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedFirmName(firmName);
+    }, 500); // Adjust debounce delay as needed (e.g., 500ms)
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [firmName]);
+
+  const fetchData = useCallback(async () => {
+    // Avoid unnecessary calls
+
+    let url = debouncedFirmName
+      ? `https://signpostphonebook.in/search/ascending_ordered_by_businessname_and_person.php?searchLetter=${debouncedFirmName}&page=${currentPage}&limit=${itemsPerPage}`
+      : productName
+      ? `https://signpostphonebook.in/search/ordered_list_by_product.php?searchLetter=${productName}&page=${currentPage}&limit=${itemsPerPage}`
+      : `https://signpostphonebook.in/client_fetch_by_dropdown.php?page=${currentPage}&limit=${itemsPerPage}`;
+
+    setIsFetching(true);
+    setFetchError(null); // Clear previous errors before new fetch
+
     try {
-      const response = await fetch(
-        "https://signpostphonebook.in/client_fetch_for_new_database.php"
-      );
-      if (!response.ok)
-        throw new Error(`HTTP Error! Status: ${response.status}`);
+      const controller = new AbortController();
+      const signal = controller.signal;
+
+      const response = await fetch(url, { signal });
+      if (!response.ok) throw new Error("Failed to fetch data");
+
       const jsonResponse = await response.json();
-      if (Array.isArray(jsonResponse)) {
-        setData(jsonResponse.sort((a, b) => b.id - a.id));
-      } else {
-        alert("Unexpected response from server.");
-      }
+      if (!Array.isArray(jsonResponse.data))
+        throw new Error("Invalid response format");
+
+      setData(jsonResponse.data.sort((a, b) => b.id - a.id));
+      setTotalPages(jsonResponse.totalPages);
     } catch (error) {
-      alert("Failed to load data: " + error.message);
+      if (error.name !== "AbortError") {
+        setFetchError(`Error loading data: ${error.message}`);
+      }
+    } finally {
+      setIsFetching(false);
+    }
+  }, [debouncedFirmName, productName, currentPage]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  // // Function to fetch paginated data (Server-Side Pagination)
+  // const fetchData = useCallback(async () => {
+  //   let url = firmName
+  //     ? `https://signpostphonebook.in/search/ascending_ordered_by_businessname_and_person.php?searchLetter=${firmName}&page=${currentPage}&limit=${itemsPerPage}`
+  //     : productName
+  //     ? `https://signpostphonebook.in/search/ordered_list_by_product.php?searchLetter=${productName}&page=${currentPage}&limit=${itemsPerPage}`
+  //     : `https://signpostphonebook.in/client_fetch_by_dropdown.php?page=${currentPage}&limit=${itemsPerPage}`;
+
+  //   try {
+  //     const response = await fetch(url);
+  //     if (!response.ok) throw new Error("Failed to fetch data");
+  //     const jsonResponse = await response.json();
+  //     if (!Array.isArray(jsonResponse.data))
+  //       throw new Error("Invalid response format");
+
+  //     setData(jsonResponse.data.sort((a, b) => b.id - a.id));
+  //     setTotalPages(jsonResponse.totalPages); // Ensure the API returns total pages count
+  //   } catch (error) {
+  //     alert(`Error loading data: ${error.message}`);
+  //   }
+  // }, [firmName, productName, currentPage]);
+
+  // useEffect(() => {
+  //   fetchData();
+  // }, [fetchData]);
+
+  // Function to handle page navigation
+  const goToPage = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
     }
   };
 
+  // Handle window resize
   useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          return 100;
-        }
-        return prev + 1;
-      });
-    }, 50);
-    return () => clearInterval(interval);
+    const handleResize = () => setIsMobile(window.innerWidth < 480);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const maskMobileNumber = useMemo(
+    () => (mobileNumber) =>
+      mobileNumber && mobileNumber.length > 5
+        ? mobileNumber.slice(0, -5) + "xxxxx"
+        : mobileNumber,
+    []
+  );
   function toTitleCase(str) {
     return str
       .toLowerCase()
@@ -58,72 +136,13 @@ export default function Homepage() {
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
   }
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 480);
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const maskMobileNumber = (mobileNumber) =>
-    mobileNumber && mobileNumber.length > 5
-      ? mobileNumber.slice(0, -5) + "xxxxx"
-      : mobileNumber;
-
-  const fetchFirmData = async (name) => {
-    if (!name) return;
-    try {
-      const response = await fetch(
-        `https://signpostphonebook.in/client_fetch_byname_and_byperson.php?searchname=${name}`
-      );
-
-      if (!response.ok) {
-        throw new Error(`HTTP Error! Status: ${response.status}`);
-      }
-
-      const jsonResponse = await response.json();
-      if (Array.isArray(jsonResponse)) {
-        setData(jsonResponse);
-      } else {
-        window.alert("Unexpected response from server.");
-      }
-    } catch (error) {
-      console.error("Fetch Error:", error);
-      window.alert("Failed to load firm data: " + error.message);
-    }
+  const handleFirmname = () => {
+    setProductName("");
+    setActiveInput(1);
   };
-
-  const fetchProductData = async (name) => {
-    if (!name) return;
-
-    try {
-      const response = await fetch(
-        `https://signpostphonebook.in/client_fetch_byproduct_for_new_database.php?searchname=${name}`
-      );
-
-      if (!response.ok) {
-        throw new Error(`HTTP Error! Status: ${response.status}`);
-      }
-
-      const jsonResponse = await response.json();
-
-      // Ensure the response is an array
-      if (Array.isArray(jsonResponse)) {
-        setData(jsonResponse);
-      } else {
-        window.alert("Unexpected response from server.");
-      }
-    } catch (error) {
-      console.error("Fetch Error:", error);
-      window.alert("Failed to load product data: " + error.message);
-    }
+  const handleProductname = () => {
+    setFirmName("");
+    setActiveInput(2);
   };
 
   const handleCallClick = (item) => {
@@ -144,48 +163,7 @@ export default function Homepage() {
     }
   };
 
-  const closePopup = () => {
-    setSelectedItem(null);
-  };
-
-  useEffect(() => {
-    if (firmName) fetchFirmData(firmName);
-    else fetchData();
-  }, [firmName]);
-
-  useEffect(() => {
-    if (productName) fetchProductData(productName);
-    else fetchData();
-  }, [productName]);
-
-  const styles = {
-    container: {
-      display: "flex",
-      gap: "20px",
-      justifyContent: "center",
-      alignItems: "center",
-      marginTop: "2px",
-    },
-    inputContainer: {
-      position: "relative",
-      width: "250px",
-    },
-    input: {
-      width: "100%",
-      padding: "10px 10px 10px 40px", // Leave space for the icon
-      borderRadius: "5px",
-      border: "1px solid #ccc",
-      fontSize: "16px",
-    },
-    icon: {
-      position: "absolute",
-      top: "50%",
-      left: "10px",
-      transform: "translateY(-50%)",
-      color: "#888",
-      fontSize: "18px",
-    },
-  };
+  const closePopup = () => setSelectedItem(null);
 
   return (
     <div>
@@ -193,35 +171,56 @@ export default function Homepage() {
         <div className="sticky-container">
           {/* Search Bars */}
           {isMobile ? (
-            <div style={styles.container}>
+            <div className="input-container ">
               {/* First Input Box */}
-              <div style={styles.inputContainer}>
-                <FaSearch style={styles.icon} />
-                <input
-                  type="text"
-                  placeholder="Firm/Person Name"
-                  style={styles.input}
-                  onChange={(e) => setFirmName(e.target.value)}
-                  onSelect={() => setProductName("")}
-                  value={firmName}
-                />
-              </div>
+              <input
+                type="text"
+                placeholder="Firm/Person Name"
+                onChange={(e) => setFirmName(e.target.value)}
+                onSelect={handleFirmname}
+                value={firmName}
+                autoComplete="off"
+                className={`input-box ${
+                  activeInput === 1 ? "expanded" : "shrunken"
+                }`}
+              />
+              {firmName && (
+                <button
+                  onClick={() => {
+                    setFirmName("");
+                  }}
+                  className="clear-button"
+                >
+                  Clear
+                </button>
+              )}
 
               {/* Second Input Box */}
-              <div style={styles.inputContainer}>
-                <FaSearch style={styles.icon} />
-                <input
-                  type="text"
-                  placeholder="Product Name"
-                  style={styles.input}
-                  onChange={(e) => setProductName(e.target.value)}
-                  onSelect={() => setFirmName("")}
-                  value={productName}
-                />
-              </div>
+
+              <input
+                type="text"
+                placeholder="Product Name"
+                onChange={(e) => setProductName(e.target.value)}
+                onSelect={handleProductname}
+                value={productName}
+                autoComplete="off"
+                className={`input-box ${
+                  activeInput === 2 ? "expanded" : "shrunken"
+                }`}
+              />
+              {productName && (
+                <button
+                  onClick={() => {
+                    setProductName("");
+                  }}
+                  className="personclear-button"
+                >
+                  Clear
+                </button>
+              )}
             </div>
           ) : (
-            <div className="search-container">
+            <div className="search-container text-light">
               <label>Firm/Person: </label>
               <input
                 type="text"
@@ -243,6 +242,15 @@ export default function Homepage() {
             </div>
           )}
         </div>
+        {/* Phone Frame */}
+        {/* <div className="phone-container"> */}
+        {/* <h1>Find Anyone!.. Anytime!..</h1> */}
+        {/* <div className="phone-frame"> */}
+        {/* Camera */}
+        {/* <div className="phone-camera"></div> */}
+
+        {/* Scrollable List inside Phone Screen */}
+        {/* <div className="phone-screen"> */}
         {/* Contact Cards */}
         <div className="home_contactcard-div">
           {data.length > 0 ? (
@@ -309,22 +317,53 @@ export default function Homepage() {
               </div>
             ))
           ) : (
-            <div className="download-container">
-              <div className="loader-wrapper">
-                <div className="status-text">
-                  {progress < 100 ? "Loading..." : "Completed!"}
-                </div>
-                {progress < 100 && <div className="spinner"></div>}
-              </div>
-              <div className="progress-bar">
-                <div
-                  className="progress-fill"
-                  style={{ width: `${progress}%` }}
-                ></div>
-              </div>
-            </div>
+            <p className="loading-bar">
+              <ThreeDot color="#ffffff" size="medium" text="" textColor="" />
+            </p>
           )}
         </div>
+        {/* </div> */}
+        {/* <div className="phone-home"></div> */}
+        {/* </div> */}
+        {/* Pagination Controls */}
+
+        <div className="pagination">
+          <button
+            disabled={currentPage === 1}
+            onClick={() => goToPage(currentPage - 1)}
+          >
+            ◀ Previous
+          </button>
+          <button
+            disabled={currentPage === totalPages}
+            onClick={() => goToPage(currentPage + 1)}
+          >
+            Next ▶
+          </button>
+        </div>
+
+        <div className="pagination-number">
+          <Stack spacing={2}>
+            <Pagination
+              count={totalPages}
+              color="primary"
+              page={currentPage}
+              onChange={(event, value) => goToPage(value)}
+            />
+          </Stack>
+        </div>
+
+        {/* "Go to Page" Input */}
+        <div className="goto-page">
+          <input
+            type="number"
+            min="1"
+            max={totalPages}
+            placeholder="Go to page..."
+            onChange={(e) => goToPage(Number(e.target.value))}
+          />
+        </div>
+        {/* </div> */}
 
         {/* Popup */}
         {selectedItem && (
