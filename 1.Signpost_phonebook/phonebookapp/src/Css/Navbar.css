@@ -37,7 +37,8 @@
 .user_btn{
   border: none;
   background: none;
-  color: #EC2D01;
+  color: #f9f5f5;
+  font-weight: 700;
 }
 
 
@@ -66,6 +67,13 @@
       margin-left: 10px;
       justify-content: left;
       align-items: flex-start;
+    }
+    .user_btn{
+      border: none;
+      background: none;
+      color: #EC2D01;
+      font-weight: 700;
+      margin-left: 10px;
     }
 }
 

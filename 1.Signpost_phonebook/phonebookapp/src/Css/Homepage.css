@@ -404,7 +404,7 @@ General Reset
     }
     .sticky-container {
       position: sticky;
-      top: 13%; /* Distance from the top of the viewport */
+      top: 9%; /* Distance from the top of the viewport */
       z-index: 1000; /* Ensures it stays above other content */
       background: linear-gradient(to right, rgb(147, 15, 147), rgb(57, 57, 232)); 
       padding: auto;

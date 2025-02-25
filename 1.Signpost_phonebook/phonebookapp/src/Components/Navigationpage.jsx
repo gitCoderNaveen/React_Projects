@@ -114,10 +114,9 @@ export default function Navigationpage() {
             {user ? (
               <div className="userfn-btn">
                 <span className="navbar-text d-block m-2 userlogin-name text-light">
-                  Welcome,{" "}
                   {user ? (
                     <button className="user_btn" onClick={handleProfile}>
-                      <strong className="text-light">{user}</strong>
+                      My Profile
                     </button>
                   ) : (
                     <strong>Guest</strong>
@@ -156,10 +155,9 @@ export default function Navigationpage() {
         }}
       >
         <span className="navbar-text d-block m-2">
-          Welcome,{" "}
           {user ? (
             <button className="user_btn" onClick={handleProfile}>
-              {user}
+              My Profile
             </button>
           ) : (
             <strong>Guest</strong>

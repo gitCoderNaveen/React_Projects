@@ -345,7 +345,7 @@ export default function Homepage() {
         <div className="pagination-number">
           <Stack spacing={2}>
             <Pagination
-              count={totalPages}
+              count={50}
               color="primary"
               page={currentPage}
               onChange={(event, value) => goToPage(value)}

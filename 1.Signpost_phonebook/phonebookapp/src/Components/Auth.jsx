@@ -10,8 +10,6 @@ export default function Auth({ children }) {
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
 
-  
-
   // Persist user data in localStorage
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -66,7 +64,7 @@ export default function Auth({ children }) {
 
   return (
     <Authcontext.Provider
-      value={{ user, userData, Login, Logout }}
+      value={{ user, userData, setUserData, Login, Logout }}
     >
       {children}
     </Authcontext.Provider>
