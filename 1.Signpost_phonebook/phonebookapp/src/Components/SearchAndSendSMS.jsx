@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "../Css/SearchAndSendSms.css";
 import { FaPencilAlt } from "react-icons/fa";
+import axios from "axios";
+import { useAuth } from "./Auth";
 
 export default function SearchAndSendSMS() {
   const [data, setData] = useState([]);
@@ -20,6 +22,7 @@ export default function SearchAndSendSMS() {
   const [customMessage, setCustomMessage] = useState(
     "I Saw Your Listing in SIGNPOST PHONE BOOK. I am Interested in your Products. Please Send Details/Call Me. (Sent Thro Signpost PHONE BOOK)"
   );
+  const { userData } = useAuth();
 
   const handleProductChange = (value) => {
     setProductInput(value);
@@ -113,6 +116,26 @@ export default function SearchAndSendSMS() {
       window.alert("No clients selected!");
       return;
     }
+    const currentDate = new Date().toISOString().split("T")[0];
+
+    const postData = {
+      user_name: userData.bussinessname || userData.person || "Unknown",
+      date: currentDate,
+      pincode: "",
+      product: productInput.trim(),
+      promotion_from: "CatagoryWise Promotion",
+      selected_count: selectedClients.length,
+    };
+
+    axios
+      .post(
+        "https://signpostphonebook.in/promotion_app/promotion_appliaction.php",
+        postData
+      )
+      .then((response) => {
+        console.log(response.data.Message);
+      })
+      .catch((error) => console.error("Error sending data:", error));
 
     const mobileNumbers = selectedClients.map((client) => client.mobileno);
     try {
@@ -121,6 +144,7 @@ export default function SearchAndSendSMS() {
         customMessage
       )}`;
       window.location.href = smsUri;
+      setSelectedClients([]);
     } catch (error) {
       console.error("Error opening SMS application:", error.message);
       window.alert(

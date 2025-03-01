@@ -156,11 +156,16 @@ export default function Navigationpage() {
       >
         <span className="navbar-text d-block m-2">
           {user ? (
-            <button className="user_btn" onClick={handleProfile}>
-              My Profile
-            </button>
+            <div>
+              <p>
+                Welcome <strong>{user}</strong>
+              </p>
+              <button className="user_btn" onClick={handleProfile}>
+                My Profile
+              </button>
+            </div>
           ) : (
-            <strong>Guest</strong>
+            <strong>Welcome Guest</strong>
           )}
         </span>
         <ul className="navbar-nav p-3">

@@ -907,7 +907,7 @@ function Signup() {
         <h2 className="header-text">Signup</h2>
         <div className="form-container">
           <form className="scrollable-form">
-            <label htmlFor="mobile">Mobile Number:</label>
+            <label htmlFor="mobile">Mobile Number*:</label>
             <input
               type="number"
               id="mobile"
@@ -929,7 +929,7 @@ function Signup() {
               <p className="helptext">{`Type 10 digits with get Country code (+91), without gap Don't Type Land Line`}</p>
             )}
 
-            <label htmlFor="name">Person Name:</label>
+            <label htmlFor="name">Person Name*:</label>
             <input
               type="text"
               id="name"
@@ -942,7 +942,7 @@ function Signup() {
               <p className="helptext">{`Type Initial at the end`}</p>
             )}
 
-            <label>Prefix:</label>
+            <label>Prefix*:</label>
             <div className="radio-group">
               <label>
                 <input
@@ -975,7 +975,7 @@ function Signup() {
               <p className="helptext">{`Select Mr. For Gents and Ms. for Ladies`}</p>
             )}
 
-            <label htmlFor="name">Firm/Business Name:</label>
+            <label htmlFor="name">Firm/Business Name*:</label>
             <input
               type="text"
               id="name"
@@ -988,22 +988,9 @@ function Signup() {
               <p className="helptext">{`Type Your FirmName or BusinessName`}</p>
             )}
 
-            <label htmlFor="address">Address:</label>
-            <textarea
-              id="address"
-              name="address"
-              value={myaddress}
-              onClick={handleAddress}
-              onChange={(e) => {
-                setAddress(e.target.value);
-              }}
-              required
-            ></textarea>
-            {showAddressText && (
-              <p className="helptext">{`Type Door Number, Street, Flat No, Appartment Name, Landmark, Area Name etc.`}</p>
-            )}
-
-            <label htmlFor="city">City:</label>
+            <label htmlFor="city">
+              City<span className="red-star">*</span>:
+            </label>
             <input
               type="text"
               id="city"
@@ -1017,7 +1004,9 @@ function Signup() {
               <p className="helptext">{`Type City Name. Don't Use Petnames (Kovai Etc.)`}</p>
             )}
 
-            <label htmlFor="pincode">Pincode:</label>
+            <label htmlFor="pincode">
+              Pincode<span className="red-star">*</span>:
+            </label>
             <input
               type="number"
               id="pincode"
@@ -1038,9 +1027,26 @@ function Signup() {
               <p className="helptext">{`Type 6 Digits Continioulsy Without Gap`}</p>
             )}
 
+            <label htmlFor="address">
+              Address<span className="red-star">*</span>:
+            </label>
+            <textarea
+              id="address"
+              name="address"
+              value={myaddress}
+              onClick={handleAddress}
+              onChange={(e) => {
+                setAddress(e.target.value);
+              }}
+              required
+            ></textarea>
+            {showAddressText && (
+              <p className="helptext">{`Type Door Number, Street, Flat No, Appartment Name, Landmark, Area Name etc.`}</p>
+            )}
+
             {mybusinessname && (
               <div>
-                <label htmlFor="productService">Product/Service:</label>
+                <label htmlFor="productService">Product/Service*:</label>
                 <input
                   type="text"
                   id="productService"

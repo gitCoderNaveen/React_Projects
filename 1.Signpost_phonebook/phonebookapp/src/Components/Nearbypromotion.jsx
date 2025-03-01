@@ -3,6 +3,7 @@ import axios from "axios";
 import "../Css/NearbyPromotion.css";
 import { FaPencilAlt } from "react-icons/fa";
 import { faL } from "@fortawesome/free-solid-svg-icons";
+import { useAuth } from "./Auth";
 
 const Nearbypromotion = () => {
   const [pincodeInput, setPincodeInput] = useState("");
@@ -19,6 +20,7 @@ const Nearbypromotion = () => {
   );
   const [prefix, setPrefix] = useState("");
   const [loading, setLoading] = useState(false);
+  const { userData, setUserData } = useAuth();
 
   const handleSelectAllChange = () => {
     if (selectAll) {
@@ -102,6 +104,26 @@ const Nearbypromotion = () => {
       window.alert("No clients selected!");
       return;
     }
+    const currentDate = new Date().toISOString().split("T")[0];
+
+    const postData = {
+      user_name: userData.bussinessname || userData.person || "Unknown",
+      date: currentDate,
+      pincode: pincodeInput.trim(),
+      product: "",
+      promotion_from: "Nearby Promotion",
+      selected_count: selectedBusinesses.length,
+    };
+
+    axios
+      .post(
+        "https://signpostphonebook.in/promotion_app/promotion_appliaction.php",
+        postData
+      )
+      .then((response) => {
+        console.log(response.data.Message);
+      })
+      .catch((error) => console.error("Error sending data:", error));
 
     const mobileNumbers = selectedBusinesses.map((client) => client.mobileno);
     try {

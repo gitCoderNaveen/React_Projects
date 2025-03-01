@@ -908,7 +908,7 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
             {showPersonName && (
               <p className="helptext">{`Type Initial at the end`}</p>
             )}
-            <label>Prefix:</label>
+            <label>Prefix*:</label>
             <div className="radio-group">
               <label>
                 <input
@@ -940,6 +940,7 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
             {showprefixtext && (
               <p className="helptext">{`Select Mr. For Gents and Ms. for Ladies`}</p>
             )}
+
             <label htmlFor="name">Firm/Business Name*:</label>
             <input
               type="text"
@@ -958,22 +959,7 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
             {showbusinesstext && (
               <p className="helptext">{`Type Your FirmName or BusinessName`}</p>
             )}
-            <label htmlFor="address">
-              Address<span className="red-star">*</span>:
-            </label>
-            <textarea
-              id="address"
-              name="address"
-              value={myaddress}
-              onClick={handleAddress}
-              onChange={(e) => {
-                setAddress(e.target.value);
-              }}
-              required
-            ></textarea>
-            {showAddressText && (
-              <p className="helptext">{`Type Door Number, Street, Flat No, Appartment Name, Landmark, Area Name etc.`}</p>
-            )}
+
             <label htmlFor="city">
               City<span className="red-star">*</span>:
             </label>
@@ -989,6 +975,7 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
             {showCityText && (
               <p className="helptext">{`Type City Name. Don't Use Petnames (Kovai Etc.)`}</p>
             )}
+
             <label htmlFor="pincode">
               Pincode<span className="red-star">*</span>:
             </label>
@@ -1010,6 +997,23 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
             />
             {showPincodeText && (
               <p className="helptext">{`Type 6 Digits Continioulsy Without Gap`}</p>
+            )}
+
+            <label htmlFor="address">
+              Address<span className="red-star">*</span>:
+            </label>
+            <textarea
+              id="address"
+              name="address"
+              value={myaddress}
+              onClick={handleAddress}
+              onChange={(e) => {
+                setAddress(e.target.value);
+              }}
+              required
+            ></textarea>
+            {showAddressText && (
+              <p className="helptext">{`Type Door Number, Street, Flat No, Appartment Name, Landmark, Area Name etc.`}</p>
             )}
 
             <div>
