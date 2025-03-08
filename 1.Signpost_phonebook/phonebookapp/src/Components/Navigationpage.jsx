@@ -70,46 +70,28 @@ export default function Navigationpage() {
                   Home
                 </NavLink>
               </li>
-              {user ? (
-                <>
                   <li className="nav-item">
-                    <NavLink
-                      className="nav-link text-light"
-                      to="/NearbyPromotion"
-                    >
-                      Nearby Promotion
+                    <NavLink className="nav-link text-light" to="/about">
+                      About Us
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink
-                      className="nav-link text-light"
-                      to="/SearchandSendSms"
-                    >
-                      Categorywise Promotion
-                    </NavLink>
-                  </li>
-                  {isAdminUser && (
-                    <li className="nav-item">
-                      <NavLink className="nav-link text-light" to="/admin">
-                        Admin
-                      </NavLink>
-                    </li>
-                  )}
-                </>
-              ) : (
-                <>
-                  <li className="nav-item">
-                    <NavLink className="nav-link" to="/about">
-                      About
-                    </NavLink>
-                  </li>
-                  <li className="nav-item">
-                    <NavLink className="nav-link" to="/contactus">
+                    <NavLink className="nav-link text-light" to="/contactus">
                       Contact Us
                     </NavLink>
-                  </li>
-                </>
-              )}
+                  </li>    
+                  {isAdminUser && (
+                <li className="nav-item">
+                  <NavLink
+                    className="nav-link text-light"
+                    to="/admin"
+                    onClick={toggleDrawer}
+                  >
+                    Admin
+                  </NavLink>
+                </li>
+              )}      
+            
             </ul>
             {user ? (
               <div className="userfn-btn">
@@ -119,7 +101,7 @@ export default function Navigationpage() {
                       My Profile
                     </button>
                   ) : (
-                    <strong>Guest</strong>
+                    <p><strong>Guest</strong></p>
                   )}
                 </span>
                 <button onClick={handleAddCustomer} className="btn btn-primary">
@@ -131,9 +113,12 @@ export default function Navigationpage() {
                 </button>
               </div>
             ) : (
-              <button onClick={handleLogin} className="btn btn-primary ms-3">
+              <div className="d-flex justify-content-center align-items-center text-light text-center">
+                <p><strong>Welcome Guest</strong></p>
+                <button onClick={handleLogin} className="btn btn-primary ms-3">
                 Login
               </button>
+              </div>
             )}
           </div>
         </div>
@@ -229,12 +214,12 @@ export default function Navigationpage() {
           ) : (
             <>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/about">
+                <NavLink className="nav-link" to="/about" onClick={()=>toggleDrawer()}>
                   About
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/contactus">
+                <NavLink className="nav-link" to="/contactus" onClick={()=>toggleDrawer()}>
                   Contact Us
                 </NavLink>
               </li>

@@ -475,9 +475,7 @@ const UserProfile = () => {
                               <h2>
                                 {userData.businessname || userData.person || ""}
                               </h2>
-                              <p>
-                                <strong>Valid Until:</strong> Date Not Available
-                              </p>
+
                               <p>
                                 <strong>Address:</strong>
                                 {userData.address}
@@ -485,7 +483,7 @@ const UserProfile = () => {
                             </div>
                           </div>
                           <div className="memfooter">
-                            This card is valid for 5 years from the date of
+                            This card is valid for 12 Months from the date of
                             issue.
                             <br />
                             46, Sidco Industrial Estate, Coimbatore - 641021
