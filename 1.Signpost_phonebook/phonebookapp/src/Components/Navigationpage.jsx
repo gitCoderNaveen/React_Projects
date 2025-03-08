@@ -215,7 +215,7 @@ export default function Navigationpage() {
             <>
               <li className="nav-item">
                 <NavLink className="nav-link" to="/about" onClick={()=>toggleDrawer()}>
-                  About
+                  About Us
                 </NavLink>
               </li>
               <li className="nav-item">

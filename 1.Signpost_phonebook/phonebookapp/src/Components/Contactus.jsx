@@ -18,7 +18,7 @@ const ContactCard = () => {
         <p className="contact-number">drshivakumaarj.md@signpostphonebook.in</p>
       </div>
     </div>
-    <div className="footer-div">
+    <div className="footer-div-contact">
       <p>Copy Rights © 2025 | SIGNPOST CELFON.IN TECHNOLOGY | All Rights Reserved.</p>
     </div>
     </div>

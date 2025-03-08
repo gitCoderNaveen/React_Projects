@@ -5,6 +5,7 @@ import "../Css/Aboutus.css";
 
 function AboutPage() {
   return (
+    <div>
     <div
       style={{
         padding: "20px",
@@ -74,11 +75,10 @@ function AboutPage() {
 
       <h3 style={{ color: "#004080" }}>For Registrations, Subscription:</h3>
       <p>
-        Signpost Celfon.in Technology, 46, SIDCO Industrial Estate, Coimbatore
-        641021
+      46, SIGNPOST TOWERS, FIRST FLOOR, SIDCO INDUSTRIAL ESTATE, TAMIL NADU, COIMBATORE ,Pincode - 641 021.
       </p>
       <p>
-        <strong>Contact:</strong> 98436 57564
+        <strong>Contact:</strong> 95145 55132
       </p>
 
       <h2 style={{ textAlign: "center", color: "#0066cc" }}>
@@ -100,6 +100,11 @@ function AboutPage() {
         Rs 4,500 (for Small)
       </p>
     </div>
+
+<div className="footer-div">
+<p>Copy Rights © 2025 | SIGNPOST CELFON.IN TECHNOLOGY | All Rights Reserved.</p>
+</div>
+</div>
   );
 }
 
