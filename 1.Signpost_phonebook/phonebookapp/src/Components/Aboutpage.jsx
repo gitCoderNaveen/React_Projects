@@ -11,24 +11,20 @@ function AboutPage() {
         padding: "20px",
         fontFamily: "Arial, sans-serif",
         lineHeight: "1.6",
+        backgroundColor:"#282534",
+        
       }}
     >
-      <h1 style={{ textAlign: "center", color: "#004080" }}>
-        Business Promotion for MSMEs
+      <h1 style={{ textAlign: "justify", color: "#fff", fontSize:"1.5rem", marginTop:"5px"}}>
+        Signpost PHONE BOOK is Your ultimate solution for effective business promotion. We specialize in helping businesses reach their target audience through powerful marketing channels like SMS, WhatsApp, and Email.
       </h1>
-      <h2 style={{ textAlign: "center", color: "#0066cc" }}>
-        is now Made Easy with <strong>PHONE BOOK</strong>
-      </h2>
-      <p style={{ fontSize: "1.1rem", marginTop: "20px" }}>
-        A Mobile App for Tiny, Micro & Small Firms
-      </p>
 
-      <h3 style={{ color: "#004080" }}>Highlights:</h3>
+      <h3 style={{ color: "#fff" }}>Highlights:</h3>
       <div className="phonebook_Intro">
         <div className="img_Section">
           <img src={phonebookLogo} alt="phonebookLogo" />
         </div>
-        <div>
+        <div style={{color:"#fff"}}>
           <ul>
             <li>Built-in Database of Lakhs of MSMEs</li>
             <li>Can be used in your Smart Mobile Phones</li>
@@ -42,9 +38,9 @@ function AboutPage() {
         </div>
       </div>
 
-      <h3 style={{ color: "#004080" }}>Uses:</h3>
+      <h3 style={{ color: "#fff" }}>Uses:</h3>
       <div className="phonebook_Intro">
-        <div>
+        <div style={{ color: "#fff" }}>
           <ul>
             <li>Find Phone Numbers of any MSME & Dial</li>
             <li>Send SMS, WhatsApp, Email</li>
@@ -73,26 +69,31 @@ function AboutPage() {
         </div>
       </div>
 
-      <h3 style={{ color: "#004080" }}>For Registrations, Subscription:</h3>
-      <p>
+      <h3 style={{ color: "#fff" }}>For Registrations, Subscription:</h3>
+      <p style={{ color: "#fff", textAlign:"justify" }}>
       46, SIGNPOST TOWERS, FIRST FLOOR, SIDCO INDUSTRIAL ESTATE, TAMIL NADU, COIMBATORE ,Pincode - 641 021.
       </p>
-      <p>
+      <p style={{ color: "#fff", textAlign:"justify" }}>
         <strong>Contact:</strong> 95145 55132
       </p>
 
-      <h2 style={{ textAlign: "center", color: "#0066cc" }}>
+      <h2 style={{ textAlign: "center", color: "#fff" }}>
         <strong>Signpost PHONE BOOK</strong>
       </h2>
-      <p style={{ textAlign: "center" }}>
+      <p style={{ textAlign: "justify", color:"#fff" }}>Our platform is designed to deliver seamless user experiences, ensuring you can easily create, manage, and track your promotional campaigns with ease. Whether you're a small business or a large enterprise, our tools are built to scale with your needs.
+
+We pride ourselves on offering <strong>24/7 customer support</strong>, ensuring that help is always available whenever you need it. With our reliable services and dedicated team, you can focus on growing your business while we handle the communication.
+
+Get started with Signpost Phone Book today and take your business promotion to the next level!</p>
+      <p style={{ textAlign: "center", color:"#fff"}}>
         Scan QR Code or Visit{" "}
-        <strong>
-          <a href="https://signpostphonebook.in">www.signpostphonebook.in</a>
+        <strong color="#fff">
+          <a href="https://signpostphonebook.in" style={{color:"#fff"}}>www.signpostphonebook.in</a>
         </strong>
       </p>
 
-      <h3 style={{ textAlign: "center", color: "#004080" }}>For MSMEs Only</h3>
-      <p style={{ textAlign: "center" }}>
+      <h3 style={{ textAlign: "center", color: "#fff" }}>For MSMEs Only</h3>
+      <p style={{ textAlign: "center", color: "#fff" }}>
         <strong>Annual Subscription:</strong>
         <br />
         Rs 2,500 (for Tiny & Micro)

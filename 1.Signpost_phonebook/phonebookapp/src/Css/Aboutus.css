@@ -9,6 +9,7 @@
 .QR_Section img{
     width: 200px;
     height: 200px;
+    background-color: #fff;
 }
 @media (max-width: 600px) {
     .phonebook_Intro{

@@ -4,7 +4,7 @@ import image from "../assets/images/Logo_Phonebook.jpg";
 
 const ContactCard = () => {
   return (
-    <div>
+    <div style={{backgroundColor:"#282534"}}>
     <div className="contact-card">
       <img src={image} alt={`logo`} className="card-image" />
       <h3 className="company-name">Signpost Celfon.in Technology</h3>
