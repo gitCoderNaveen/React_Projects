@@ -1,16 +1,21 @@
 import React, { useState } from "react";
-import { useAuth } from "./Auth"; // Correctly import the useAuth hook
+import { useAuth } from "./Auth";
 import { useNavigate } from "react-router-dom";
 import "../Css/Login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEye,
+  faEyeSlash,
+  faSpinner,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Login = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(true);
   const [mobileno, setMobileNo] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
-  const { Login } = useAuth(); // Correct usage of context
+  const [showPassword, setShowPassword] = useState(false);
+  const { Login } = useAuth();
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const handleClosePopup = () => {
@@ -27,11 +32,15 @@ const Login = () => {
     setPassword(e.target.value.toLowerCase());
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulate loading
     Login(mobileno, password);
     setMobileNo("");
     setPassword("");
+    setLoading(false);
+    // Navigation will likely happen within the Login function from the Auth context
   };
 
   return (
@@ -76,12 +85,23 @@ const Login = () => {
                   )}
                 </div>
               </div>
-              <button type="submit" className="login-button">
-                Login
+              <button type="submit" className="login-button" disabled={loading}>
+                {loading ? (
+                  <div className="loading-container">
+                    <FontAwesomeIcon
+                      icon={faSpinner}
+                      className="spinner"
+                      spin
+                    />
+                    <span>Loading...</span>
+                  </div>
+                ) : (
+                  "Login"
+                )}
               </button>
             </form>
             <div className="links">
-              <a href="#forgot-password">Forgot password?</a>
+              <a>Dont have an account?</a>
               <span> | </span>
               <button
                 type="button"

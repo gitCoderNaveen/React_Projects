@@ -1,13 +1,17 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { FaSearch } from "react-icons/fa";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { FaTimes } from "react-icons/fa";
 import { useAuth } from "./Auth";
 import { useNavigate } from "react-router-dom";
-import { ThreeDot } from "react-loading-indicators";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import "../Css/Homepage.css";
 import "../Css/Phonescreen.css";
-import { color } from "framer-motion";
+import { useDispatch } from "react-redux";
+import { addFavorite } from "../redux/features/favorites/favoritesSlice";
+import ShimmerCard from "./ShimmerCard";
+import { CiHeart, CiPhone } from "react-icons/ci";
+import { BiQuestionMark } from "react-icons/bi";
+import { FaPhoneAlt } from "react-icons/fa";
 
 export default function Homepage() {
   const [data, setData] = useState([]);
@@ -23,21 +27,26 @@ export default function Homepage() {
   const [debouncedFirmName, setDebouncedFirmName] = useState(firmName);
   const itemsPerPage = 10;
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [favoriteItem, setFavoriteItem] = useState(null);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [disabledCategories, setDisabledCategories] = useState([]);
   const messageTemplate =
     "I Saw Your Listing in SIGNPOST PHONE BOOK. I am Interested in your Products. Please Send Details/Call Me.";
   const encodedMessage = useMemo(
     () => encodeURIComponent(messageTemplate),
     [messageTemplate]
   );
+  const [enquiryMessage, setEnquiryMessage] = useState(messageTemplate);
 
   const { user } = useAuth();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  // Debounce the firmName input to prevent rapid API calls
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedFirmName(firmName);
-    }, 500); // Adjust debounce delay as needed (e.g., 500ms)
+    }, 500);
 
     return () => {
       clearTimeout(handler);
@@ -45,8 +54,6 @@ export default function Homepage() {
   }, [firmName]);
 
   const fetchData = useCallback(async () => {
-    // Avoid unnecessary calls
-
     let url = debouncedFirmName
       ? `https://signpostphonebook.in/search/ascending_ordered_by_businessname_and_person.php?searchLetter=${debouncedFirmName}&page=${currentPage}&limit=${itemsPerPage}`
       : productName
@@ -54,7 +61,7 @@ export default function Homepage() {
       : `https://signpostphonebook.in/client_fetch_by_dropdown.php?page=${currentPage}&limit=${itemsPerPage}`;
 
     setIsFetching(true);
-    setFetchError(null); // Clear previous errors before new fetch
+    setFetchError(null);
 
     try {
       const controller = new AbortController();
@@ -82,42 +89,27 @@ export default function Homepage() {
     fetchData();
   }, [fetchData]);
 
-  // // Function to fetch paginated data (Server-Side Pagination)
-  // const fetchData = useCallback(async () => {
-  //   let url = firmName
-  //     ? `https://signpostphonebook.in/search/ascending_ordered_by_businessname_and_person.php?searchLetter=${firmName}&page=${currentPage}&limit=${itemsPerPage}`
-  //     : productName
-  //     ? `https://signpostphonebook.in/search/ordered_list_by_product.php?searchLetter=${productName}&page=${currentPage}&limit=${itemsPerPage}`
-  //     : `https://signpostphonebook.in/client_fetch_by_dropdown.php?page=${currentPage}&limit=${itemsPerPage}`;
-
-  //   try {
-  //     const response = await fetch(url);
-  //     if (!response.ok) throw new Error("Failed to fetch data");
-  //     const jsonResponse = await response.json();
-  //     if (!Array.isArray(jsonResponse.data))
-  //       throw new Error("Invalid response format");
-
-  //     setData(jsonResponse.data.sort((a, b) => b.id - a.id));
-  //     setTotalPages(jsonResponse.totalPages); // Ensure the API returns total pages count
-  //   } catch (error) {
-  //     alert(`Error loading data: ${error.message}`);
-  //   }
-  // }, [firmName, productName, currentPage]);
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, [fetchData]);
-
-  // Function to handle page navigation
   const goToPage = (page) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
     }
   };
 
-  // Handle window resize
+  const handleIconClick = (item) => {
+    setFavoriteItem(item);
+    setIsModalOpen(true);
+    setSelectedCategories([]);
+    setDisabledCategories([]);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setFavoriteItem(null);
+  };
+
+  const handleResize = () => setIsMobile(window.innerWidth < 480);
+
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 480);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -129,6 +121,7 @@ export default function Homepage() {
         : mobileNumber,
     []
   );
+
   function toTitleCase(str) {
     return str
       .toLowerCase()
@@ -136,10 +129,12 @@ export default function Homepage() {
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
   }
+
   const handleFirmname = () => {
     setProductName("");
     setActiveInput(1);
   };
+
   const handleProductname = () => {
     setFirmName("");
     setActiveInput(2);
@@ -154,9 +149,24 @@ export default function Homepage() {
     }
   };
 
-  const handleMoreClick = (item) => {
+  // const handleEnquiryClick = (item) => {
+  //   if (user) {
+  //     setSelectedItem(item);
+  //     // Log selectedItem here to check its structure and email property
+  //     console.log("Selected Item for Enquiry:", item);
+  //   } else {
+  //     alert("Login Required");
+  //     navigate("/login");
+  //   }
+  // };
+  const handleEnquiryClick = (item) => {
     if (user) {
       setSelectedItem(item);
+      setEnquiryMessage(
+        `Hi i need to enquiry regarding "<span class="math-inline">\{item\.product\}" from "</span>{item.businessname || 'signpost'}". ${messageTemplate}`
+      );
+      // OR simply:
+      // setEnquiryMessage(messageTemplate);
     } else {
       alert("Login Required");
       navigate("/login");
@@ -165,14 +175,51 @@ export default function Homepage() {
 
   const closePopup = () => setSelectedItem(null);
 
+  const handleAddToFavorites = () => {
+    if (favoriteItem && user && selectedCategories.length > 0) {
+      selectedCategories.forEach((category) => {
+        const favorite = {
+          id: favoriteItem.id,
+          businessname: favoriteItem.businessname,
+          person: favoriteItem.person,
+          mobileno: favoriteItem.mobileno,
+          city: favoriteItem.city,
+          pincode: favoriteItem.pincode,
+          category: category,
+        };
+        dispatch(addFavorite(favorite));
+      });
+      handleCloseModal();
+    } else {
+      if (!user) {
+        alert("Login Required");
+        navigate("/login");
+      } else if (selectedCategories.length === 0) {
+        alert("Please select at least one category.");
+      }
+    }
+  };
+
+  const handleCategoryChange = (category) => {
+    if (selectedCategories.includes(category)) {
+      setSelectedCategories(selectedCategories.filter((c) => c !== category));
+      setDisabledCategories([]);
+    } else {
+      setSelectedCategories([...selectedCategories, category]);
+      setDisabledCategories(
+        ["buyer", "supplier", "friends & families", "others"].filter(
+          (c) => c !== category
+        )
+      );
+    }
+  };
+
   return (
     <div>
-      <div className="mycontainer container-fluid">
+      <div className="mycontainer container-fluid home-container">
         <div className="sticky-container">
-          {/* Search Bars */}
           {isMobile ? (
             <div className="input-container ">
-              {/* First Input Box */}
               <input
                 type="text"
                 placeholder="Firm/Person Name"
@@ -194,9 +241,6 @@ export default function Homepage() {
                   Clear
                 </button>
               )}
-
-              {/* Second Input Box */}
-
               <input
                 type="text"
                 placeholder="Product Name"
@@ -242,18 +286,22 @@ export default function Homepage() {
             </div>
           )}
         </div>
-        {/* Phone Frame */}
-        {/* <div className="phone-container"> */}
-        {/* <h1>Find Anyone!.. Anytime!..</h1> */}
-        {/* <div className="phone-frame"> */}
-        {/* Camera */}
-        {/* <div className="phone-camera"></div> */}
 
-        {/* Scrollable List inside Phone Screen */}
-        {/* <div className="phone-screen"> */}
-        {/* Contact Cards */}
         <div className="home_contactcard-div">
-          {data.length > 0 ? (
+          {isFetching ? (
+            <>
+              <ShimmerCard />
+              <ShimmerCard />
+              <ShimmerCard />
+              <ShimmerCard />
+              <ShimmerCard />
+              <ShimmerCard />
+              <ShimmerCard />
+              <ShimmerCard />
+              <ShimmerCard />
+              <ShimmerCard />
+            </>
+          ) : data.length > 0 ? (
             data.map((item) => (
               <div
                 className={`home_card-container ${
@@ -264,7 +312,32 @@ export default function Homepage() {
                 {item.discount && (
                   <div className="discount_badge">Discount</div>
                 )}
-                <div className="home_card-left">
+                <div className="home_card-left-icons">
+                  <FaPhoneAlt
+                    className="call-icon"
+                    onClick={() => handleCallClick(item)}
+                    style={{
+                      cursor: "pointer",
+                      fontSize: "30px",
+                      color: "white",
+                      backgroundColor: "#0288D1",
+                      borderRadius: "70px",
+                      fontWeight: "bold",
+                      padding: "5px",
+                    }}
+                    title="Call"
+                  />
+                  <CiHeart
+                    className="favorite-icon"
+                    onClick={() => handleIconClick(item)}
+                    style={{
+                      cursor: "pointer",
+                      fontSize: "30px",
+                    }}
+                    title="Add to MyList"
+                  />
+                </div>
+                <div className="home_card-middle">
                   <h3
                     className={`home_card-name ${
                       Number(item.priority) === 1
@@ -288,84 +361,105 @@ export default function Homepage() {
                       </>
                     )}
                   </p>
+                  <p
+                    className="phone-number"
+                    style={{
+                      position: "absolute",
+                      top: "63px",
+                      fontSize: "14px",
+                      marginbottom: "-15px",
+                    }}
+                  >
+                    {maskMobileNumber(item.mobileno)}
+                  </p>
                 </div>
                 <div className="home_card-right">
-                  <div className="phone-section">
-                    <p className="phone-number">
-                      {maskMobileNumber(item.mobileno)}
-                    </p>
-                  </div>
-                  <div className="button-group">
-                    <button
-                      className={`mybtn call-btn ${
-                        Number(item.priority) === 1 ? "prime_call-button" : ""
-                      }`}
-                      onClick={() => handleCallClick(item)}
-                    >
-                      Call
-                    </button>
-                    <button
-                      className={`mybtn more-btn ${
-                        Number(item.priority) === 1 ? "prime_more-button" : ""
-                      }`}
-                      onClick={() => handleMoreClick(item)}
-                    >
-                      More
-                    </button>
-                  </div>
+                  <button
+                    className={`mybtn enquiry-btn ${
+                      Number(item.priority) === 1 ? "prime_enquiry-button" : ""
+                    }`}
+                    onClick={() => handleEnquiryClick(item)}
+                  >
+                    <BiQuestionMark
+                      className="button-icon"
+                      title="Add to myList"
+                    />
+                  </button>
                 </div>
               </div>
             ))
           ) : (
-            <p className="loading-bar">
-              <ThreeDot color="#ffffff" size="medium" text="" textColor="" />
-            </p>
+            fetchError && <p className="loading-bar">{fetchError}</p>
           )}
         </div>
-        {/* </div> */}
-        {/* <div className="phone-home"></div> */}
-        {/* </div> */}
-        {/* Pagination Controls */}
 
-        <div className="pagination">
-          <button
-            disabled={currentPage === 1}
-            onClick={() => goToPage(currentPage - 1)}
-          >
-            ◀ Previous
-          </button>
-          <button
-            disabled={currentPage === totalPages}
-            onClick={() => goToPage(currentPage + 1)}
-          >
-            Next ▶
-          </button>
-        </div>
+        {/* Modal for adding to favorites */}
+        {isModalOpen && (
+          <div className="modal-overlay" onClick={handleCloseModal}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              {/* Close Icon */}
+              <FaTimes
+                onClick={handleCloseModal}
+                style={{
+                  position: "absolute",
+                  top: "10px",
+                  right: "10px",
+                  fontSize: "20px",
+                  cursor: "pointer",
+                  color: "#333",
+                }}
+              />
 
-        <div className="pagination-number">
-          <Stack spacing={2}>
-            <Pagination
-              count={50}
-              color="primary"
-              page={currentPage}
-              onChange={(event, value) => goToPage(value)}
-            />
-          </Stack>
-        </div>
-
-        {/* "Go to Page" Input */}
-        <div className="goto-page">
-          <input
-            type="number"
-            min="1"
-            max={totalPages}
-            placeholder="Go to page..."
-            onChange={(e) => goToPage(Number(e.target.value))}
-          />
-        </div>
-        {/* </div> */}
-
-        {/* Popup */}
+              <h2>Add to My List</h2>
+              <div className="modal-categories">
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={selectedCategories.includes("buyer")}
+                    onChange={() => handleCategoryChange("buyer")}
+                    disabled={disabledCategories.includes("buyer")}
+                  />
+                  Buyer
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={selectedCategories.includes("supplier")}
+                    onChange={() => handleCategoryChange("supplier")}
+                    disabled={disabledCategories.includes("supplier")}
+                  />
+                  Supplier
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={selectedCategories.includes("friends & families")}
+                    onChange={() => handleCategoryChange("friends & families")}
+                    disabled={disabledCategories.includes("friends & families")}
+                  />
+                  Friends & Families
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={selectedCategories.includes("others")}
+                    onChange={() => handleCategoryChange("others")}
+                    disabled={disabledCategories.includes("others")}
+                  />
+                  Others
+                </label>
+              </div>
+              <div className="modal-actions">
+                <button
+                  className="confirm-button"
+                  onClick={handleAddToFavorites}
+                >
+                  Confirm
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
         {selectedItem && (
           <div className="popup">
             <div className="popup-content">
@@ -375,8 +469,7 @@ export default function Homepage() {
               <h2>{selectedItem.businessname}</h2>
               {selectedItem.person && (
                 <h3>
-                  {selectedItem.personprefix}
-                  {selectedItem.person}
+                  {selectedItem.personprefix} {selectedItem.person}
                 </h3>
               )}
               <p>
@@ -391,6 +484,14 @@ export default function Homepage() {
                 <strong>Address:</strong> {selectedItem.address},{" "}
                 {selectedItem.city}, {selectedItem.pincode}
               </p>
+              <div className="enquiry-textarea">
+                <textarea
+                  className="enquiry-input" // Added a class name
+                  value={enquiryMessage}
+                  onChange={(e) => setEnquiryMessage(e.target.value)}
+                  rows="3"
+                />
+              </div>
               <div className="button-group">
                 <a
                   href={`https://wa.me/${selectedItem.mobileno}`}
@@ -426,6 +527,41 @@ export default function Homepage() {
             </div>
           </div>
         )}
+        <div className="pagination">
+          <button
+            disabled={currentPage === 1}
+            onClick={() => goToPage(currentPage - 1)}
+          >
+            ◀ Previous
+          </button>
+          <button
+            disabled={currentPage === totalPages}
+            onClick={() => goToPage(currentPage + 1)}
+          >
+            Next ▶
+          </button>
+        </div>
+
+        <div className="pagination-number">
+          <Stack spacing={2}>
+            <Pagination
+              count={50}
+              color="primary"
+              page={currentPage}
+              onChange={(event, value) => goToPage(value)}
+            />
+          </Stack>
+        </div>
+
+        <div className="goto-page">
+          <input
+            type="number"
+            min="1"
+            max={totalPages}
+            placeholder="Go to page..."
+            onChange={(e) => goToPage(Number(e.target.value))}
+          />
+        </div>
       </div>
     </div>
   );

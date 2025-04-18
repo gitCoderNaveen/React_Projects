@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { NavLink } from "react-router-dom";
-import { FaPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./Auth";
 import "../Css/Navbar.css";
+import { MdLogout } from "react-icons/md";
 
 export default function Navigationpage() {
   const { user, Logout, Login, userData } = useAuth();
   const navigate = useNavigate();
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const [isAdminUser, setIsAdminUser] = useState(false);
-  const adminUser = ["9843657564", "8344508070", "6383965890", "8838491311"];
+  const adminUser = [
+    "9843657564",
+    "8344508070",
+    "6383965890",
+    "8838491311",
+    "6383463820",
+  ];
   const checkAdminUser = adminUser.includes(userData?.mobileno);
 
   useEffect(() => {
@@ -51,9 +57,9 @@ export default function Navigationpage() {
   return (
     <div>
       <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top">
-        <div className="container-fluid">
-          <NavLink className="nav-brand" to="/">
-            Signpost PHONE BOOK
+        <div className="container py-1">
+          <NavLink className="nav-brand fw-bolder" to="/">
+            Signpost PHONE BOOK {/* Add the book icon */}
           </NavLink>
           <button
             className="navbar-toggler bg-light"
@@ -70,17 +76,17 @@ export default function Navigationpage() {
                   Home
                 </NavLink>
               </li>
-                  <li className="nav-item">
-                    <NavLink className="nav-link text-light" to="/about">
-                      About Us
-                    </NavLink>
-                  </li>
-                  <li className="nav-item">
-                    <NavLink className="nav-link text-light" to="/contactus">
-                      Contact Us
-                    </NavLink>
-                  </li>    
-                  {isAdminUser && (
+              <li className="nav-item">
+                <NavLink className="nav-link text-light" to="/about">
+                  About Us
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link text-light" to="/contactus">
+                  Contact Us
+                </NavLink>
+              </li>
+              {isAdminUser && (
                 <li className="nav-item">
                   <NavLink
                     className="nav-link text-light"
@@ -90,34 +96,45 @@ export default function Navigationpage() {
                     Admin
                   </NavLink>
                 </li>
-              )}      
-            
+              )}
             </ul>
             {user ? (
-              <div className="userfn-btn">
+              <div className="userfn-btn d-flex align-items-center">
                 <span className="navbar-text d-block m-2 userlogin-name text-light">
                   {user ? (
                     <button className="user_btn" onClick={handleProfile}>
                       My Profile
                     </button>
                   ) : (
-                    <p><strong>Guest</strong></p>
+                    <p>
+                      <strong>Guest</strong>
+                    </p>
                   )}
                 </span>
-                <button onClick={handleAddCustomer} className="btn btn-primary">
-                  <FaPlus className="me-2" />
-                  Add Contact
+                <button
+                  onClick={handleAddCustomer}
+                  className="btn btn-primary me-2 fw-bold"
+                  style={{ fontSize: "16px" }}
+                >
+                  {/* <MdPersonAddAlt1 className="me-2 mb-1" size={20} /> */}
+                  <span style={{ fontSize: "20px" }}>+</span>Add Contact
                 </button>
-                <button onClick={handleLogout} className="btn btn-danger ms-3">
-                  Logout
+                <button
+                  onClick={handleLogout}
+                  className="btn btn-danger d-flex align-items-center justify-content-center"
+                  style={{ fontSize: "16px" }}
+                >
+                  <MdLogout className="me-1" size={20} /> Logout
                 </button>
               </div>
             ) : (
               <div className="d-flex justify-content-center align-items-center text-light text-center">
-                <p><strong>Welcome Guest</strong></p>
+                <p>
+                  <strong>Welcome Guest</strong>
+                </p>
                 <button onClick={handleLogin} className="btn btn-primary ms-3">
-                Login
-              </button>
+                  Login
+                </button>
               </div>
             )}
           </div>
@@ -182,6 +199,15 @@ export default function Navigationpage() {
               <li className="nav-item">
                 <NavLink
                   className="nav-link"
+                  to="/favourite"
+                  onClick={toggleDrawer}
+                >
+                  My List
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link"
                   to="/reference"
                   onClick={toggleDrawer}
                 >
@@ -214,12 +240,20 @@ export default function Navigationpage() {
           ) : (
             <>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/about" onClick={()=>toggleDrawer()}>
+                <NavLink
+                  className="nav-link"
+                  to="/about"
+                  onClick={() => toggleDrawer()}
+                >
                   About Us
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/contactus" onClick={()=>toggleDrawer()}>
+                <NavLink
+                  className="nav-link"
+                  to="/contactus"
+                  onClick={() => toggleDrawer()}
+                >
                   Contact Us
                 </NavLink>
               </li>
@@ -231,16 +265,15 @@ export default function Navigationpage() {
             <div className="mb-3 userfn-btn">
               <button
                 onClick={handleAddCustomer}
-                className="btn btn-primary btn-block mb-2 addContact-btn"
+                className="btn btn-primary btn-block mb-2 addContact-btn p-2 fw-bold"
               >
-                <FaPlus className="me-2" />
-                Add Contact
+                <span>+</span> Add Contact
               </button>
               <button
                 onClick={handleLogout}
-                className="btn btn-danger btn-block"
+                className="btn btn-danger btn-block d-flex align-items-center justify-content-center"
               >
-                Logout
+                <MdLogout className="me-2" size={20} /> Logout
               </button>
             </div>
           )}
