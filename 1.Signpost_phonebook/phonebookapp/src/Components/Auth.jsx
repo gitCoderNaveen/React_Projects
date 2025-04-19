@@ -54,6 +54,8 @@ export default function Auth({ children }) {
     }
   };
 
+
+
   const Logout = () => {
     setUser(null);
     setUserData(null);

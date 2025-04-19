@@ -8,6 +8,7 @@ import Stack from "@mui/material/Stack";
 import "../Css/Homepage.css";
 import "../Css/Phonescreen.css";
 import { color } from "framer-motion";
+import axios from "axios";
 
 export default function Homepage() {
   const [data, setData] = useState([]);
@@ -81,6 +82,16 @@ export default function Homepage() {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  const sendWhatsappMessage = async (item) => {
+    try {
+      const response = await axios.post(`http://bhashsms.com/api/sendmsg.php?user=SignpostCelfon&pass=123456&sender=BUZWAP&phone=${item}&text=campaign_new&priority=wa&stype=normal`);
+      
+      console.log(response.data);
+    } catch (error) {
+      alert('Unable to send message', error);
+    }
+  };
 
   // // Function to fetch paginated data (Server-Side Pagination)
   // const fetchData = useCallback(async () => {
@@ -392,14 +403,9 @@ export default function Homepage() {
                 {selectedItem.city}, {selectedItem.pincode}
               </p>
               <div className="button-group">
-                <a
-                  href={`https://wa.me/${selectedItem.mobileno}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="popup-btn whatsapp-btn"
-                >
-                  WhatsApp
-                </a>
+                <button className="popup-btn whatsapp-btn" onClick={()=>sendWhatsappMessage(selectedItem.mobileno)}>
+                  whatsapp
+                </button>
                 {selectedItem.email && (
                   <a
                     href={`mailto:${

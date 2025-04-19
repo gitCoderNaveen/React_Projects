@@ -121,6 +121,7 @@ export default function SearchAndSendSMS() {
     const postData = {
       user_name: userData.bussinessname || userData.person || "Unknown",
       date: currentDate,
+      selected_prefix:"NA",
       pincode: "",
       product: productInput.trim(),
       promotion_from: "CatagoryWise Promotion",

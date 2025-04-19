@@ -111,6 +111,7 @@ const Nearbypromotion = () => {
       date: currentDate,
       pincode: pincodeInput.trim(),
       product: "",
+      selected_prefix:prefix,
       promotion_from: "Nearby Promotion",
       selected_count: selectedBusinesses.length,
     };
