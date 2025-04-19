@@ -122,3 +122,102 @@ h2 {
 .spinner {
   margin-right: 5px;
 }
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 600px) {
+  .popup-card {
+    padding: 15px;
+    margin: 20px; /* Add some margin around the popup on smaller screens */
+  }
+
+  h2 {
+    font-size: 1.5em; /* Slightly smaller heading */
+    margin-bottom: 15px;
+  }
+
+  .input-group label {
+    font-size: 0.9em;
+  }
+
+  .input-group input {
+    padding: 10px; /* Slightly larger padding for better touch interaction */
+    font-size: 1em;
+  }
+
+  .login-button {
+    padding: 12px;
+    font-size: 1.1em;
+  }
+
+  .links {
+    font-size: 0.9em;
+  }
+
+  .spinner {
+    font-size: 1em; /* Adjust spinner size */
+    margin-right: 8px;
+  }
+
+  .loading-container span {
+    font-size: 1em; /* Adjust loading text size */
+  }
+}
+
+/* Further adjustments for very small screens */
+@media (max-width: 400px) {
+  .popup-card {
+    margin: 10px;
+  }
+
+  h2 {
+    font-size: 1.3em;
+  }
+
+  .input-group label {
+    font-size: 0.85em;
+  }
+
+  .input-group input {
+    padding: 9px;
+  }
+
+  .login-button {
+    padding: 11px;
+    font-size: 1em;
+  }
+
+  .links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .links span {
+    display: none; /* Hide the separator on very small screens */
+  }
+
+  .links button {
+    margin-top: 10px;
+  }
+
+  .spinner {
+    font-size: 0.9em;
+    margin-right: 6px;
+  }
+
+  .loading-container span {
+    font-size: 0.9em;
+  }
+}
+
+/* Style the loading container and spinner */
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  font-size: 1.2em; /* Adjust the size of the spinner */
+  margin-right: 8px;
+}

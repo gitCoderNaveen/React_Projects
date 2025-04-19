@@ -3,7 +3,7 @@ import "../Css/Accordian.css";
 
 const Accordion = () => {
   return (
-    <div className="container-fluid mt-5 bg-light py-5">
+    <div className="container mt-5 bg-light py-5">
       <section>
         <div className="text-center mb-4">
           <h2 className="fw-bold fs-3 faq-header" style={{ color: "#EA580C" }}>

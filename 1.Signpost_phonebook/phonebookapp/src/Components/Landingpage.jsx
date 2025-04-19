@@ -167,7 +167,7 @@ const Landingpage = () => {
 
   return (
     <div>
-      <div className="landing-page">
+      <div className="landing-page g-1">
         {/* Left Section */}
         <div className="left-section" ref={inputRef}>
           <motion.h1
@@ -176,7 +176,7 @@ const Landingpage = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1 }}
           >
-            <label htmlFor="text" className="blue">
+            <label htmlFor="text" className="blue text-white">
               Search Here...
             </label>
             <input
@@ -196,7 +196,7 @@ const Landingpage = () => {
             </span>
           </motion.h1>
           <motion.p
-            className="subheading"
+            className="subheading text-white"
             variants={fadeIn}
             initial="hidden"
             animate="visible"
@@ -289,7 +289,7 @@ const Landingpage = () => {
             </div>
             <button
               href="/home"
-              className="Home_direct"
+              className="Home_direct rounded-3 border-0 py-2 fw-bold"
               onClick={handleHomepage}
             >
               Click Here To view More

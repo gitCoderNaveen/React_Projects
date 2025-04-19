@@ -1,19 +1,64 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import MobileImage from "../assets/images/MoBile Image (1).png";
 import MobileAboutImage from "../assets/images/Mobile-about_app.png";
 import "../Css/HeroSecondSection.css"; // Import CSS file
+import { motion, useInView, useAnimation } from "framer-motion";
 
 const HeroSecondSection = () => {
+  const leftRef = useRef(null);
+  const isLeftInView = useInView(leftRef, { once: true });
+  const leftControls = useAnimation();
+
+  const rightRef = useRef(null);
+  const isRightInView = useInView(rightRef, { once: true });
+  const rightControls = useAnimation();
+
+  useEffect(() => {
+    if (isLeftInView) {
+      leftControls.start("visible");
+    }
+  }, [isLeftInView, leftControls]);
+
+  useEffect(() => {
+    if (isRightInView) {
+      rightControls.start("visible");
+    }
+  }, [isRightInView, rightControls]);
+
+  const slideInLeftVariants = {
+    hidden: { opacity: 0, x: -50 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.7, ease: "easeInOut" },
+    },
+  };
+
+  const slideInRightVariants = {
+    hidden: { opacity: 0, x: 50 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.7, ease: "easeInOut" },
+    },
+  };
+
   return (
-    <div className="hero-second-section">
+    <div className="hero-second-section container g-5">
       <section className="mt-5 mt-md-7 px-3 px-md-5 py-5">
         <div className="d-flex flex-column flex-md-row justify-content-between align-items-center align-items-md-start gap-md-5 px-md-5 py-3 py-md-4">
           {/* Left side */}
-          <div className="position-relative mobile-image-container">
+          <motion.div
+            ref={leftRef}
+            className="position-relative mobile-image-container"
+            variants={slideInLeftVariants}
+            initial="hidden"
+            animate={leftControls}
+          >
             {/* Background Circle */}
             <div className="background-circle"></div>
 
-            {/* Images with Bounce Animation */}
+            {/* Images with Bounce Animation (You might want to animate these separately if needed) */}
             <img
               src={MobileAboutImage}
               alt="Mobile About"
@@ -26,11 +71,17 @@ const HeroSecondSection = () => {
               className="mobile-image"
               loading="lazy"
             />
-          </div>
+          </motion.div>
 
           {/* Right side */}
-          <div className="text-center text-md-start max-width-text">
-            <p className="section-title">
+          <motion.div
+            ref={rightRef}
+            className="text-center text-md-start max-width-text"
+            variants={slideInRightVariants}
+            initial="hidden"
+            animate={rightControls}
+          >
+            <p className="section-title mt-5">
               Ready to Supercharge Your Business?{" "}
               <span className="orange-text">Find Mobile Numbers Easily</span>
             </p>
@@ -67,7 +118,7 @@ const HeroSecondSection = () => {
             </div>
 
             <button className="start-trial-button">START FREE TRIAL</button>
-          </div>
+          </motion.div>
         </div>
       </section>
     </div>
