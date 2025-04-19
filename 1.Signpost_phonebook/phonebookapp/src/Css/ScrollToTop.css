@@ -1,0 +1,34 @@
+/* ScrollToTop.css */
+.scroll-to-top-button {
+  position: fixed;
+  bottom: 1.25rem; /* bottom-5 */
+  right: 1.25rem; /* right-5 */
+  padding: 1rem; /* px-4 py-4 */
+  background-color: #ea580c; /* orange-700 */
+  color: white;
+  border-radius: 50%; /* rounded-full */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25); /* shadow-2xl */
+  border: none;
+  cursor: pointer;
+  animation: bounce 2s infinite ease-in-out; /* animate-bounce */
+  width: 3rem; /* Make the button square */
+  height: 3rem; /* Make the button square */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it's above other elements */
+}
+
+.scroll-to-top-button:focus {
+  outline: none; /* Remove default focus outline */
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-0.5rem);
+  }
+}

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../Css/NearbyPromotion.css";
 import { FaPencilAlt } from "react-icons/fa";
-import { faL } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "./Auth";
 
 const Nearbypromotion = () => {
@@ -143,27 +142,50 @@ const Nearbypromotion = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container" style={{ marginTop: "40px" }}>
+      <div className="accordion" id="nearbyPromotionAccordion">
+        <div className="accordion-item">
+          <h2 className="accordion-header" id="headingOne">
+            <button
+              className="accordion-button collapsed fw-semibold text-primary"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseOne"
+              aria-expanded="false"
+              aria-controls="collapseOne"
+            >
+              How to Use Nearby Promotion
+            </button>
+          </h2>
+          <div
+            id="collapseOne"
+            className="accordion-collapse collapse"
+            aria-labelledby="headingOne"
+            data-bs-parent="#nearbyPromotionAccordion"
+          >
+            <div className="accordion-body">
+              <p>
+                Send Text messages to Mobile Users in desired Pincode Area
+                <br />
+                1) First edit / create message to be sent. Minimum 1 Count (145
+                characters), Maximum 2 counts (290 characters)
+                <br />
+                2) Select type of Recipient (Males / Females / Business Firms)
+                <br />
+                3) Type Pincode Number of Targetted area for Promotion
+                <br />
+                4) For error free delivery of messages, send in batches of 10
+                nos. each time
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="input-section">
         <div>
-          <p>
-            <span className="headingNearby">
-              <strong>NEARBY PROMOTION</strong>
-            </span>{" "}
-            <br />
-            {`Send Text messages to Mobile Users in desired Pincode Area`}{" "}
-            <br />
-            {`1) First edit / create message to be sent. Minimum 1 Count (145 characters), Maximum 2 counts (290 characters)`}
-            <br />
-            {`2) Select type of Recipient  (Males / Females / Business Firms)`}
-            <br />
-            {`3) Type Pincode Number of Targetted area for Promotion`}
-            <br />
-            {`4) For error free delivery of messages,  send in batches of 10 nos. each time`}
-          </p>
           <label htmlFor="">
             <strong>
-              Edit / Create Message :{" "}
+              Edit / Create Message :
               <span>
                 <FaPencilAlt
                   style={{
@@ -172,7 +194,7 @@ const Nearbypromotion = () => {
                     color: "#000000",
                   }}
                 />
-              </span>{" "}
+              </span>
             </strong>
           </label>
           <div
@@ -205,7 +227,7 @@ const Nearbypromotion = () => {
             </div>
           </div>
           <label>
-            <strong>Select Recipients Type :</strong>{" "}
+            <strong>Select Recipients Type :</strong>
           </label>
           <div className="prefix-container">
             <div className="radio-group" aria-required>
@@ -245,7 +267,7 @@ const Nearbypromotion = () => {
         </div>
         <div>
           <label htmlFor="">
-            <strong>Type Pincode of Recipients</strong>{" "}
+            <strong>Type Pincode of Recipients</strong>
           </label>
         </div>
         <div className="search_Container">
@@ -301,7 +323,7 @@ const Nearbypromotion = () => {
             <div className="selectAllSection">
               <div>
                 <label>
-                  <strong>Select All</strong>{" "}
+                  <strong>Select All</strong>
                 </label>
               </div>
               <div>

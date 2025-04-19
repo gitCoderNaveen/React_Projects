@@ -1,4 +1,4 @@
-/* 
+/* General Styles */
 .profile_Card_main {
   display: flex;
   justify-content: center;
@@ -22,13 +22,6 @@
 .Profile_card:hover {
   transform: translateY(-10px);
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-}
-
-
-@media (max-width: 768px) {
-  .Profile_card {
-    max-width: 90%;
-  }
 }
 
 .card-image {
@@ -73,7 +66,6 @@
   margin: 0;
 }
 
-
 .card-stats {
   background: #f9fafb;
   padding: 10px;
@@ -81,7 +73,6 @@
   animation: fadeIn 1.5s ease-in-out;
 }
 
-
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -93,82 +84,33 @@
   }
 }
 
-
-@media (max-width: 576px) {
-  .Profile_card {
-    padding: 10px;
-  }
-
-  .name_card p {
-    text-align: center;
-    font-size: 14px;
-  }
-
-  .name_card h2 {    
-    text-align: center;
-    font-size: 16px;
-  }
-  .profile_Card_main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    background-color: #f4f4f9;
-    min-height: 100vh;
-    box-sizing: border-box;
-  }
-  
-  .Profile_card {
-    width: 100%;
-    max-width: 400px;
-    background: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .Profile_card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-  }
- 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-} */
 .user-profile {
-  width:100%;
+  width: 100%;
   background-color: #007bff;
   display: flex;
   justify-content: center;
 }
-.content { 
+
+.content {
   width: 100%;
   height: auto;
   padding: 20px;
-  background-color: #ffffff; 
+  background-color: #ffffff;
 }
-.tab-content{
+
+.tab-content {
   width: 100%;
 }
-.tab-content .profile-header{
+
+.tab-content .profile-header {
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
 
-
-.profile-container {  
+.profile-container {
   display: flex;
-  justify-content:center;
+  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   gap: 20px; /* Adjust the gap between elements */
@@ -180,7 +122,7 @@
 }
 
 .membership-button {
-  background-color: #4CAF50; /* Button color */
+  background-color: #4caf50; /* Button color */
   color: white;
   padding: 10px 20px;
   border: none;
@@ -192,6 +134,7 @@
 .membership-button:hover {
   background-color: #45a049; /* Darker shade on hover */
 }
+
 .profile-picture {
   position: relative;
 }
@@ -225,8 +168,6 @@
   border-radius: 50%;
   /* display: none; */
 }
-
- 
 
 .profile-info {
   position: relative;
@@ -279,7 +220,6 @@
 
 /* About Details */
 .about-details {
-  
   flex-direction: column;
   margin-top: 30px;
 }
@@ -291,12 +231,12 @@
 }
 
 .about-details strong {
-
   font-weight: 600;
   color: #000000;
 }
- /* Sidebar Styles */ 
- .sidebar {
+
+/* Sidebar Styles */
+.sidebar {
   width: 250px;
   background-color: #2c3e50;
   padding: 20px;
@@ -320,8 +260,6 @@
 .sidebar button:hover {
   background-color: #34495e;
 }
-
-
 
 .subscription-card {
   padding: 15px;
@@ -347,6 +285,7 @@
   cursor: pointer;
   z-index: 1000;
 }
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -382,79 +321,7 @@
     width: 100%;
     margin-top: 10px;
   }
-}
-@media (max-width: 480px) {
-  .user-profile {
-    width:100%;
-    background-color: #007bff;
-  }
-  .profile-container {
-    display: flex;
-  }
-  .profile-info{
-  text-align: center;
-    left: 0;
-    margin-top: 30px;
-  }
-  .content {
-    width: 100%;
-    height: auto;
-    padding: 20px;
-   
-    display: flex;
-    justify-content: center;
-  }
-  .tab-content{
-    width: 100%;
-    
-    background-color: #16a085;
-  }
-  .tab-content .profile-header{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    }
-    .modal-overlay {
-      top: 0;
-      left: 0;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 10000;
-    }
-    .modal-overlay .modal-content {
-  background: white;
-  padding: 20px; 
-  width: auto;
-  border-radius: 15px;
-  text-align: center;
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
-  animation: fadeIn 0.3s ease-in-out;
- transform: rotate(90deg);
-    }
-.memcard-header {
-  width: 20%;
-  background: #ff4081;
-  padding: 10px;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
-  color: white;
-  font-size: 22px;
-  font-weight: bold;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-}
 
-}
-
-@media (max-width: 768px) {
   .toggle-button {
     /* z-index: 1000; */
     display: block;
@@ -474,8 +341,83 @@
   }
 }
 
+@media (max-width: 480px) {
+  .user-profile {
+    width: 100%;
+    background-color: #007bff;
+  }
 
-.general-tab{
+  .profile-container {
+    display: flex;
+  }
+
+  .profile-info {
+    text-align: center;
+    left: 0;
+    margin-top: 30px;
+  }
+
+  .content {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .tab-content {
+    width: 100%;
+    background-color: #16a085;
+  }
+
+  .tab-content .profile-header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .modal-overlay {
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+  }
+
+  .modal-overlay .modal-content {
+    background: white;
+    padding: 20px;
+    width: auto;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.3s ease-in-out;
+    /* REMOVED THE ROTATION */
+  }
+
+  .memcard-header {
+    width: 20%;
+    background: #ff4081;
+    padding: 10px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+  }
+}
+
+.general-tab {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -484,14 +426,10 @@
   @media screen and (max-width: 768px) {
     flex-direction: column;
     align-items: flex-start;
-    
   }
 }
 
-
-
 /* Profile Section */
-
 
 /* Profile Header */
 
@@ -506,7 +444,7 @@
   .profile-info {
     padding: 0 15px;
     position: relative;
-    top: -30px; 
+    top: -30px;
     /* background-color: #2c3e50; */
   }
 
@@ -522,7 +460,8 @@
     width: 100%;
   }
 }
-.tab-content-2{
+
+.tab-content-2 {
   background: rgb(255, 255, 255);
   padding: 30px;
   border-radius: 10px;
@@ -536,17 +475,15 @@
     top: 0px;
     left: 0;
     width: 100%;
-    
   }
 }
+
 .description {
   padding: 25px;
   transition: transform 0.3s ease;
   max-width: 600px;
   margin: 20px auto;
 }
-
- 
 
 .description h3 {
   font-size: 1.5rem;
@@ -619,6 +556,7 @@
     padding: 12px;
   }
 }
+
 /* Subscription Plans */
 .sub-tab {
   text-align: center; /* Center-align child elements */
@@ -727,23 +665,17 @@
   }
 }
 
-
-
 @media (max-width: 768px) {
-  .txt .col-md-6{
+  .txt .col-md-6 {
     text-align: start;
   }
 }
-
-
-
 
 .rightside-sub {
   /* width: 100%; */
   text-align: center;
 }
 
- 
 .card-blue {
   width: 100%;
   background-color: #007bff;
@@ -925,9 +857,7 @@ a.yellow:hover {
 .modal-content {
   background: white;
   padding: 20px;
- 
   border-radius: 15px;
-
   position: relative;
   text-align: center;
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
@@ -957,7 +887,7 @@ a.yellow:hover {
   }
 }
 
-.CompanyLogo{
+.CompanyLogo {
   width: 100%;
   height: 100%;
   border-radius: 50%;
@@ -966,7 +896,8 @@ a.yellow:hover {
   padding: 5px;
   transition: transform 0.3s ease-in-out;
 }
-.CompanyLogo2{
+
+.CompanyLogo2 {
   width: 100%;
   height: 100%;
   border-radius: 50%;
@@ -992,9 +923,7 @@ a.yellow:hover {
   transform: scale(1.05); /* Subtle zoom effect on hover */
 }
 
-
 .membership-card {
-             
   background: #fff;
   border-radius: 15px;
   font-family: Arial, sans-serif;
@@ -1003,6 +932,7 @@ a.yellow:hover {
   align-items: center;
   position: relative;
 }
+
 .memcard-header {
   width: 100%;
   background: #ff4081;
@@ -1018,22 +948,26 @@ a.yellow:hover {
   justify-content: center;
   gap: 15px;
 }
+
 .memcard-header img {
   width: 50px;
   height: 50px;
 }
-.memcard-header .membership-title  {
+
+.memcard-header .membership-title {
   font-size: 26px;
   font-weight: bold;
   text-align: center;
   color: black;
 }
+
 .memcard-content {
   display: flex;
   align-items: center;
   width: 100%;
   /* padding: 20px 0; */
 }
+
 .memprofile-img {
   width: 100px;
   height: 100px;
@@ -1043,18 +977,22 @@ a.yellow:hover {
   object-fit: cover;
   margin-right: 15px;
 }
+
 .memuser-details {
   text-align: left;
 }
+
 .memuser-details h2 {
   font-size: 20px;
   margin: 5px 0;
 }
+
 .memuser-details p {
   font-size: 16px;
   color: #555;
   margin: 5px 0;
 }
+
 .memfooter {
   margin: 5px 0;
   width: 100%;
@@ -1066,6 +1004,3 @@ a.yellow:hover {
   font-size: 14px;
   text-align: center;
 }
-
-
-

@@ -156,23 +156,47 @@ export default function SearchAndSendSMS() {
 
   return (
     <div className="productCityMainDiv">
-      <div className="productCityDiv" style={{ margin: "20px" }}>
-        <p>
-          <span className="headingCategory">
-            <strong>CATEGORYWISE PROMOTION</strong>
-          </span>
-          <br />
-          {`Send Text messages to all Mobile Users dealing in a specific product / keyword,  all over the selected city`}{" "}
-          <br />
-          {`1) First edit / create message to be sent. Minimum 1 Count (145 characters), Maximum 2 counts (290 characters)`}
-          <br />
-          {`2) Type specific Category / product / keyword `}
-          <br />
-          {`3) For error free delivery of messages,  send in batches 10 each time.`}
-        </p>
-        <label htmlFor="">
+      <div className="productCityDiv" style={{ margin: "40px" }}>
+        <div className="accordion" id="categoryPromotionAccordion">
+          <div className="accordion-item">
+            <h2 className="accordion-header" id="headingOne">
+              <button
+                className="accordion-button collapsed fw-semibold text-primary"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseOne"
+                aria-expanded="false"
+                aria-controls="collapseOne"
+              >
+                How to Use Categorywise Promotion
+              </button>
+            </h2>
+            <div
+              id="collapseOne"
+              className="accordion-collapse collapse"
+              aria-labelledby="headingOne"
+              data-bs-parent="#categoryPromotionAccordion"
+            >
+              <div className="accordion-body">
+                <p>
+                  Send Text messages to all Mobile Users dealing in a specific
+                  product / keyword, all over the selected city
+                  <br />
+                  1) First edit / create message to be sent. Minimum 1 Count
+                  (145 characters), Maximum 2 counts (290 characters)
+                  <br />
+                  2) Type specific Category / product / keyword
+                  <br />
+                  3) For error free delivery of messages, send in batches 10
+                  each time.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <label htmlFor="" style={{ paddingTop: "10px" }}>
           <strong>
-            Edit / Create Message :{" "}
+            Edit / Create Message :
             <span>
               <FaPencilAlt
                 style={{
@@ -181,7 +205,7 @@ export default function SearchAndSendSMS() {
                   color: "#000000",
                 }}
               />
-            </span>{" "}
+            </span>
           </strong>
         </label>
         <div
@@ -216,7 +240,7 @@ export default function SearchAndSendSMS() {
         <div className="inputContainer">
           <div style={{ position: "relative", marginBottom: "20px" }}>
             <label htmlFor="product">
-              <strong>Category : </strong>{" "}
+              <strong>Category : </strong>
             </label>
             <input
               type="text"
@@ -329,7 +353,7 @@ export default function SearchAndSendSMS() {
           <div className="selectedList">
             <div className="selectionDiv">
               <label>
-                <strong>Select All</strong>{" "}
+                <strong>Select All</strong>
               </label>
               &nbsp;&nbsp;
               <div>

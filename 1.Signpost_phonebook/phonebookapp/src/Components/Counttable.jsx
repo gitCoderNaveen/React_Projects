@@ -15,6 +15,7 @@ const Counttable = () => {
   const [isListModalOpen, setIsListModalOpen] = useState(false);
   const [businessList, setBusinessList] = useState([]);
   const navigate = useNavigate();
+
   // Fetch team data
   const fetchTeamData = async () => {
     setIsLoading(true);
