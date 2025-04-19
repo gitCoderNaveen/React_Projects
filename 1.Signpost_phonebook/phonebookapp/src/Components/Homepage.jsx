@@ -12,6 +12,8 @@ import ShimmerCard from "./ShimmerCard";
 import { CiHeart, CiPhone } from "react-icons/ci";
 import { BiQuestionMark } from "react-icons/bi";
 import { FaPhoneAlt } from "react-icons/fa";
+import { color } from "framer-motion";
+import axios from "axios";
 
 export default function Homepage() {
   const [data, setData] = useState([]);
@@ -88,6 +90,16 @@ export default function Homepage() {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  const sendWhatsappMessage = async (item) => {
+    try {
+      const response = await axios.post(`http://bhashsms.com/api/sendmsg.php?user=SignpostCelfon&pass=123456&sender=BUZWAP&phone=${item}&text=campaign_new&priority=wa&stype=normal`);
+      
+      console.log(response.data);
+    } catch (error) {
+      alert('Unable to send message', error);
+    }
+  };
 
   const goToPage = (page) => {
     if (page >= 1 && page <= totalPages) {
@@ -493,14 +505,9 @@ export default function Homepage() {
                 />
               </div>
               <div className="button-group">
-                <a
-                  href={`https://wa.me/${selectedItem.mobileno}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="popup-btn whatsapp-btn"
-                >
-                  WhatsApp
-                </a>
+                <button className="popup-btn whatsapp-btn" onClick={()=>sendWhatsappMessage(selectedItem.mobileno)}>
+                  whatsapp
+                </button>
                 {selectedItem.email && (
                   <a
                     href={`mailto:${
