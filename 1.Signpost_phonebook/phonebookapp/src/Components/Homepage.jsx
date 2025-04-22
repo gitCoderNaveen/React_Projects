@@ -175,7 +175,7 @@ export default function Homepage() {
     if (user) {
       setSelectedItem(item);
       setEnquiryMessage(
-        `Hi i need to enquiry regarding "<span class="math-inline">\{item\.product\}" from "</span>{item.businessname || 'signpost'}". ${messageTemplate}`
+        `I Saw Your Listing in SIGNPOST PHONE BOOK. I am Interested in your Products. Please Send Details/Call Me. (Sent Thro Signpost PHONE BOOK)`
       );
       // OR simply:
       // setEnquiryMessage(messageTemplate);
