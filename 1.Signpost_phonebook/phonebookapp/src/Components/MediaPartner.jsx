@@ -45,12 +45,12 @@ function MediaPartner() {
   const smsBody = encodeURIComponent(
     `Dear ${
       mybusinessname ? `M/s.${mybusinessname}` : `${myprefix}.${myperson}`
-    }, \n Signpost PHONE BOOK,  is a portal for  Mobile Number Finder and & Dialerwith Digital Marketing. Please kindly view and verify the correctness of details on your firm, at the earliest. \n URL :- www.signpostphonebook.in \n User name :-  your mobile number \n Password  :- Signpost \n You can use the PHONE BOOK for your business promotion in any desired (Pincode) area so Entire Coimbatore`
+    }, \n Signpost PHONE BOOK,  is a portal for  Mobile Number Finder and Dialerwith Digital Marketing. Please kindly view and verify the correctness of details on your firm, at the earliest. \n URL :- www.signpostphonebook.in \n User name :-  your mobile number \n Password  :- Signpost \n You can use the PHONE BOOK for your business promotion in any desired (Pincode) area so Entire Coimbatore`
   );
 
   const { userData } = useAuth();
 
-  const [dateTime, setDateTime] = useState("");
+  const [dateTime, setDateTime] = useState("");s
 
   const updateDateTime = () => {
     const now = new Date();
