@@ -95,17 +95,17 @@ export default function Homepage() {
   }, [fetchData]);
 
   const sendWhatsappMessage = async (item) => {
+    console.log("WhatsApp Number being sent:", item); // Add this line
     try {
       const response = await axios.post(
         `http://bhashsms.com/api/sendmsg.php?user=SignpostCelfon&pass=123456&sender=BUZWAP&phone=${item}&text=campaign_new&priority=wa&stype=normal`
       );
-
       console.log(response.data);
     } catch (error) {
       alert("Unable to send message", error);
+      console.error("WhatsApp API Error:", error); // Log the error object
     }
   };
-
   const goToPage = (page) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
@@ -122,6 +122,10 @@ export default function Homepage() {
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setFavoriteItem(null);
+  };
+
+  const openWhatsApp = (phoneNumber) => {
+    window.open(`https://wa.me/${phoneNumber}`, "_blank");
   };
 
   const handleResize = () => setIsMobile(window.innerWidth < 480);
@@ -364,7 +368,11 @@ export default function Homepage() {
                     item.person.toLowerCase().includes(firmName.toLowerCase())
                       ? toTitleCase(item.person)
                       : toTitleCase(
-                          item.businessname ? item.businessname : item.person
+                          item.businessname
+                            ? item.businessname.length > 20
+                              ? `${item.businessname.slice(0, 20)}....`
+                              : item.businessname
+                            : item.person
                         )}
                   </h3>
                   <p className="card-location">
@@ -514,7 +522,7 @@ export default function Homepage() {
                   <div className="button-group">
                     <button
                       className="popup-btn whatsapp-btn mb-2"
-                      onClick={() => sendWhatsappMessage(selectedItem.mobileno)}
+                      onClick={() => openWhatsApp(selectedItem.mobileno)}
                     >
                       whatsapp
                     </button>
