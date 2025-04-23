@@ -26,21 +26,24 @@
   font-family: Arial, sans-serif;
 }
 
-.input-section, .result-container, .message-box {
+.input-section,
+.result-container,
+.message-box {
   margin: 20px 0;
 }
-  
-.headingNearby{
+
+.headingNearby {
   color: #007bff;
   font-size: larger;
   font-weight: 520;
 }
 
-.prefix-container, .result-container {
+.prefix-container,
+.result-container {
   display: flex;
 }
 
-.prefix-item{
+.prefix-item {
   display: flex;
   width: 100%;
   justify-content: center;
@@ -50,7 +53,6 @@
   width: 100%;
 }
 
-
 .input-wrapper input {
   width: 100%;
   padding-right: 40px; /* Space for the button */
@@ -59,7 +61,7 @@
 }
 
 .input-wrapper .search_Button {
-  position: absolute; 
+  position: absolute;
   top: 40%;
   right: 10px;
   transform: translateY(-50%);
@@ -69,7 +71,7 @@
   font-size: 16px;
   color: #000000;
 }
-.prefix-container{
+.prefix-container {
   display: flex;
   justify-content: space-evenly;
   width: 100%;
@@ -78,14 +80,14 @@
   display: flex;
   gap: 25px;
   text-wrap: nowrap;
- /* Adjust spacing between items */
+  /* Adjust spacing between items */
 }
 
 .radio-group label {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
- /* Adjust spacing between the radio button and text */
+  /* Adjust spacing between the radio button and text */
 }
 
 .promotioncard {
@@ -98,12 +100,12 @@
   animation: fadeIn 0.5s ease-in-out;
 }
 
-.selectAllSection{
+.selectAllSection {
   display: flex;
   gap: 5px;
 }
 
-.data_Controls{
+.data_Controls {
   display: flex;
   justify-content: space-between;
 }
@@ -121,7 +123,7 @@
   border-radius: 4px;
 }
 
-.checkbox{
+.checkbox {
   right: -10%;
 }
 
@@ -132,7 +134,7 @@ textarea.message-box {
   padding: 10px;
   font-size: 14px;
 }
-.defaultContainer{
+.defaultContainer {
   border: 2px solid black;
   text-align: center;
 }
@@ -151,16 +153,14 @@ textarea.message-box {
   .card {
     width: 100%;
   }
-  .card-details{
-
+  .card-details {
   }
-  .checkbox{
+  .checkbox {
     display: flex;
     justify-content: center;
   }
-  .checkbox input{
+  .checkbox input {
     position: absolute;
     left: 30%;
   }
-
 }

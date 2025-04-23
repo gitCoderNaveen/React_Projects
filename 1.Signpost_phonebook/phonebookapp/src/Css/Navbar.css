@@ -1,14 +1,17 @@
 .navbar {
   background: url("../assets/images/background.jpg") no-repeat center
     center/cover;
+  width: 100%;
+  padding: 5px;
 }
 .nav-brand {
   text-decoration: none;
   color: #ffffff;
   font-size: x-large;
   font-weight: 700;
-  border: 1.5px solid white;
-  padding: 3px;
+  border: 2px solid white;
+  padding: 4px;
+  margin-left: -10px;
 }
 
 .navbar-nav .nav-link {
@@ -83,4 +86,51 @@
   .drawer-open {
     display: none !important; /* Ensure the drawer is hidden on large screens */
   }
+}
+
+.navbar-toggler {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 2rem;
+  height: 2rem;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+.navbar-toggler:focus {
+  outline: none;
+}
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 2rem;
+  height: 2rem;
+}
+
+.hamburger span {
+  display: block;
+  width: 2rem;
+  height: 0.25rem;
+  background: #fff; /* Adjust color as needed */
+  border-radius: 10px;
+  transition: all 0.3s linear;
+  position: relative;
+  transform-origin: 1px;
+}
+
+.hamburger.open span:nth-child(1) {
+  transform: rotate(45deg);
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg);
 }

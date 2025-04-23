@@ -43,9 +43,11 @@
     "react-router-dom": "^6.29.0",
     "react-select": "^5.8.3",
     "react-slick": "^0.30.3",
+    "react-toastify": "^11.0.5",
     "react-transition-group": "^4.4.5",
     "react-window": "^1.8.11",
     "slick-carousel": "^1.8.1",
+    "sweetalert2": "^11.19.1",
     "swiper": "^11.2.1",
     "typed.js": "^2.1.0"
   },

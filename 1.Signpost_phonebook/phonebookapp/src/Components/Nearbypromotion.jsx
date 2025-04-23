@@ -3,6 +3,9 @@ import axios from "axios";
 import "../Css/NearbyPromotion.css";
 import { FaPencilAlt } from "react-icons/fa";
 import { useAuth } from "./Auth";
+import Swal from "sweetalert2";
+import { Spinner } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Nearbypromotion = () => {
   const [pincodeInput, setPincodeInput] = useState("");
@@ -41,10 +44,18 @@ const Nearbypromotion = () => {
       if (Array.isArray(jsonResponse)) {
         setData(jsonResponse.sort((a, b) => b.id - a.id));
       } else {
-        alert("Unexpected response from server.");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Unexpected response from server.",
+        });
       }
     } catch (error) {
-      alert("Failed to load data: " + error.message);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Failed to load data: " + error.message,
+      });
     }
   };
 
@@ -54,7 +65,11 @@ const Nearbypromotion = () => {
 
   const fetchBusinesses = () => {
     if (!pincodeInput || !prefix) {
-      alert("Please enter a valid pincode and select a prefix.");
+      Swal.fire({
+        icon: "warning",
+        title: "Attention!",
+        text: "Please enter a valid pincode and select a prefix.",
+      });
       return;
     }
 
@@ -75,7 +90,14 @@ const Nearbypromotion = () => {
           setShowresults(true);
         }
       })
-      .catch((error) => console.error("Error fetching businesses:", error))
+      .catch((error) => {
+        console.error("Error fetching businesses:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Error fetching businesses.",
+        });
+      })
       .finally(() => setLoading(false));
   };
 
@@ -98,47 +120,82 @@ const Nearbypromotion = () => {
     setShowresults(false);
     setNoRecord(false);
   };
+
   const sendBatchSMS = () => {
     if (selectedBusinesses.length === 0) {
-      window.alert("No clients selected!");
+      Swal.fire({
+        icon: "warning",
+        title: "Attention!",
+        text: "No clients are selected!",
+      });
       return;
     }
-    const currentDate = new Date().toISOString().split("T")[0];
 
-    const postData = {
-      user_name: userData.bussinessname || userData.person || "Unknown",
-      date: currentDate,
-      pincode: pincodeInput.trim(),
-      product: "",
-      selected_prefix:prefix,
-      promotion_from: "Nearby Promotion",
-      selected_count: selectedBusinesses.length,
-    };
+    Swal.fire({
+      title: "Are you sure?",
+      text: `Do you want to send the following message to ${selectedBusinesses.length} recipients?`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, send it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const currentDate = new Date().toISOString().split("T")[0];
 
-    axios
-      .post(
-        "https://signpostphonebook.in/promotion_app/promotion_appliaction.php",
-        postData
-      )
-      .then((response) => {
-        console.log(response.data.Message);
-      })
-      .catch((error) => console.error("Error sending data:", error));
+        const postData = {
+          user_name: userData.bussinessname || userData.person || "Unknown",
+          date: currentDate,
+          pincode: pincodeInput.trim(),
+          product: "",
+          selected_prefix: prefix,
+          promotion_from: "Nearby Promotion",
+          selected_count: selectedBusinesses.length,
+        };
 
-    const mobileNumbers = selectedBusinesses.map((client) => client.mobileno);
-    try {
-      const recipients = mobileNumbers.join(",");
-      const smsUri = `sms:${recipients}?body=${encodeURIComponent(
-        customMessage
-      )}`;
-      window.location.href = smsUri;
-      setSelectedBusinesses([]);
-    } catch (error) {
-      console.error("Error opening SMS application:", error.message);
-      window.alert(
-        "An error occurred while opening the SMS application. Please try again."
-      );
-    }
+        axios
+          .post(
+            "https://signpostphonebook.in/promotion_app/promotion_appliaction.php",
+            postData
+          )
+          .then((response) => {
+            console.log(response.data.Message);
+            Swal.fire({
+              icon: "success",
+              title: "SMS Request Sent!",
+              text: "Your SMS request has been successfully sent.",
+            });
+          })
+          .catch((error) => {
+            console.error("Error sending data:", error);
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Error sending data.",
+            });
+          });
+
+        const mobileNumbers = selectedBusinesses.map(
+          (client) => client.mobileno
+        );
+        try {
+          const recipients = mobileNumbers.join(",");
+          const smsUri = `sms:${recipients}?body=${encodeURIComponent(
+            customMessage
+          )}`;
+          window.location.href = smsUri;
+          setSelectedBusinesses([]);
+          setSelectAll(false);
+        } catch (error) {
+          console.error("Error opening SMS application:", error.message);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "An error occurred while opening the SMS application. Please try again.",
+          });
+        }
+      }
+    });
   };
 
   return (
@@ -312,7 +369,11 @@ const Nearbypromotion = () => {
         )}
       </div>
       {loading ? (
-        <p>Loading...</p>
+        <div className="d-flex justify-content-center">
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        </div>
       ) : (
         <div>
           <div className="result-header">
@@ -364,7 +425,7 @@ const Nearbypromotion = () => {
                   ))}
                 </>
               ) : (
-                <p>Loading...</p>
+                <p>No records found.</p>
               )}
             </div>
           ) : (

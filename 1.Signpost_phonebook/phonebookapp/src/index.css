@@ -15,3 +15,12 @@
 .phone-number {
   font-size: 8px;
 }
+
+@media only screen and (max-width: 768px) {
+  html,
+  body {
+    /* Corrected: Removed the parenthesis */
+    width: 100%;
+    overflow-x: hidden;
+  }
+}
