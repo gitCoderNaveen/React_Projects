@@ -47,6 +47,7 @@
     "react-transition-group": "^4.4.5",
     "react-window": "^1.8.11",
     "slick-carousel": "^1.8.1",
+    "sweetalert": "^2.1.2",
     "sweetalert2": "^11.19.1",
     "swiper": "^11.2.1",
     "typed.js": "^2.1.0"
