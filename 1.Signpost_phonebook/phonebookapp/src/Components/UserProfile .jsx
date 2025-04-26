@@ -8,6 +8,7 @@ import { color } from "framer-motion";
 
 const UserProfile = () => {
   const [activeTab, setActiveTab] = useState("general");
+  const [isShopOwner, setIsShopOwner] = useState(false)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { userData, setUserData } = useAuth(); // Fetch userData from Auth context
   const [details, setDetails] = useState([]);
@@ -41,6 +42,10 @@ const UserProfile = () => {
     }));
   };
 
+  useEffect(()=>{
+    checkIsBuyer()
+  },[])
+
   // Fetch saved profile image from the database on page load
   useEffect(() => {
     const fetchProfileImage = async () => {
@@ -62,11 +67,54 @@ const UserProfile = () => {
     if (userId) {
       fetchProfileImage();
       fetchCountData();
+      checkIsBuyer();
+      checkIsOwner();
     }
   }, [userId, setUserData]); // Add userId and setUser Data as dependencies
 
   const handleBuyNow = (price) => {
     setSelectedPrice(price);
+  };
+
+  const checkIsOwner = async () => {
+    try {
+      const response = await fetch(`https://signpostphonebook.in/icecream/check_shop_owner_id.php`,{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json",
+        },
+        body: JSON.stringify({user_id:userId})
+      });
+
+      const result = await response.json();
+      if(result.success){
+        console.log("welcome Owner")
+      }else{
+        console.log("Your not a owner")
+      }
+    } catch (error) {
+      console.log("Error Message from Buyer check", error);
+    }
+  };
+  const checkIsBuyer = async () => {
+    try {
+      const response = await fetch(`https://signpostphonebook.in/icecream/check_ice_cream_buyer.php`,{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json",
+        },
+        body: JSON.stringify({user_id:userId})
+      });
+
+      const result = await response.json();
+      if(result.success){
+        console.log("welcome Buyer")
+      }else{
+        console.log("Your not a Buyer")
+      }
+    } catch (error) {
+      console.log("Error Message from Buyer check", error);
+    }
   };
 
   const fetchCountData = async () => {
