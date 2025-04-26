@@ -53,7 +53,7 @@ const Card = () => {
         setMessage("Record Added Successfully");
 
         const smsBody = encodeURIComponent(
-          `Dear ${referName},\n\nI am using Signpost PHONE BOOK - a Portal for Mobile Number Finder & Dialer with Digital Marketing Assistant. I find it very useful, and you can also join. \n\nThe URL link is: www.signpostphonebook.in\nMention my mobile number, ${userData.mobileno}, as the Promocode while signing up.\n\nRegards,\n${userData.businessname}`
+          `Dear ${referName},\n\nI am using Signpost PHONE BOOK - a Portal for Mobile Number Finder & Dialer with Digital Marketing Assistant. I find it very useful, and you can also join. \n\nThe URL link is: www.signpostphonebook.in/signup \nMention my mobile number, ${userData.mobileno}, as the Promocode while signing up.\n\nRegards,\n${userData.businessname}`
         );
         const smsLink = `sms:${referNo}?body=${smsBody}`;
 

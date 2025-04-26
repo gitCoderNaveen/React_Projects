@@ -50,7 +50,7 @@ function MediaPartner() {
 
   const { userData } = useAuth();
 
-  const [dateTime, setDateTime] = useState("");s
+  const [dateTime, setDateTime] = useState("");
 
   const updateDateTime = () => {
     const now = new Date();
