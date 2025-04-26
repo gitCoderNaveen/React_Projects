@@ -4,10 +4,12 @@ import { useAuth } from "./Auth"; // Assuming this is your auth context
 import "../Css/UserProfile.css";
 import { Modal, Button, Form } from "react-bootstrap";
 import bookLogo from "../assets/images/logos.png";
-import { color } from "framer-motion";
+import iceCreamBadge from "../assets/images/image.png"; // Import the ice cream badge image
 
 const UserProfile = () => {
   const [activeTab, setActiveTab] = useState("general");
+  const [isShopOwner, setIsShopOwner] = useState(false);
+  const [isWelcomeOwnerSuccess, setIsWelcomeOwnerSuccess] = useState(false); // State for "welcome owner" success
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { userData, setUserData } = useAuth(); // Fetch userData from Auth context
   const [details, setDetails] = useState([]);
@@ -33,6 +35,7 @@ const UserProfile = () => {
     defaultModal: false, // Existing modal
     membershipCard: false, // New Membership Card modal
   });
+  const [soldCount, setSoldCount] = useState("");
 
   const toggleMembershipModal = (modalName) => {
     setModalState((prev) => ({
@@ -40,6 +43,10 @@ const UserProfile = () => {
       [modalName]: !prev[modalName],
     }));
   };
+
+  useEffect(() => {
+    checkIsBuyer();
+  }, []);
 
   // Fetch saved profile image from the database on page load
   useEffect(() => {
@@ -62,11 +69,64 @@ const UserProfile = () => {
     if (userId) {
       fetchProfileImage();
       fetchCountData();
+      checkIsBuyer();
+      checkIsOwner();
     }
   }, [userId, setUserData]); // Add userId and setUser Data as dependencies
 
   const handleBuyNow = (price) => {
     setSelectedPrice(price);
+  };
+
+  const checkIsOwner = async () => {
+    try {
+      const response = await fetch(
+        `https://signpostphonebook.in/icecream/check_shop_owner_id.php`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ user_id: userId }),
+        }
+      );
+
+      const result = await response.json();
+      if (result.success) {
+        console.log("welcome Owner");
+        setIsShopOwner(true); // Set isShopOwner to true if the user is an owner
+        setIsWelcomeOwnerSuccess(true); // Assuming this also implies "welcome owner" success
+      } else {
+        console.log("Your not a owner");
+        setIsShopOwner(false);
+        setIsWelcomeOwnerSuccess(false);
+      }
+    } catch (error) {
+      console.log("Error Message from Buyer check", error);
+    }
+  };
+  const checkIsBuyer = async () => {
+    try {
+      const response = await fetch(
+        `https://signpostphonebook.in/icecream/check_ice_cream_buyer.php`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ user_id: userId }),
+        }
+      );
+
+      const result = await response.json();
+      if (result.success) {
+        console.log("welcome Buyer");
+      } else {
+        console.log("Your not a Buyer");
+      }
+    } catch (error) {
+      console.log("Error Message from Buyer check", error);
+    }
   };
 
   const fetchCountData = async () => {
@@ -77,7 +137,7 @@ const UserProfile = () => {
       }
 
       const response = await fetch(
-        `https://signpostphonebook.in/data_entry_details.php?userid=${userData.id}&date=${date}`
+        `https://signpostphonebook.in/data_entry_details.php?userid=<span class="math-inline">\{userData\.id\}&date\=</span>{date}`
       );
 
       if (!response.ok) {
@@ -265,6 +325,13 @@ const UserProfile = () => {
     }
   };
 
+  const handleSoldSubmit = () => {
+    // Implement your logic to handle the sold count here
+    console.log("Items Sold:", soldCount);
+    // You might want to send this data to your backend
+    setSoldCount(""); // Clear the input after submission
+  };
+
   const defaultimage =
     "https://cdn.pixabay.com/photo/2021/07/25/08/03/account-6491185_1280.png";
 
@@ -333,6 +400,13 @@ const UserProfile = () => {
                               className="CompanyLogo "
                             />
                             Membership Card
+                            {(isShopOwner || isWelcomeOwnerSuccess) && (
+                              <img
+                                src={iceCreamBadge}
+                                alt="Ice Cream Badge"
+                                className="icecream-badge"
+                              />
+                            )}
                           </div>
                           <div className="memcard-content">
                             <img
@@ -359,6 +433,25 @@ const UserProfile = () => {
                               </p>
                             </div>
                           </div>
+                          {isWelcomeOwnerSuccess && (
+                            <div className="owner-section">
+                              <Form.Group className="mb-3">
+                                {/* <Form.Label>Enter Icecream Count</Form.Label> */}
+                                <Form.Control
+                                  type="number"
+                                  placeholder="Enter count"
+                                  value={soldCount}
+                                  onChange={(e) => setSoldCount(e.target.value)}
+                                />
+                              </Form.Group>
+                              <Button
+                                variant="primary"
+                                onClick={handleSoldSubmit}
+                              >
+                                Submit Sold Count
+                              </Button>
+                            </div>
+                          )}
                           <div className="memfooter">
                             This card is valid for 12 Months from the date of
                             issue.
@@ -378,9 +471,9 @@ const UserProfile = () => {
                 </button>
               </div>
               <div className="about-details">
-                <p>
+                {/* <p>
                   <strong>ID:</strong> {userData.id || "N/A"}
-                </p>
+                </p> */}
                 <p>
                   <strong>Prefix:</strong>{" "}
                   {userData.prefix || userData.personprefix || "N/A"}
@@ -405,6 +498,71 @@ const UserProfile = () => {
                 </p>
               </div>
             </div>
+
+            {/* <div className="tab-content-2 col-lg-4">
+              <div className="description">
+                <h3>Bio</h3>
+                <p>{userData.description || "N/A"}</p>
+                <Button onClick={toggleModal} variant="primary">
+                  Request from{" "}
+                  {userData.businessname ||
+                    userData.person ||
+                    "Business Name Not Available"}{" "}
+                  to signpostphonebook
+                </Button>
+
+                <Modal show={showModal} onHide={toggleModal} centered>
+                  <Modal.Header closeButton>
+                    <Modal.Title>
+                      Frequently Asked Questions{" "}
+                      <h3 style={{ fontSize: 18 }}>
+                        contact us if you need help
+                      </h3>
+                    </Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+
+                    <div className="faq-list">
+                      {questionsAndAnswers.map((item, index) => (
+                        <div key={index} className="faq-item">
+                          <strong>Q: {item.question}</strong>
+                          <p>A: {item.answer}</p>
+                        </div>
+                      ))}
+                    </div>
+
+
+                    <Form.Group className="mt-3">
+                      <Form.Label>Ask a Question:</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Type your message..."
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                      />
+                    </Form.Group>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={toggleModal}>
+                      Close
+                    </Button>
+                    <Button
+                      variant="primary"
+                      onClick={() => {
+                        toggleModal();
+                      }}
+                    >
+                      Send
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
+                <div className="socialmedia">
+                  <h3>Links</h3>
+                  <Button variant="primary">Share</Button>
+                  <Button variant="primary">Social media of Signpost</Button>
+                </div>
+              </div>
+            </div> */}
           </div>
         )}
         {activeTab === "tasks" && (
@@ -770,17 +928,48 @@ const UserProfile = () => {
 
                 {/* Action Buttons */}
                 <div className="action-buttons">
-                  <Button variant="success" onClick={handleSave}>
-                    Save
-                  </Button>
                   <Button variant="secondary" onClick={toggleEdit}>
                     Cancel
+                  </Button>
+                  <Button variant="primary" onClick={handleSave}>
+                    Save Changes
                   </Button>
                 </div>
               </div>
             )}
           </div>
         )}
+      </div>
+      <div className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
+        <button className="sidebar-toggle" onClick={toggleSidebar}>
+          ☰
+        </button>
+        <ul>
+          <li
+            className={activeTab === "general" ? "active" : ""}
+            onClick={() => handleTabChange("general")}
+          >
+            General
+          </li>
+          <li
+            className={activeTab === "tasks" ? "active" : ""}
+            onClick={() => handleTabChange("tasks")}
+          >
+            Tasks
+          </li>
+          <li
+            className={activeTab === "sub" ? "active" : ""}
+            onClick={() => handleTabChange("sub")}
+          >
+            Subscription
+          </li>
+          <li
+            className={activeTab === "settings" ? "active" : ""}
+            onClick={() => handleTabChange("settings")}
+          >
+            Settings
+          </li>
+        </ul>
       </div>
     </div>
   );
