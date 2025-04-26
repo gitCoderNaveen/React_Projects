@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
 import axios from "axios";
-import React, { useContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Authcontext = React.createContext();
+const Authcontext = createContext(); // You create the context here
 
-export default function Auth({ children }) {
+export function Auth({ children }) {
   const [user, setUser] = useState(null);
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ export default function Auth({ children }) {
         { mobileno: username }
       );
 
-      if (response.data.valid) {
+      if (response.data && response.data.valid) {
         setUser(response.data.businessname || response.data.person);
         setUserData(response.data);
         localStorage.setItem(
@@ -50,7 +50,7 @@ export default function Auth({ children }) {
       }
     } catch (error) {
       alert("Error: Unable to Login. Please Try Again Later");
-      console.log(error);
+      console.error(error); // Use console.error for errors
     }
   };
 
@@ -78,3 +78,8 @@ Auth.propTypes = {
 export function useAuth() {
   return useContext(Authcontext);
 }
+
+// Importantly, export Authcontext
+export { Authcontext };
+
+export default Auth;

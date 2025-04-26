@@ -11,6 +11,7 @@ export default function Navigationpage() {
   const navigate = useNavigate();
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const [isAdminUser, setIsAdminUser] = useState(false);
+  const [isIceCreamDropdownOpen, setIsIceCreamDropdownOpen] = useState(false); // State for dropdown visibility
   const adminUser = [
     "9843657564",
     "8344508070",
@@ -30,6 +31,10 @@ export default function Navigationpage() {
 
   const toggleDrawer = () => {
     setDrawerOpen(!isDrawerOpen);
+  };
+
+  const toggleIceCreamDropdown = () => {
+    setIsIceCreamDropdownOpen(!isIceCreamDropdownOpen);
   };
 
   const handleAddCustomer = () => {
@@ -113,6 +118,62 @@ export default function Navigationpage() {
                   </NavLink>
                 </li>
               )}
+              {/* ICE CREAM DROPDOWN - Conditional rendering */}
+              {isAdminUser && (
+                <li className="nav-item dropdown">
+                  <a
+                    className="nav-link dropdown-toggle text-light"
+                    href="#"
+                    id="navbarDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded={isIceCreamDropdownOpen} // Control expansion with state
+                    onClick={toggleIceCreamDropdown} // Toggle state on click
+                  >
+                    Ice Cream
+                  </a>
+                  <ul
+                    className={`dropdown-menu ${
+                      isIceCreamDropdownOpen ? "show" : ""
+                    }`}
+                    aria-labelledby="navbarDropdown"
+                  >
+                    <li>
+                      <NavLink
+                        className="dropdown-item"
+                        to="/buyer"
+                        onClick={() => {
+                          setIsIceCreamDropdownOpen(false); // Close dropdown on item click
+                        }}
+                      >
+                        Buyer
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        className="dropdown-item"
+                        to="/shopkeeper"
+                        onClick={() => {
+                          setIsIceCreamDropdownOpen(false); // Close dropdown on item click
+                        }}
+                      >
+                        Shopkeeper
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        className="dropdown-item"
+                        to="/transactions"
+                        onClick={() => {
+                          setIsIceCreamDropdownOpen(false); // Close dropdown on item click
+                        }}
+                      >
+                        Transactions
+                      </NavLink>
+                    </li>
+                  </ul>
+                </li>
+              )}
             </ul>
             {user ? (
               <div className="userfn-btn d-flex align-items-center">
@@ -157,7 +218,7 @@ export default function Navigationpage() {
         </div>
       </nav>
 
-      {/* Drawer Section */}
+      {/* Drawer Section (No changes needed here for the dropdown behavior) */}
       <div
         className={`drawer ${isDrawerOpen ? "drawer-open" : ""}`}
         style={{
@@ -210,6 +271,43 @@ export default function Navigationpage() {
                   onClick={toggleDrawer}
                 >
                   Categorywise Promotion
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link"
+                  to="/icecream" // Keep this for the drawer if needed
+                  onClick={toggleDrawer}
+                >
+                  Ice Cream
+                </NavLink>
+              </li>
+              {/* Dropdown items for the drawer */}
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link ms-3 fw-bold"
+                  to="/buyer"
+                  onClick={toggleDrawer}
+                >
+                  Buyer
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link ms-3"
+                  to="/shopkeeper"
+                  onClick={toggleDrawer}
+                >
+                  Shopkeeper
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link ms-3"
+                  to="/transactions"
+                  onClick={toggleDrawer}
+                >
+                  Transaction
                 </NavLink>
               </li>
               <li className="nav-item">
