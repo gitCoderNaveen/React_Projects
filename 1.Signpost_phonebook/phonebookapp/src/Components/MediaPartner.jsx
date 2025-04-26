@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../Components/Auth";
 import "../Css/MediaPartner.css"; // Keeping your existing CSS
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 function MediaPartner() {
   const [mypromoCode, setPromoCode] = useState("");
@@ -42,6 +40,11 @@ function MediaPartner() {
   const mydescription = "Update Soon";
   const cmpanyPrefix = "M/s.";
   const navigate = useNavigate();
+  const smsBody = encodeURIComponent(
+    `Dear ${
+      mybusinessname ? `M/s.${mybusinessname}` : `${myprefix}.${myperson}`
+    }, \n Signpost PHONE BOOK,  is a portal for  Mobile Number Finder and Dialerwith Digital Marketing. Please kindly view and verify the correctness of details on your firm, at the earliest. \n URL :- www.signpostphonebook.in \n User name :-  your mobile number \n Password  :- Signpost \n You can use the PHONE BOOK for your business promotion in any desired (Pincode) area so Entire Coimbatore`
+  );
 
   const { userData } = useAuth();
   const [dateTime, setDateTime] = useState("");

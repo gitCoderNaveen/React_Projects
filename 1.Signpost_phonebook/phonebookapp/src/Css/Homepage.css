@@ -630,6 +630,7 @@ h6 {
     font-size: 1rem;
     margin-bottom: 2px;
     text-align: left;
+    /* text-wrap: nowrap; */
   }
 
   .card-location {
@@ -640,7 +641,7 @@ h6 {
 
   .phone-number {
     font-size: 0.8rem;
-    margin-top: 2px;
+    margin-top: 10px;
     text-align: left;
   }
 
