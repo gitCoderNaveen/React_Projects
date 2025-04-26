@@ -311,7 +311,7 @@ const Landingpage = () => {
             </span>{" "}
             Companies
           </h2>
-          <div className="trusted-partners-container overflow-hidden mt-4">
+          <div className="trusted-partners-container overflow-hidden mt-4 w-100">
             <div className="trusted-partners-images d-flex">
               {[
                 Company2,

@@ -2,12 +2,7 @@ import React, { useState } from "react";
 import { useAuth } from "./Auth";
 import { useNavigate } from "react-router-dom";
 import "../Css/Login.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faEye,
-  faEyeSlash,
-  faSpinner,
-} from "@fortawesome/free-solid-svg-icons";
+import { FaEye, FaEyeSlash } from "react-icons/fa"; // Removed FaSpinner
 
 const Login = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(true);
@@ -77,27 +72,17 @@ const Login = () => {
                     required
                   />
                   {password && (
-                    <FontAwesomeIcon
-                      icon={showPassword ? faEyeSlash : faEye}
+                    <span
                       className="toggle-password"
                       onClick={() => setShowPassword(!showPassword)}
-                    />
+                    >
+                      {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </span>
                   )}
                 </div>
               </div>
               <button type="submit" className="login-button" disabled={loading}>
-                {loading ? (
-                  <div className="loading-container">
-                    <FontAwesomeIcon
-                      icon={faSpinner}
-                      className="spinner"
-                      spin
-                    />
-                    <span>Loading...</span>
-                  </div>
-                ) : (
-                  "Login"
-                )}
+                {loading ? <div className="loader"></div> : "Login"}
               </button>
             </form>
             <div className="links">

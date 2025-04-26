@@ -1,3 +1,7 @@
+body {
+  overflow-x: hidden;
+}
+
 .mobile-image-container {
   width: 300px; /* Base width */
 }

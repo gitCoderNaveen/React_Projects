@@ -1,10 +1,10 @@
-// =============================== Updated Page ==================================
 import React, { useEffect, useState } from "react";
-import "../Css/Signup.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useAuth } from "./Auth";
-import { AlternateEmail } from "@mui/icons-material";
+import { useAuth } from "../Components/Auth";
+import "../Css/MediaPartner.css"; // Keeping your existing CSS
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function MediaPartner() {
   const [mypromoCode, setPromoCode] = useState("");
@@ -42,41 +42,36 @@ function MediaPartner() {
   const mydescription = "Update Soon";
   const cmpanyPrefix = "M/s.";
   const navigate = useNavigate();
+<<<<<<< HEAD
   const smsBody = encodeURIComponent(
     `Dear ${
       mybusinessname ? `M/s.${mybusinessname}` : `${myprefix}.${myperson}`
     }, \n Signpost PHONE BOOK,  is a portal for  Mobile Number Finder and Dialerwith Digital Marketing. Please kindly view and verify the correctness of details on your firm, at the earliest. \n URL :- www.signpostphonebook.in \n User name :-  your mobile number \n Password  :- Signpost \n You can use the PHONE BOOK for your business promotion in any desired (Pincode) area so Entire Coimbatore`
   );
+=======
+>>>>>>> 36ca4765e704dea43318f0b66a9df5a7bcc24a40
 
   const { userData } = useAuth();
-
   const [dateTime, setDateTime] = useState("");
 
   const updateDateTime = () => {
     const now = new Date();
-
-    // Format date
     const options = { year: "numeric", month: "numeric", day: "numeric" };
     const formattedDate = now.toLocaleDateString(undefined, options);
-
-    // Format time
     let hours = now.getHours();
     const minutes = now.getMinutes();
     const ampm = hours >= 12 ? "PM" : "AM";
-    hours = hours % 12 || 12; // Convert to 12-hour format
-    const formattedTime = `${hours}:${
-      minutes < 10 ? "0" + minutes : minutes
-    } ${ampm}`;
-
-    // Combine date and time
+    hours = hours % 12 || 12;
+    const formattedTime = `<span class="math-inline">\{hours\}\:</span>{minutes < 10 ? "0" + minutes : minutes} ${ampm}`;
     setDateTime(`${formattedDate} ${formattedTime}`);
   };
 
   useEffect(() => {
     updateDateTime();
-    const interval = setInterval(updateDateTime, 1000); // Update every second
-    return () => clearInterval(interval); // Cleanup interval on unmount
+    const interval = setInterval(updateDateTime, 1000);
+    return () => clearInterval(interval);
   }, []);
+
   const resetForm = () => {
     setBusinessname("");
     setMobileno("");
@@ -86,7 +81,6 @@ function MediaPartner() {
     setPincode("");
     setCity("");
     setProduct("");
-    setLandLine("");
     setLandLine("");
     setLcode("");
     setEmail("");
@@ -113,18 +107,18 @@ function MediaPartner() {
         mybusinessname
           ? `${myprefix} ${myperson}, M/s.${mybusinessname}`
           : `${myprefix} ${myperson}`
-      }  
-Signpost PHONE BOOK,  is a portal for  Mobile Number Finder and & Dialer with Digital Marketing. Please kindly view and verify the correctness of details on your firm, at the earliest.
+      }
+Signpost PHONE BOOK,  is a portal for  Mobile Number Finder and & Dialer with Digital Marketing. Please kindly view and verify the correctness of details on your firm, at the earliest.
 
 URL :- www.signpostphonebook.in
-User name :-  Your mobile number 
-Password  :- Signpost
+User name :-  Your mobile number
+Password  :- Signpost
 You are registered Under the Category
 ${myproduct}
 
 You can use the PHONE BOOK for your business promotion in any desired (Pincode) area or Entire Coimbatore`
     );
-    const smsLink = `sms:${mymobileno}?body=${smsBody}`;
+    const smsLink = `sms:<span class="math-inline">\{mymobileno\}?body\=</span>{smsBody}`;
 
     setTimeout(() => {
       window.location.href = smsLink;
@@ -134,11 +128,8 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
 
   const handleChange = (e) => {
     const value = e.target.value;
-
-    // Allow only numbers
     if (/^\d*$/.test(value)) {
       setMobileno(value);
-      // Validation: Check for length and starting digit
       if (value.length > 10) {
         alert("The number should not exceed 10 digits.");
       } else if (value.length === 10 && !/^[6-9]/.test(value)) {
@@ -211,7 +202,6 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
 
       const responseData = response.data;
 
-      // Handle response
       if (responseData.success) {
         console.log(
           `Success: ${responseData.message}, New Count: ${responseData.newCount}`
@@ -457,164 +447,234 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
     setshowStdText(false);
     setshowEmailText(true);
   };
+
   return (
-    <div className="signup-container">
-      <div className="signup-content">
-        <button className="close-button" onClick={() => navigate("/home")}>
-          &times;{" "}
-        </button>
-        <h2 className="header-text">Media Partner</h2>
-        <div className="form-container">
-          <form className="scrollable-form">
-            <label htmlFor="mobile">Mobile Number:*</label>
-            <input
-              type="number"
-              id="mobile"
-              name="mobile"
-              value={mymobileno}
-              onClick={handleMobileHelptext}
-              onChange={handleChange}
-              maxLength={10}
-              onInput={(e) => {
-                if (e.target.value.length > 10)
-                  e.target.value = e.target.value.slice(0, 10);
-              }}
-              onBlur={() => checkMobileNumber(mymobileno)}
-              required
-            />
-            {showMobiletext && (
-              <p className="helptext">{`Type 10 digits without Country code (+91), without gap Don't Type Land Line`}</p>
-            )}
-            <label htmlFor="name">Person Name*:</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={myperson}
-              onClick={handlePersonHelptext}
-              onChange={handlePersonName}
-              onSelect={() => {
-                if (mymobileno.length < 10) {
-                  alert("Enter Vaid Mobile Number");
-                  setMobileno("");
-                }
-              }}
-            />
-            {showPersonName && (
-              <p className="helptext">{`Type Initial at the end`}</p>
-            )}
-            <label>Prefix*:</label>
-            <div className="radio-group">
-              <label>
-                <input
-                  type="radio"
-                  name="title"
-                  value="Mr."
-                  checked={myprefix === "Mr."}
-                  onClick={handleRadio}
-                  onChange={(e) => {
-                    setPrefix(e.target.value);
-                  }}
-                />
-                Mr.
+    <div className="container-fluid bg-light py-5">
+      <div className="container shadow-md">
+        <div className="card shadow-lg rounded-lg p-4">
+          <button
+            className="btn-close p-2 float-end fw-bolder"
+            aria-label="Close"
+            onClick={() => navigate("/home")}
+          ></button>
+          <h2 className="text-center mb-4 text-primary fw-bold">
+            Media Partner Registration
+          </h2>
+          <form
+            className="row g-3 needs-validation "
+            onSubmit={insertRecord}
+            noValidate
+          >
+            <div className="col-md-6">
+              <label htmlFor="mobile" className="form-label fw-semibold">
+                Mobile Number:<span className="text-danger">*</span>
               </label>
-              <label>
-                <input
-                  type="radio"
-                  name="title"
-                  value="Ms."
-                  onClick={handleRadio}
-                  checked={myprefix === "Ms."}
-                  onChange={(e) => {
-                    setPrefix(e.target.value);
-                  }}
-                />
-                Ms.
-              </label>
+              <input
+                type="number"
+                className="form-control form-control-lg"
+                id="mobile"
+                name="mobile"
+                value={mymobileno}
+                onClick={handleMobileHelptext}
+                onChange={handleChange}
+                maxLength={10}
+                onInput={(e) => {
+                  if (e.target.value.length > 10)
+                    e.target.value = e.target.value.slice(0, 10);
+                }}
+                onBlur={() => checkMobileNumber(mymobileno)}
+                required
+              />
+              {showMobiletext && (
+                <div className="form-text text-danger">
+                  Type 10 digits without Country code (+91), without gap. Don't
+                  Type Land Line.
+                </div>
+              )}
             </div>
-            {showprefixtext && (
-              <p className="helptext">{`Select Mr. For Gents and Ms. for Ladies`}</p>
-            )}
 
-            <label htmlFor="name">Firm/Business Name*:</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={mybusinessname}
-              onClick={handleBusinessHelptext}
-              onChange={handleBusinessName}
-              onSelect={() => {
-                if (mymobileno.length < 10) {
-                  alert("Enter Vaid Mobile Number");
-                  setMobileno("");
-                }
-              }}
-            />
-            {showbusinesstext && (
-              <p className="helptext">{`Type Your FirmName or BusinessName`}</p>
-            )}
-
-            <label htmlFor="city">
-              City<span className="red-star">*</span>:
-            </label>
-            <input
-              type="text"
-              id="city"
-              name="city"
-              value={mycity}
-              onClick={handleCity}
-              onChange={handleCityName}
-              required
-            />
-            {showCityText && (
-              <p className="helptext">{`Type City Name. Don't Use Petnames (Kovai Etc.)`}</p>
-            )}
-
-            <label htmlFor="pincode">
-              Pincode<span className="red-star">*</span>:
-            </label>
-            <input
-              type="number"
-              id="pincode"
-              name="pincode"
-              value={mypincode}
-              onChange={(e) => {
-                setPincode(e.target.value);
-              }}
-              onClick={handlePincode}
-              maxLength={6}
-              onInput={(e) => {
-                if (e.target.value.length > 6)
-                  e.target.value = e.target.value.slice(0, 6);
-              }}
-              required
-            />
-            {showPincodeText && (
-              <p className="helptext">{`Type 6 Digits Continioulsy Without Gap`}</p>
-            )}
-
-            <label htmlFor="address">
-              Address<span className="red-star">*</span>:
-            </label>
-            <textarea
-              id="address"
-              name="address"
-              value={myaddress}
-              onClick={handleAddress}
-              onChange={(e) => {
-                setAddress(e.target.value);
-              }}
-              required
-            ></textarea>
-            {showAddressText && (
-              <p className="helptext">{`Type Door Number, Street, Flat No, Appartment Name, Landmark, Area Name etc.`}</p>
-            )}
-
-            <div>
-              <label htmlFor="productService">Product/Service:*</label>
+            <div className="col-md-6">
+              <label htmlFor="person" className="form-label fw-semibold">
+                Person Name:<span className="text-danger">*</span>
+              </label>
               <input
                 type="text"
+                className="form-control form-control-lg"
+                id="person"
+                name="person"
+                value={myperson}
+                onClick={handlePersonHelptext}
+                onChange={handlePersonName}
+                onSelect={() => {
+                  if (mymobileno.length < 10) {
+                    alert("Enter Valid Mobile Number");
+                    setMobileno("");
+                  }
+                }}
+              />
+              {showPersonName && (
+                <div className="form-text text-danger">
+                  Type Initial at the end.
+                </div>
+              )}
+            </div>
+
+            <div className="col-md-6">
+              <label className="form-label fw-semibold">
+                Prefix:<span className="text-danger">*</span>
+              </label>
+              <div className="d-flex gap-2">
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="title"
+                    value="Mr."
+                    checked={myprefix === "Mr."}
+                    onClick={handleRadio}
+                    onChange={(e) => {
+                      setPrefix(e.target.value);
+                    }}
+                    id="mr"
+                  />
+                  <label className="form-check-label" htmlFor="mr">
+                    Mr.
+                  </label>
+                </div>
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="title"
+                    value="Ms."
+                    onClick={handleRadio}
+                    checked={myprefix === "Ms."}
+                    onChange={(e) => {
+                      setPrefix(e.target.value);
+                    }}
+                    id="ms"
+                  />
+                  <label className="form-check-label" htmlFor="ms">
+                    Ms.
+                  </label>
+                </div>
+              </div>
+              {showprefixtext && (
+                <div className="form-text text-danger">
+                  Select Mr. For Gents and Ms. for Ladies.
+                </div>
+              )}
+            </div>
+
+            <div className="col-md-6">
+              <label htmlFor="businessname" className="form-label fw-semibold">
+                Firm/Business Name:<span className="text-danger">*</span>
+              </label>
+              <input
+                type="text"
+                className="form-control form-control-lg"
+                id="businessname"
+                name="businessname"
+                value={mybusinessname}
+                onClick={handleBusinessHelptext}
+                onChange={handleBusinessName}
+                onSelect={() => {
+                  if (mymobileno.length < 10) {
+                    alert("Enter Valid Mobile Number");
+                    setMobileno("");
+                  }
+                }}
+              />
+              {showbusinesstext && (
+                <div className="form-text text-danger">
+                  Type Your FirmName or BusinessName.
+                </div>
+              )}
+            </div>
+
+            <div className="col-md-6">
+              <label htmlFor="city" className="form-label fw-semibold">
+                City<span className="text-danger">*</span>:
+              </label>
+              <input
+                type="text"
+                className="form-control form-control-lg"
+                id="city"
+                name="city"
+                value={mycity}
+                onClick={handleCity}
+                onChange={handleCityName}
+                required
+              />
+              {showCityText && (
+                <div className="form-text text-danger">
+                  Type City Name. Don't Use Petnames (Kovai Etc.).
+                </div>
+              )}
+            </div>
+
+            <div className="col-md-6">
+              <label htmlFor="pincode" className="form-label fw-semibold">
+                Pincode<span className="text-danger">*</span>:
+              </label>
+              <input
+                type="number"
+                className="form-control form-control-lg"
+                id="pincode"
+                name="pincode"
+                value={mypincode}
+                onChange={(e) => {
+                  setPincode(e.target.value);
+                }}
+                onClick={handlePincode}
+                maxLength={6}
+                onInput={(e) => {
+                  if (e.target.value.length > 6)
+                    e.target.value = e.target.value.slice(0, 6);
+                }}
+                required
+              />
+              {showPincodeText && (
+                <div className="form-text text-danger">
+                  Type 6 Digits Continuously Without Gap.
+                </div>
+              )}
+            </div>
+
+            <div className="col-12">
+              <label htmlFor="address" className="form-label fw-semibold">
+                Address<span className="text-danger">*</span>:
+              </label>
+              <textarea
+                className="form-control form-control-lg"
+                id="address"
+                name="address"
+                value={myaddress}
+                onClick={handleAddress}
+                onChange={(e) => {
+                  setAddress(e.target.value);
+                }}
+                rows="3"
+                required
+              ></textarea>
+              {showAddressText && (
+                <div className="form-text text-danger">
+                  Type Door Number, Street, Flat No, Appartment Name, Landmark,
+                  Area Name etc.
+                </div>
+              )}
+            </div>
+
+            <div className="col-12">
+              <label
+                htmlFor="productService"
+                className="form-label fw-semibold"
+              >
+                Product/Service:<span className="text-danger">*</span>
+              </label>
+              <input
+                type="text"
+                className="form-control form-control-lg"
                 id="productService"
                 name="productService"
                 value={myproduct}
@@ -622,148 +682,176 @@ You can use the PHONE BOOK for your business promotion in any desired (Pincode) 
                   setProduct(e.target.value);
                 }}
                 onClick={handleProduct}
+                required
               />
               {showProductText && (
-                <p className="helptext">{`Type Correct & Specific Name of Product/Service offered. Sepparate Each Keyword By Comma. For `}</p>
+                <div className="form-text text-danger">
+                  Type Correct & Specific Name of Product/Service offered.
+                  Separate Each Keyword By Comma. For example: "Plumber,
+                  Electrician, Carpenter".
+                </div>
               )}
             </div>
-            <label htmlFor="landline">Landline No:</label>
-            <input
-              type="number"
-              id="landline"
-              name="landline"
-              value={mylandLine}
-              onClick={handleLandLine}
-              onChange={(e) => {
-                setLandLine(e.target.value);
-              }}
-            />
-            {showLandlineText && (
-              <p className="helptext">{`Type Only Landline, if Available. Don't Type Mobile Number here.`}</p>
-            )}
-            <label htmlFor="stdCode">STD Code:</label>
-            <input
-              type="number"
-              id="stdCode"
-              name="stdCode"
-              value={myLcode}
-              onClick={handleStdCode}
-              onChange={(e) => {
-                setLcode(e.target.value);
-              }}
-            />
-            {showStdText && (
-              <p className="helptext">{`Type Only Landline, if Available. Don't Type Mobile Number here.`}</p>
-            )}
-            <label htmlFor="email">Email:</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={myemail}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-              onClick={handleEmail}
-            />
-            {showEmailText && (
-              <p className="helptext">{`Type Correctly, Only If Available`}</p>
-            )}
+
+            <div className="col-md-6">
+              <label htmlFor="landline" className="form-label fw-semibold">
+                Landline No:
+              </label>
+              <input
+                type="number"
+                className="form-control form-control-lg"
+                id="landline"
+                name="landline"
+                value={mylandLine}
+                onClick={handleLandLine}
+                onChange={(e) => {
+                  setLandLine(e.target.value);
+                }}
+              />
+              {showLandlineText && (
+                <div className="form-text text-danger">
+                  Type Only Landline, if Available. Don't Type Mobile Number
+                  here.
+                </div>
+              )}
+            </div>
+
+            <div className="col-md-3">
+              <label htmlFor="stdCode" className="form-label fw-semibold">
+                STD Code:
+              </label>
+              <input
+                type="number"
+                className="form-control form-control-lg"
+                id="stdCode"
+                name="stdCode"
+                value={myLcode}
+                onClick={handleStdCode}
+                onChange={(e) => {
+                  setLcode(e.target.value);
+                }}
+              />
+              {showStdText && (
+                <div className="form-text text-danger">
+                  Type STD Code if Landline number is provided.
+                </div>
+              )}
+            </div>
+
+            <div className="col-md-3">
+              <label htmlFor="email" className="form-label fw-semibold">
+                Email:
+              </label>
+              <input
+                type="email"
+                className="form-control form-control-lg"
+                id="email"
+                name="email"
+                value={myemail}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+                onClick={handleEmail}
+              />
+              {showEmailText && (
+                <div className="form-text text-danger">
+                  Type Correctly, Only If Available.
+                </div>
+              )}
+            </div>
+
+            <div className="col-12 text-center">
+              <button
+                type="submit"
+                className="btn btn-primary btn-lg mt-4 fw-bold"
+              >
+                Submit
+              </button>
+            </div>
           </form>
         </div>
-        <div className="submit-Button">
-          <button
-            className="btn btn-primary mt-2"
-            type="button"
-            onClick={insertRecord}
-          >
-            Submit
-          </button>
-        </div>
-        {showPopup && (
-          <div className="popup">
-            <div className="popup-content">
-              <div>
-                <p>Registered successfully.</p>
-                <button onClick={handlePopup}>OK</button>
+      </div>
+
+      {showPopup && (
+        <div
+          className="modal fade show"
+          tabIndex="-1"
+          style={{ display: "block", backgroundColor: "rgba(0,0,0,0.5)" }}
+        >
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-body text-center">
+                <p className="mb-3 fw-semibold text-success">
+                  Registered successfully!
+                </p>
+                <button
+                  type="button"
+                  className="btn btn-primary btn-lg"
+                  onClick={handlePopup}
+                >
+                  OK
+                </button>
               </div>
             </div>
           </div>
-        )}
-        {/* Popup Modal */}
-        {showPopup1 && (
-          <div style={popupStyles.overlay}>
-            <div style={popupStyles.modal}>
-              <h3>Mobile Number Already Registered</h3>
-              <div>
+        </div>
+      )}
+
+      {showPopup1 && (
+        <div
+          className="modal fade show"
+          tabIndex="-1"
+          style={{ display: "block", backgroundColor: "rgba(0,0,0,0.5)" }}
+        >
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header bg-warning text-dark">
+                <h5 className="modal-title fw-bold">
+                  Mobile Number Already Registered
+                </h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={handleClosePopup1}
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div className="modal-body text-center">
                 {regBusinessName ? (
                   <div>
-                    <p>
+                    <p className="mb-2 fw-semibold">
                       In the Name of{" "}
-                      <strong>
+                      <strong className="text-primary">
                         {regBusinessPrefix} {regBusinessName}
                       </strong>
                     </p>
                   </div>
                 ) : (
                   <div>
-                    <p>
+                    <p className="mb-2 fw-semibold">
                       In the name of{" "}
-                      <strong>
+                      <strong className="text-primary">
                         {regPrefix} {regName}
                       </strong>
                     </p>
                   </div>
                 )}
               </div>
-              <button
-                onClick={handleClosePopup1}
-                style={popupStyles.closeButton}
-              >
-                Close
-              </button>
+              <div className="modal-footer justify-content-center">
+                <button
+                  type="button"
+                  className="btn btn-secondary btn-lg"
+                  onClick={handleClosePopup1}
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
-
-const popupStyles = {
-  error: {
-    color: "#EC2D01",
-  },
-  overlay: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    zIndex: 1000,
-  },
-  modal: {
-    backgroundColor: "#fff",
-    padding: "20px",
-    borderRadius: "8px",
-    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-    textAlign: "center",
-    maxWidth: "400px",
-    width: "80%",
-  },
-  closeButton: {
-    marginTop: "20px",
-    padding: "10px 20px",
-    backgroundColor: "#007BFF",
-    color: "#fff",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
-  },
-};
 
 export default MediaPartner;

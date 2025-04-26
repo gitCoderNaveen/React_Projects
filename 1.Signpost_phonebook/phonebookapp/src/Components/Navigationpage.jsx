@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { NavLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "./Auth";
 import "../Css/Navbar.css";
 import { MdLogout } from "react-icons/md";
+import Swal from "sweetalert2"; // Import SweetAlert
 
 export default function Navigationpage() {
   const { user, Logout, Login, userData } = useAuth();
   const navigate = useNavigate();
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const [isAdminUser, setIsAdminUser] = useState(false);
+  const [isIceCreamDropdownOpen, setIsIceCreamDropdownOpen] = useState(false); // State for dropdown visibility
   const adminUser = [
     "9843657564",
     "8344508070",
@@ -32,6 +33,10 @@ export default function Navigationpage() {
     setDrawerOpen(!isDrawerOpen);
   };
 
+  const toggleIceCreamDropdown = () => {
+    setIsIceCreamDropdownOpen(!isIceCreamDropdownOpen);
+  };
+
   const handleAddCustomer = () => {
     navigate("/Mediapartner");
     toggleDrawer();
@@ -44,9 +49,21 @@ export default function Navigationpage() {
   };
 
   const handleLogout = () => {
-    Logout();
-    navigate("/login");
-    toggleDrawer();
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to logout?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, logout!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Logout();
+        navigate("/login");
+        toggleDrawer();
+      }
+    });
   };
 
   const handleProfile = () => {
@@ -58,16 +75,20 @@ export default function Navigationpage() {
     <div>
       <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top">
         <div className="container py-1">
-          <NavLink className="nav-brand fw-bolder" to="/">
+          <NavLink className="nav-brand fw-bolder px-2" to="/">
             Signpost PHONE BOOK {/* Add the book icon */}
           </NavLink>
           <button
-            className="navbar-toggler bg-light"
+            className="navbar-toggler border-0" // Removed default icon
             type="button"
             onClick={toggleDrawer}
             aria-label="Toggle navigation"
           >
-            <span className="navbar-toggler-icon"></span>
+            <div className={`hamburger ${isDrawerOpen ? "open" : ""}`}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
           </button>
           <div className="collapse navbar-collapse">
             <ul className="navbar-nav ms-auto">
@@ -95,6 +116,62 @@ export default function Navigationpage() {
                   >
                     Admin
                   </NavLink>
+                </li>
+              )}
+              {/* ICE CREAM DROPDOWN - Conditional rendering */}
+              {isAdminUser && (
+                <li className="nav-item dropdown">
+                  <a
+                    className="nav-link dropdown-toggle text-light"
+                    href="#"
+                    id="navbarDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded={isIceCreamDropdownOpen} // Control expansion with state
+                    onClick={toggleIceCreamDropdown} // Toggle state on click
+                  >
+                    Ice Cream
+                  </a>
+                  <ul
+                    className={`dropdown-menu ${
+                      isIceCreamDropdownOpen ? "show" : ""
+                    }`}
+                    aria-labelledby="navbarDropdown"
+                  >
+                    <li>
+                      <NavLink
+                        className="dropdown-item"
+                        to="/buyer"
+                        onClick={() => {
+                          setIsIceCreamDropdownOpen(false); // Close dropdown on item click
+                        }}
+                      >
+                        Buyer
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        className="dropdown-item"
+                        to="/shopkeeper"
+                        onClick={() => {
+                          setIsIceCreamDropdownOpen(false); // Close dropdown on item click
+                        }}
+                      >
+                        Shopkeeper
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        className="dropdown-item"
+                        to="/transactions"
+                        onClick={() => {
+                          setIsIceCreamDropdownOpen(false); // Close dropdown on item click
+                        }}
+                      >
+                        Transactions
+                      </NavLink>
+                    </li>
+                  </ul>
                 </li>
               )}
             </ul>
@@ -141,7 +218,7 @@ export default function Navigationpage() {
         </div>
       </nav>
 
-      {/* Drawer Section */}
+      {/* Drawer Section (No changes needed here for the dropdown behavior) */}
       <div
         className={`drawer ${isDrawerOpen ? "drawer-open" : ""}`}
         style={{
@@ -194,6 +271,43 @@ export default function Navigationpage() {
                   onClick={toggleDrawer}
                 >
                   Categorywise Promotion
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link"
+                  to="/icecream" // Keep this for the drawer if needed
+                  onClick={toggleDrawer}
+                >
+                  Ice Cream
+                </NavLink>
+              </li>
+              {/* Dropdown items for the drawer */}
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link ms-3 fw-bold"
+                  to="/buyer"
+                  onClick={toggleDrawer}
+                >
+                  Buyer
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link ms-3"
+                  to="/shopkeeper"
+                  onClick={toggleDrawer}
+                >
+                  Shopkeeper
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link ms-3"
+                  to="/transactions"
+                  onClick={toggleDrawer}
+                >
+                  Transaction
                 </NavLink>
               </li>
               <li className="nav-item">

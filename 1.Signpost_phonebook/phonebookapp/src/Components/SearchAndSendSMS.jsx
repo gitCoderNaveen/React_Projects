@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import "../Css/SearchAndSendSms.css";
 import { FaPencilAlt } from "react-icons/fa";
 import axios from "axios";
-import { useAuth } from "./Auth";
+import { useAuth } from "../Components/Auth";
+import Swal from "sweetalert2";
 
 export default function SearchAndSendSMS() {
   const [data, setData] = useState([]);
@@ -41,11 +42,7 @@ export default function SearchAndSendSMS() {
   };
 
   const handleSelectAllChange = () => {
-    if (selectAll) {
-      setSelectedClients([]);
-    } else {
-      setSelectedClients(data);
-    }
+    setSelectedClients(selectAll ? [] : data);
     setSelectAll(!selectAll);
   };
 
@@ -54,16 +51,25 @@ export default function SearchAndSendSMS() {
       const response = await fetch(
         "https://signpostphonebook.in/client_fetch.php"
       );
-      if (!response.ok)
+      if (!response.ok) {
         throw new Error(`HTTP Error! Status: ${response.status}`);
+      }
       const jsonResponse = await response.json();
       if (Array.isArray(jsonResponse)) {
         setData(jsonResponse.sort((a, b) => b.id - a.id));
       } else {
-        alert("Unexpected response from server.");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Unexpected response from server.",
+        });
       }
     } catch (error) {
-      alert("Failed to load data: " + error.message);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `Failed to load data: ${error.message}`,
+      });
     }
   };
 
@@ -88,11 +94,19 @@ export default function SearchAndSendSMS() {
       if (Array.isArray(jsonResponse)) {
         setData(jsonResponse);
       } else {
-        window.alert("Unexpected response from server.");
+        Swal.fire({
+          icon: "warning",
+          title: "Attention!",
+          text: "Unexpected response from server.",
+        });
       }
     } catch (error) {
       console.error("Fetch Error:", error);
-      window.alert("Failed to load product data: " + error.message);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `Failed to load product data: ${error.message}`,
+      });
     }
   };
 
@@ -101,57 +115,85 @@ export default function SearchAndSendSMS() {
     if (productInput) {
       fetchProductData(productInput);
       setShowresults(true);
-    } else fetchData();
+    } else {
+      fetchData();
+      setShowresults(false);
+    }
   };
 
   const handleClear = () => {
     setProductInput("");
     setSelectAll(false);
-    setSelectedClients("");
+    setSelectedClients([]);
     setShowresults(false);
   };
 
   const sendSMS = () => {
     if (selectedClients.length === 0) {
-      window.alert("No clients selected!");
+      Swal.fire({
+        icon: "warning",
+        title: "Attention!",
+        text: "No clients selected!",
+      });
       return;
     }
-    const currentDate = new Date().toISOString().split("T")[0];
 
-    const postData = {
-      user_name: userData.bussinessname || userData.person || "Unknown",
-      date: currentDate,
-      selected_prefix:"NA",
-      pincode: "",
-      product: productInput.trim(),
-      promotion_from: "CatagoryWise Promotion",
-      selected_count: selectedClients.length,
-    };
+    Swal.fire({
+      title: "Are you sure?",
+      text: `Do you want to send SMS to ${selectedClients.length} selected clients?`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, send it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const currentDate = new Date().toISOString().split("T")[0];
 
-    axios
-      .post(
-        "https://signpostphonebook.in/promotion_app/promotion_appliaction.php",
-        postData
-      )
-      .then((response) => {
-        console.log(response.data.Message);
-      })
-      .catch((error) => console.error("Error sending data:", error));
+        const postData = {
+          user_name: userData?.bussinessname || userData?.person || "Unknown",
+          date: currentDate,
+          selected_prefix: "NA",
+          pincode: "",
+          product: productInput.trim(),
+          promotion_from: "CatagoryWise Promotion",
+          selected_count: selectedClients.length,
+        };
 
-    const mobileNumbers = selectedClients.map((client) => client.mobileno);
-    try {
-      const recipients = mobileNumbers.join(",");
-      const smsUri = `sms:${recipients}?body=${encodeURIComponent(
-        customMessage
-      )}`;
-      window.location.href = smsUri;
-      setSelectedClients([]);
-    } catch (error) {
-      console.error("Error opening SMS application:", error.message);
-      window.alert(
-        "An error occurred while opening the SMS application. Please try again."
-      );
-    }
+        axios
+          .post(
+            "https://signpostphonebook.in/promotion_app/promotion_appliaction.php",
+            postData
+          )
+          .then((response) => {
+            console.log(response.data.Message);
+            Swal.fire({
+              icon: "success",
+              title: "Success!",
+              text: "Promotion data sent successfully!",
+            });
+          })
+          .catch((error) => console.error("Error sending data:", error));
+
+        const mobileNumbers = selectedClients.map((client) => client.mobileno);
+        try {
+          const recipients = mobileNumbers.join(",");
+          const smsUri = `sms:${recipients}?body=${encodeURIComponent(
+            customMessage
+          )}`;
+          window.location.href = smsUri;
+          setSelectedClients([]);
+          setSelectAll(false);
+        } catch (error) {
+          console.error("Error opening SMS application:", error.message);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "An error occurred while opening the SMS application. Please try again.",
+          });
+        }
+      }
+    });
   };
 
   return (

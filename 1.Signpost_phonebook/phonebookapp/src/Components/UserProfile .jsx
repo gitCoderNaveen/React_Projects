@@ -275,49 +275,6 @@ const UserProfile = () => {
 
   return (
     <div className="user-profile">
-      {/* <button className="toggle-button" onClick={toggleSidebar}>
-        ☰
-      </button>
-
-      <div className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
-        <button
-          onClick={() => {
-            setActiveTab("general");
-            setIsSidebarOpen(false);
-          }}
-          className={activeTab === "general" ? "active" : ""}
-        >
-          General
-        </button>
-        <button
-          onClick={() => {
-            setActiveTab("tasks");
-            setIsSidebarOpen(false);
-          }}
-          className={activeTab === "tasks" ? "active" : ""}
-        >
-          Tasks
-        </button>
-        <button
-          onClick={() => {
-            setActiveTab("sub");
-            setIsSidebarOpen(false);
-          }}
-          className={activeTab === "sub" ? "active" : ""}
-        >
-          Subscription
-        </button>
-        <button
-          onClick={() => {
-            setActiveTab("settings");
-            setIsSidebarOpen(false);
-          }}
-          className={activeTab === "set</div>tings" ? "active" : ""}
-        >
-          Settings
-        </button>
-      </div> */}
-
       <div className="content">
         {activeTab === "general" && (
           <div className="general-tab ">
@@ -373,16 +330,10 @@ const UserProfile = () => {
                             <img
                               src={bookLogo}
                               alt="CompanyLogo"
-                              className="CompanyLogo   "
+                              className="CompanyLogo "
                             />
-                            SIGNPOST PHONE BOOK
-                          </div>
-                          <p
-                            className="membership-title"
-                            style={{ color: "black", fontSize: 20 }}
-                          >
                             Membership Card
-                          </p>
+                          </div>
                           <div className="memcard-content">
                             <img
                               src={
@@ -399,8 +350,12 @@ const UserProfile = () => {
                               </h2>
 
                               <p>
-                                <strong>Address:</strong>
+                                <strong>Address: </strong>
                                 {userData.address}
+                              </p>
+                              <p>
+                                <strong>pincode: </strong>
+                                {userData.pincode}
                               </p>
                             </div>
                           </div>
@@ -877,16 +832,6 @@ const UserProfile = () => {
                     onChange={handleChange}
                   />
                 </Form.Group>
-
-                {/* <Form.Group>
-                <Form.Label>Mobile No</Form.Label>
-                <Form.Control
-                  type="number"
-                  name="mobilenumber"
-                  value={editableDetails.mobilenumber}
-                  onChange={handleChange}
-                />
-              </Form.Group> */}
 
                 {/* Action Buttons */}
                 <div className="action-buttons">

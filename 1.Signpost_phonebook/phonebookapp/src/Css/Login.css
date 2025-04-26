@@ -70,10 +70,38 @@ h2 {
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
+  position: relative; /* For loader positioning */
+  overflow: hidden; /* Clip loader if needed */
+  min-height: 40px; /* Ensure consistent height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .login-button:hover {
   background-color: #0056b3;
+}
+
+.login-button.disabled {
+  color: transparent; /* Hide text during loading */
+}
+
+.loader {
+  width: 20px; /* Adjust size as needed */
+  height: 20px; /* Adjust size as needed */
+  border: 2px solid #fff; /* Loader circle color */
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .links {
@@ -89,15 +117,19 @@ h2 {
 .links a:hover {
   text-decoration: underline;
 }
+
 .signupButton {
   background: none;
   border: none;
   color: #007bff;
+  cursor: pointer;
 }
+
 .password-wrapper {
   position: relative;
   width: 100%;
 }
+
 .password-wrapper input {
   width: 100%;
   padding: 8px;
@@ -109,18 +141,9 @@ h2 {
   position: absolute;
   right: 10px;
   top: 50%;
-  transform: translateY(-70%);
+  transform: translateY(-50%);
   cursor: pointer;
-}
-
-.loading-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.spinner {
-  margin-right: 5px;
+  color: #555; /* Adjust color as needed */
 }
 
 /* Responsive adjustments for smaller screens */
@@ -147,19 +170,17 @@ h2 {
   .login-button {
     padding: 12px;
     font-size: 1.1em;
+    min-height: 42px; /* Adjust min-height for smaller screens if needed */
+  }
+
+  .loader {
+    width: 18px; /* Adjust loader size for smaller screens */
+    height: 18px; /* Adjust loader size for smaller screens */
+    border-width: 1.5px; /* Adjust border width for smaller screens */
   }
 
   .links {
     font-size: 0.9em;
-  }
-
-  .spinner {
-    font-size: 1em; /* Adjust spinner size */
-    margin-right: 8px;
-  }
-
-  .loading-container span {
-    font-size: 1em; /* Adjust loading text size */
   }
 }
 
@@ -184,6 +205,13 @@ h2 {
   .login-button {
     padding: 11px;
     font-size: 1em;
+    min-height: 40px; /* Adjust min-height for very small screens if needed */
+  }
+
+  .loader {
+    width: 16px; /* Adjust loader size for very small screens */
+    height: 16px; /* Adjust loader size for very small screens */
+    border-width: 1.5px; /* Adjust border width for very small screens */
   }
 
   .links {
@@ -199,25 +227,4 @@ h2 {
   .links button {
     margin-top: 10px;
   }
-
-  .spinner {
-    font-size: 0.9em;
-    margin-right: 6px;
-  }
-
-  .loading-container span {
-    font-size: 0.9em;
-  }
-}
-
-/* Style the loading container and spinner */
-.loading-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.spinner {
-  font-size: 1.2em; /* Adjust the size of the spinner */
-  margin-right: 8px;
 }

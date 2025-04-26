@@ -33,6 +33,9 @@ export default function Homepage() {
   const [favoriteItem, setFavoriteItem] = useState(null);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [disabledCategories, setDisabledCategories] = useState([]);
+
+  // new update:
+  const [clickSource, setClickSource] = useState(null);
   const messageTemplate =
     "I Saw Your Listing in SIGNPOST PHONE BOOK. I am Interested in your Products. Please Send Details/Call Me.";
   const encodedMessage = useMemo(
@@ -92,15 +95,17 @@ export default function Homepage() {
   }, [fetchData]);
 
   const sendWhatsappMessage = async (item) => {
+    console.log("WhatsApp Number being sent:", item); // Add this line
     try {
-      const response = await axios.post(`http://bhashsms.com/api/sendmsg.php?user=SignpostCelfon&pass=123456&sender=BUZWAP&phone=${item}&text=campaign_new&priority=wa&stype=normal`);
-      
+      const response = await axios.post(
+        `http://bhashsms.com/api/sendmsg.php?user=SignpostCelfon&pass=123456&sender=BUZWAP&phone=${item}&text=campaign_new&priority=wa&stype=normal`
+      );
       console.log(response.data);
     } catch (error) {
-      alert('Unable to send message', error);
+      alert("Unable to send message", error);
+      console.error("WhatsApp API Error:", error); // Log the error object
     }
   };
-
   const goToPage = (page) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
@@ -117,6 +122,10 @@ export default function Homepage() {
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setFavoriteItem(null);
+  };
+
+  const openWhatsApp = (phoneNumber) => {
+    window.open(`https://wa.me/${phoneNumber}`, "_blank");
   };
 
   const handleResize = () => setIsMobile(window.innerWidth < 480);
@@ -161,28 +170,22 @@ export default function Homepage() {
     }
   };
 
-  // const handleEnquiryClick = (item) => {
-  //   if (user) {
-  //     setSelectedItem(item);
-  //     // Log selectedItem here to check its structure and email property
-  //     console.log("Selected Item for Enquiry:", item);
-  //   } else {
-  //     alert("Login Required");
-  //     navigate("/login");
-  //   }
-  // };
   const handleEnquiryClick = (item) => {
     if (user) {
       setSelectedItem(item);
       setEnquiryMessage(
-        `I Saw Your Listing in SIGNPOST PHONE BOOK. I am Interested in your Products. Please Send Details/Call Me. (Sent Thro Signpost PHONE BOOK)`
+        `I Saw Your Listing in SIGNPOST PHONE BOOK. I am Interested in your Products. Please Send Details/Call Me. (Sent Through Signpost PHONE BOOK)`
       );
-      // OR simply:
-      // setEnquiryMessage(messageTemplate);
+      setClickSource("enquiry"); // Set clickSource to 'enquiry'
     } else {
       alert("Login Required");
       navigate("/login");
     }
+  };
+
+  const handleMiddleClick = (item) => {
+    setSelectedItem(item);
+    setClickSource("middle"); // Set clickSource to 'middle'
   };
 
   const closePopup = () => setSelectedItem(null);
@@ -349,7 +352,11 @@ export default function Homepage() {
                     title="Add to MyList"
                   />
                 </div>
-                <div className="home_card-middle">
+                <div
+                  className="home_card-middle hoverable-middle"
+                  onClick={() => handleMiddleClick(item)}
+                  style={{ cursor: "pointer" }}
+                >
                   <h3
                     className={`home_card-name ${
                       Number(item.priority) === 1
@@ -361,7 +368,11 @@ export default function Homepage() {
                     item.person.toLowerCase().includes(firmName.toLowerCase())
                       ? toTitleCase(item.person)
                       : toTitleCase(
-                          item.businessname ? item.businessname : item.person
+                          item.businessname
+                            ? item.businessname.length > 20
+                              ? `${item.businessname.slice(0, 20)}....`
+                              : item.businessname
+                            : item.person
                         )}
                   </h3>
                   <p className="card-location">
@@ -392,10 +403,7 @@ export default function Homepage() {
                     }`}
                     onClick={() => handleEnquiryClick(item)}
                   >
-                    <BiQuestionMark
-                      className="button-icon"
-                      title="Add to myList"
-                    />
+                    <BiQuestionMark className="button-icon" title="enquiry" />
                   </button>
                 </div>
               </div>
@@ -478,59 +486,71 @@ export default function Homepage() {
               <button className="close-button" onClick={closePopup}>
                 &times;
               </button>
-              <h2>{selectedItem.businessname}</h2>
-              {selectedItem.person && (
-                <h3>
-                  {selectedItem.personprefix} {selectedItem.person}
-                </h3>
+              {clickSource === "middle" && (
+                <>
+                  <h2 className="text-primary">{selectedItem.businessname}</h2>
+                  {selectedItem.person && (
+                    <h3>
+                      {selectedItem.personprefix} {selectedItem.person}
+                    </h3>
+                  )}
+                  <p>
+                    <strong>Mobile:</strong>{" "}
+                    {maskMobileNumber(selectedItem.mobileno)}
+                  </p>
+                  <p>
+                    <strong>Product/Services:</strong> <br />
+                    {selectedItem.product}
+                  </p>
+                  <p>
+                    <strong>Address:</strong> {selectedItem.address},{" "}
+                    {selectedItem.city}, {selectedItem.pincode}
+                  </p>
+                </>
               )}
-              <p>
-                <strong>Mobile:</strong>{" "}
-                {maskMobileNumber(selectedItem.mobileno)}
-              </p>
-              <p>
-                <strong>Product/Services:</strong> <br />
-                {selectedItem.product}
-              </p>
-              <p>
-                <strong>Address:</strong> {selectedItem.address},{" "}
-                {selectedItem.city}, {selectedItem.pincode}
-              </p>
-              <div className="enquiry-textarea">
-                <textarea
-                  className="enquiry-input" // Added a class name
-                  value={enquiryMessage}
-                  onChange={(e) => setEnquiryMessage(e.target.value)}
-                  rows="3"
-                />
-              </div>
-              <div className="button-group">
-                <button className="popup-btn whatsapp-btn" onClick={()=>sendWhatsappMessage(selectedItem.mobileno)}>
-                  whatsapp
-                </button>
-                {selectedItem.email && (
-                  <a
-                    href={`mailto:${
-                      selectedItem.email || "business@example.com"
-                    }`}
-                    className="popup-btn mail-btn"
-                  >
-                    Mail
-                  </a>
-                )}
-                <a
-                  href={`tel:${selectedItem.mobileno}`}
-                  className="popup-btn call-btn"
-                >
-                  Call
-                </a>
-                <a
-                  href={`sms:${selectedItem.mobileno}?&body=${encodedMessage}`}
-                  className="popup-btn sms-btn"
-                >
-                  SMS
-                </a>
-              </div>
+
+              {clickSource === "enquiry" && (
+                <>
+                  <div className="enquiry-textarea">
+                    <textarea
+                      className="enquiry-input"
+                      value={enquiryMessage}
+                      onChange={(e) => setEnquiryMessage(e.target.value)}
+                      rows="6"
+                    />
+                  </div>
+                  <div className="button-group">
+                    <button
+                      className="popup-btn whatsapp-btn mb-2"
+                      onClick={() => openWhatsApp(selectedItem.mobileno)}
+                    >
+                      whatsapp
+                    </button>
+                    {selectedItem.email && (
+                      <a
+                        href={`mailto:${
+                          selectedItem.email || "business@example.com"
+                        }`}
+                        className="popup-btn mail-btn"
+                      >
+                        Mail
+                      </a>
+                    )}
+                    <a
+                      href={`tel:${selectedItem.mobileno}`}
+                      className="popup-btn call-btn"
+                    >
+                      Call
+                    </a>
+                    <a
+                      href={`sms:${selectedItem.mobileno}?&body=${encodedMessage}`}
+                      className="popup-btn sms-btn"
+                    >
+                      SMS
+                    </a>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         )}

@@ -189,6 +189,10 @@ h6 {
   margin-bottom: 20px;
 }
 
+.hoverable-middle:hover {
+  cursor: crosshair;
+}
+
 .home_card-name {
   font-size: 1.2rem; /* Slightly smaller font size */
   font-weight: bold;
@@ -754,12 +758,12 @@ h6 {
 }
 
 .modal-content {
-  background: white;
+  background: whitesmoke;
   padding: 30px;
   border-radius: 12px;
   text-align: center;
   width: 400px; /* Increased width */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* More pronounced shadow */
+  box-shadow: 5 8px 20px rgba(0, 0, 0, 0.2); /* More pronounced shadow */
   animation: fadeIn 0.3s ease-out; /* Add a fade-in animation */
 }
 
@@ -868,73 +872,6 @@ h6 {
   }
 }
 
-/* shimmer ui css */
-.shimmer-card {
-  background-color: #f0f0f0;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 16px;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  gap: 15px; /* Space for icons */
-}
-
-.shimmer-card > div {
-  flex-grow: 1; /* Allow text areas to grow */
-}
-
-.shimmer-line {
-  background: linear-gradient(90deg, #e0e0e0, #f8f8f8, #e0e0e0);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite linear;
-  border-radius: 4px;
-}
-
-.shimmer-line.name {
-  width: 150px;
-  height: 20px;
-  margin-bottom: 8px;
-}
-
-.shimmer-line.location,
-.shimmer-line.phone {
-  width: 100px;
-  height: 16px;
-  margin-bottom: 8px;
-}
-
-.shimmer-button {
-  width: 60px;
-  height: 30px;
-  margin-left: auto; /* Push button to the right */
-  border-radius: 4px;
-  background: linear-gradient(90deg, #e0e0e0, #f8f8f8, #e0e0e0);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite linear;
-}
-
-.shimmer-icon {
-  width: 24px;
-  height: 24px;
-  background: linear-gradient(90deg, #e0e0e0, #f8f8f8, #e0e0e0);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite linear;
-}
-
-.shimmer-card > .shimmer-icon {
-  flex-shrink: 0; /* Prevent icon from shrinking */
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
 .enquiry-textarea .enquiry-input {
   width: calc(100% - 20px);
   padding: 10px;
@@ -942,4 +879,101 @@ h6 {
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
+}
+
+.shimmer-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  margin-bottom: 10px;
+  background-color: #f0f0f0; /* Light grey background */
+  border-radius: 8px;
+  position: relative; /* For absolute positioning of badge */
+}
+
+.shimmer-badge {
+  width: 60px;
+  height: 20px;
+  background-color: #ddd;
+  border-radius: 4px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  animation: shimmer 1.5s infinite linear;
+}
+
+.home_card-left-icons {
+  display: flex;
+  flex-direction: column;
+  margin-right: 15px;
+  gap: 10px;
+}
+
+.shimmer-icon-placeholder {
+  width: 40px;
+  height: 40px;
+  background-color: #ddd;
+  border-radius: 50%;
+  animation: shimmer 1.5s infinite linear; /* Apply shimmer to the icons */
+}
+
+.home_card-middle {
+  flex-grow: 1;
+}
+
+.shimmer-line {
+  height: 16px;
+  background-color: #ddd;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  animation: shimmer 1.5s infinite linear;
+}
+
+.shimmer-line.name {
+  width: 70%;
+}
+
+.shimmer-line.location {
+  width: 50%;
+}
+
+.shimmer-line.phone {
+  width: 60%;
+  height: 14px;
+}
+
+.home_card-right {
+  display: flex;
+  justify-content: flex-end;
+  margin-left: 15px;
+}
+
+.shimmer-button {
+  background-color: #ddd;
+  color: transparent; /* Hide text if any */
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: not-allowed;
+  animation: shimmer 1.5s infinite linear;
+}
+
+.shimmer-button.enquiry {
+  width: 40px; /* Adjusted to match icon size roughly */
+  height: 40px;
+  border-radius: 50%;
+  padding: 0;
+}
+
+@keyframes shimmer {
+  0% {
+    background-color: #ddd;
+  }
+  50% {
+    background-color: #eee;
+  }
+  100% {
+    background-color: #ddd;
+  }
 }

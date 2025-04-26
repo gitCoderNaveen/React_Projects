@@ -3,17 +3,25 @@ import "../Css/Homepage.css";
 
 const ShimmerCard = () => (
   <div className="home_card-container shimmer-card">
-    <div className="home_card-left">
+    {/* Discount Badge Placeholder */}
+    <div className="shimmer-badge"></div>
+
+    {/* Left Icons Placeholder */}
+    <div className="home_card-left-icons">
+      <div className="shimmer-icon-placeholder"></div>
+      <div className="shimmer-icon-placeholder"></div>
+    </div>
+
+    {/* Middle Content Placeholders */}
+    <div className="home_card-middle">
       <div className="shimmer-line name"></div>
       <div className="shimmer-line location"></div>
-    </div>
-    <div className="home_card-right">
       <div className="shimmer-line phone"></div>
-      <div className="button-group">
-        <div className="shimmer-button call"></div>
-        <div className="shimmer-button more"></div>
-        <div className="shimmer-icon"></div>
-      </div>
+    </div>
+
+    {/* Right Button Placeholder */}
+    <div className="home_card-right">
+      <div className="shimmer-button enquiry"></div>
     </div>
   </div>
 );
