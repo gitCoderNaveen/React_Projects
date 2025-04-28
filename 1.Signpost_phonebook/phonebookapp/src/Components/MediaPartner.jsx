@@ -113,7 +113,7 @@ ${myproduct}
 
 You can use the PHONE BOOK for your business promotion in any desired (Pincode) area or Entire Coimbatore`
     );
-    const smsLink = `sms:<span class="math-inline">\{mymobileno\}?body\=</span>{smsBody}`;
+    const smsLink = `sms:${mymobileno}?body=${smsBody}`;
 
     setTimeout(() => {
       window.location.href = smsLink;

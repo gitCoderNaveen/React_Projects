@@ -156,7 +156,7 @@ export default function Navigationpage() {
                         Shopkeeper
                       </NavLink>
                     </li>
-                    <li>
+                    {/* <li>
                       <NavLink
                         className="dropdown-item"
                         to="/transactions"
@@ -164,7 +164,7 @@ export default function Navigationpage() {
                       >
                         Transactions
                       </NavLink>
-                    </li>
+                    </li> */}
                   </ul>
                 </li>
               )}
@@ -297,7 +297,7 @@ export default function Navigationpage() {
                       Shopkeeper
                     </NavLink>
                   </li>
-                  <li className="nav-item">
+                  {/* <li className="nav-item">
                     <NavLink
                       className="nav-link ms-3"
                       to="/transactions"
@@ -305,7 +305,7 @@ export default function Navigationpage() {
                     >
                       Transaction
                     </NavLink>
-                  </li>
+                  </li> */}
                 </>
               )}
               <li className="nav-item">
