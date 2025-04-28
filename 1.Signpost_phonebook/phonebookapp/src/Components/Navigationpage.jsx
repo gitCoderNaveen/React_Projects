@@ -118,11 +118,11 @@ export default function Navigationpage() {
                   </NavLink>
                 </li>
               )}
-              {/* ICE CREAM DROPDOWN - Conditional rendering */}
+              {/* ICE CREAM DROPDOWN - Conditional rendering for admins only */}
               {isAdminUser && (
                 <li className="nav-item dropdown">
                   <a
-                    className="nav-link dropdown-toggle text-light"
+                    className="nav-link text-light"
                     href="#"
                     id="navbarDropdown"
                     role="button"
@@ -142,20 +142,16 @@ export default function Navigationpage() {
                       <NavLink
                         className="dropdown-item"
                         to="/buyer"
-                        onClick={() => {
-                          setIsIceCreamDropdownOpen(false); // Close dropdown on item click
-                        }}
+                        onClick={() => setIsIceCreamDropdownOpen(false)}
                       >
-                        Buyer
+                        <p>Buyer</p>
                       </NavLink>
                     </li>
                     <li>
                       <NavLink
                         className="dropdown-item"
                         to="/shopkeeper"
-                        onClick={() => {
-                          setIsIceCreamDropdownOpen(false); // Close dropdown on item click
-                        }}
+                        onClick={() => setIsIceCreamDropdownOpen(false)}
                       >
                         Shopkeeper
                       </NavLink>
@@ -164,9 +160,7 @@ export default function Navigationpage() {
                       <NavLink
                         className="dropdown-item"
                         to="/transactions"
-                        onClick={() => {
-                          setIsIceCreamDropdownOpen(false); // Close dropdown on item click
-                        }}
+                        onClick={() => setIsIceCreamDropdownOpen(false)}
                       >
                         Transactions
                       </NavLink>
@@ -218,7 +212,7 @@ export default function Navigationpage() {
         </div>
       </nav>
 
-      {/* Drawer Section (No changes needed here for the dropdown behavior) */}
+      {/* Drawer Section (Conditional rendering for Ice Cream links) */}
       <div
         className={`drawer ${isDrawerOpen ? "drawer-open" : ""}`}
         style={{
@@ -273,43 +267,47 @@ export default function Navigationpage() {
                   Categorywise Promotion
                 </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink
-                  className="nav-link"
-                  to="/icecream" // Keep this for the drawer if needed
-                  onClick={toggleDrawer}
-                >
-                  Ice Cream
-                </NavLink>
-              </li>
-              {/* Dropdown items for the drawer */}
-              <li className="nav-item">
-                <NavLink
-                  className="nav-link ms-3 fw-bold"
-                  to="/buyer"
-                  onClick={toggleDrawer}
-                >
-                  Buyer
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink
-                  className="nav-link ms-3"
-                  to="/shopkeeper"
-                  onClick={toggleDrawer}
-                >
-                  Shopkeeper
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink
-                  className="nav-link ms-3"
-                  to="/transactions"
-                  onClick={toggleDrawer}
-                >
-                  Transaction
-                </NavLink>
-              </li>
+              {/* Conditional rendering for Ice Cream links in the drawer */}
+              {isAdminUser && (
+                <>
+                  <li className="nav-item">
+                    <NavLink
+                      className="nav-link fw-bold"
+                      to="/icecream" // Keep this for the drawer if needed
+                      onClick={toggleDrawer}
+                    >
+                      Ice Cream
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink
+                      className="nav-link ms-3"
+                      to="/buyer"
+                      onClick={toggleDrawer}
+                    >
+                      Buyer
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink
+                      className="nav-link ms-3"
+                      to="/shopkeeper"
+                      onClick={toggleDrawer}
+                    >
+                      Shopkeeper
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink
+                      className="nav-link ms-3"
+                      to="/transactions"
+                      onClick={toggleDrawer}
+                    >
+                      Transaction
+                    </NavLink>
+                  </li>
+                </>
+              )}
               <li className="nav-item">
                 <NavLink
                   className="nav-link"
@@ -402,7 +400,6 @@ export default function Navigationpage() {
         </div>
       </div>
 
-      {/* Overlay to close drawer when clicking outside */}
       {isDrawerOpen && (
         <div
           className="drawer-overlay"

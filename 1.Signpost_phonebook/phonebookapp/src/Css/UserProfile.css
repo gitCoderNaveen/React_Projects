@@ -296,7 +296,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10000;
+  z-index: 1000;
 }
 
 .modal-content {
@@ -1006,4 +1006,15 @@ a.yellow:hover {
   border-bottom-right-radius: 15px;
   font-size: 14px;
   text-align: center;
+}
+
+.icecream-badge {
+  height: 150px;
+  position: relative;
+  right: -40px;
+  bottom: 25px;
+}
+
+.swal2-container.my-swal-container {
+  z-index: 10000 !important; /* Use a very high value */
 }

@@ -2,14 +2,16 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "./Auth"; // Assuming this is your auth context
 import "../Css/UserProfile.css";
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal, Button, Form, Spinner } from "react-bootstrap";
 import bookLogo from "../assets/images/logos.png";
-import iceCreamBadge from "../assets/images/image.png"; // Import the ice cream badge image
+import Swal from "sweetalert2";
+import iceCreamBadge from "../assets/images/icecream-logo.png"; // Import the ice cream badge image
 
 const UserProfile = () => {
   const [activeTab, setActiveTab] = useState("general");
   const [isShopOwner, setIsShopOwner] = useState(false);
   const [isWelcomeOwnerSuccess, setIsWelcomeOwnerSuccess] = useState(false); // State for "welcome owner" success
+  const [isBuyer, setIsBuyer] = useState(false); // State to track if the user is a buyer
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { userData, setUserData } = useAuth(); // Fetch userData from Auth context
   const [details, setDetails] = useState([]);
@@ -24,6 +26,10 @@ const UserProfile = () => {
   const [message, setMessage] = useState("");
   const toggleModal = () => setShowModal(!showModal);
   const [selectedPrice, setSelectedPrice] = useState(null);
+  const [isVerifying, setIsVerifying] = useState(false); // State to track loading
+  const [isVerified, setIsVerified] = useState(false); // New state to track verification success
+  const [isSaleSuccessful, setIsSaleSuccessful] = useState(false);
+
   const date = new Date().toISOString().split("T")[0];
 
   const [profileImage, setProfileImage] = useState(
@@ -78,31 +84,79 @@ const UserProfile = () => {
     setSelectedPrice(price);
   };
 
-  const verifyIsvalidCustomer = async ()=>{
-    try{
+  const handleVerifyClick = () => {
+    if (!buyerId.trim()) {
+      Swal.fire({
+        title: "Warning!",
+        text: "Please enter the Customer ID.",
+        icon: "warning",
+        customClass: {
+          container: "my-swal-container",
+        },
+      });
+      return; // Stop the verification process
+    }
+    verifyIsvalidCustomer(); // Proceed with verification if ID is entered
+  };
+
+  const verifyIsvalidCustomer = async () => {
+    setIsVerifying(true);
+    setIsVerified(false); // Reset verified status on new verification attempt
+    try {
       const response = await fetch(
         `https://signpostphonebook.in/icecream/validate_buyer.php`,
         {
-          method:"POST",
-          headers:{
-            "Content-Type":"application/json",
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
           },
-          body:JSON.stringify({buyer_id:buyerId})
+          body: JSON.stringify({ buyer_id: buyerId }),
         }
-      )
+      );
 
       const result = await response.json();
-      if(result.success){
+      if (result.success) {
         console.log("Valid Customer");
-      }else{
+        setIsVerified(true); // Set verified status to true on success
+        Swal.fire({
+          title: "Verified!",
+          html: "<i>Customer ID is valid.</i>",
+          icon: "success",
+          timer: 2000, // Optional: Auto close after 2 seconds
+          showConfirmButton: false,
+          customClass: {
+            container: "my-swal-container",
+          },
+        });
+      } else {
         console.log("Invalid Customer");
+        setIsVerified(false); // Ensure verified status is false on failure
+        setBuyerId("");
+        Swal.fire({
+          title: "Invalid ID!",
+          text: "The Customer ID you entered is invalid.",
+          icon: "error",
+          customClass: {
+            container: "my-swal-container",
+          },
+        });
       }
-    }catch(error){
-      console.log(error)
+    } catch (error) {
+      console.log(error);
+      setIsVerified(false); // Ensure verified status is false on error
+      setBuyerId("");
+      Swal.fire({
+        title: "Oops!",
+        text: "Something went wrong during verification.",
+        icon: "error",
+        customClass: {
+          container: "my-swal-container",
+        },
+      });
+    } finally {
+      setIsVerifying(false);
     }
-  }
-
-
+  };
 
   const checkIsOwner = async () => {
     try {
@@ -120,7 +174,7 @@ const UserProfile = () => {
       const result = await response.json();
       if (result.success) {
         console.log("welcome Owner");
-        setIsShopOwner(true); // Set isShopOwner to true if the user is an owner
+        setIsShopOwner(true);
         setIsWelcomeOwnerSuccess(true); // Assuming this also implies "welcome owner" success
       } else {
         console.log("Your not a owner");
@@ -147,8 +201,10 @@ const UserProfile = () => {
       const result = await response.json();
       if (result.success) {
         console.log("welcome Buyer");
+        setIsBuyer(true); // Set isBuyer to true if the user is a buyer
       } else {
         console.log("Your not a Buyer");
+        setIsBuyer(false);
       }
     } catch (error) {
       console.log("Error Message from Buyer check", error);
@@ -312,7 +368,7 @@ const UserProfile = () => {
     }
   };
 
-  const iceCreamTransaction =async()=>{
+  const iceCreamTransaction = async () => {
     try {
       const response = await fetch(
         `https://signpostphonebook.in/icecream/transaction_details.php`,
@@ -321,10 +377,10 @@ const UserProfile = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ 
-            customerid:buyerId,
-            userid:userData.id,
-            username:userData.businessname||userData.person
+          body: JSON.stringify({
+            customerid: buyerId,
+            userid: userData.id,
+            username: userData.businessname || userData.person,
           }),
         }
       );
@@ -332,15 +388,47 @@ const UserProfile = () => {
       const result = await response.json();
       if (result.status) {
         console.log(result.status);
-        console.log("user Added successfully")
-        setBuyerId("")
+        console.log("Ice cream sold successfully");
+        setIsSaleSuccessful(true); // Disable the button after successful sale
+        setBuyerId("");
+        Swal.fire({
+          title: "Sold!",
+          text: "Ice cream sold successfully!",
+          icon: "success",
+          timer: 2000,
+          showConfirmButton: false,
+          customClass: {
+            container: "my-swal-container",
+          },
+        });
+
+        // Optionally, you can re-enable the button after a certain period
+        // setTimeout(() => {
+        //   setIsSaleSuccessful(false);
+        // }, 3000); // Enable after 3 seconds
       } else {
-        console.log("user not updated");
+        console.log("Transaction failed");
+        Swal.fire({
+          title: "Error!",
+          text: "Failed to record the ice cream sale.",
+          icon: "error",
+          customClass: {
+            container: "my-swal-container",
+          },
+        });
       }
     } catch (error) {
-      console.log("Error Message from Buyer check", error);
+      console.log("Error during ice cream transaction", error);
+      Swal.fire({
+        title: "Oops!",
+        text: "Something went wrong during the transaction.",
+        icon: "error",
+        customClass: {
+          container: "my-swal-container",
+        },
+      });
     }
-  }
+  };
 
   const handleTabChange = (selectedTab) => {
     setActiveTab(selectedTab); // Update active tab
@@ -381,9 +469,7 @@ const UserProfile = () => {
     }
   };
 
-  const handleSoldSubmit = () => {
-    
-  };
+  const handleSoldSubmit = () => {};
 
   const defaultimage =
     "https://cdn.pixabay.com/photo/2021/07/25/08/03/account-6491185_1280.png";
@@ -438,7 +524,7 @@ const UserProfile = () => {
                     <div className="modal-overlay">
                       <div className="modal-content">
                         <span
-                          className="close-button"
+                          className="close-button fw-bolder border-"
                           onClick={() =>
                             toggleMembershipModal("membershipCard")
                           }
@@ -453,13 +539,15 @@ const UserProfile = () => {
                               className="CompanyLogo "
                             />
                             Membership Card
-                            {(isShopOwner || isWelcomeOwnerSuccess) && (
-                              <img
-                                src={iceCreamBadge}
-                                alt="Ice Cream Badge"
-                                className="icecream-badge"
-                              />
-                            )}
+                            <div>
+                              {(isShopOwner || isWelcomeOwnerSuccess) && (
+                                <img
+                                  src={iceCreamBadge}
+                                  alt="Ice Cream Badge"
+                                  className="icecream-badge"
+                                />
+                              )}
+                            </div>
                           </div>
                           <div className="memcard-content">
                             <img
@@ -474,6 +562,11 @@ const UserProfile = () => {
                             <div className="memuser-details">
                               <h2>
                                 {userData.businessname || userData.person || ""}
+                                {isBuyer && (
+                                  <p>
+                                    <strong>ID:</strong> {userData.id || "N/A"}
+                                  </p>
+                                )}
                               </h2>
 
                               <p>
@@ -486,38 +579,48 @@ const UserProfile = () => {
                               </p>
                             </div>
                           </div>
-                          {isWelcomeOwnerSuccess && (
-                            <div className="owner-section">
-                              <Form.Group className="mb-3">
-                                {/* <Form.Label>Enter Icecream Count</Form.Label> */}
-                                <Form.Control
-                                  type="number"
-                                  placeholder="Enter Customer Id"
-                                  value={buyerId}
-                                  onChange={(e) => setBuyerId(e.target.value)}
-                                />
-                              </Form.Group>
-                              <Button
-                                variant="primary"
-                                style={{marginRight:2}}
-                                onClick={verifyIsvalidCustomer}
-                              >
-                                Verify
-                              </Button>
-                              <Button
-                                variant="primary"
-                                onClick={iceCreamTransaction}
-                              >
-                                Sold Ice Cream
-                              </Button>
-                            </div>
-                          )}
+
                           <div className="memfooter">
                             This card is valid for 12 Months from the date of
                             issue.
                             <br />
                             46, Sidco Industrial Estate, Coimbatore - 641021
                           </div>
+                          {isWelcomeOwnerSuccess && (
+                            <div className="owner-section mt-3 p-3 shadow-sm px-5">
+                              <Form.Group className="mb-3">
+                                <Form.Control
+                                  type="number"
+                                  placeholder="Enter Customer Id"
+                                  value={buyerId}
+                                  onChange={(e) => setBuyerId(e.target.value)}
+                                  className="w-100 p-2"
+                                />
+                              </Form.Group>
+                              <div className="d-flex align-items-center">
+                                <Button
+                                  variant="primary"
+                                  className="me-3"
+                                  style={{ marginRight: 2 }}
+                                  onClick={handleVerifyClick}
+                                  disabled={isVerifying}
+                                >
+                                  {isVerifying ? (
+                                    <Spinner animation="border" size="sm" />
+                                  ) : (
+                                    "Verify"
+                                  )}
+                                </Button>
+                                <Button
+                                  variant="primary"
+                                  onClick={iceCreamTransaction}
+                                  disabled={!isVerified || isSaleSuccessful}
+                                >
+                                  Sold Ice Cream
+                                </Button>
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -530,33 +633,29 @@ const UserProfile = () => {
                   Membership Card
                 </button>
               </div>
-              <div className="about-details">
-                {/* <p>
-                  <strong>ID:</strong> {userData.id || "N/A"}
-                </p> */}
-                <p>
-                  <strong>Prefix:</strong>{" "}
-                  {userData.prefix || userData.personprefix || "N/A"}
-                </p>
-                <p>
-                  <strong>Address:</strong> {userData.address || "N/A"}
-                </p>
-                <p>
-                  <strong>City:</strong> {userData.city || "N/A"}
-                </p>
-                <p>
-                  <strong>Pincode:</strong> {userData.pincode || "N/A"}
-                </p>
-                <p>
-                  <strong>Mobile:</strong> {userData.mobileno || "N/A"}
-                </p>
-                <p>
-                  <strong>Landline:</strong> {userData.landline || "N/A"}
-                </p>
-                <p>
-                  <strong>Email:</strong> {userData.email || "N/A"}
-                </p>
-              </div>
+
+              <p>
+                <strong>Prefix:</strong>{" "}
+                {userData.prefix || userData.personprefix || "N/A"}
+              </p>
+              <p>
+                <strong>Address:</strong> {userData.address || "N/A"}
+              </p>
+              <p>
+                <strong>City:</strong> {userData.city || "N/A"}
+              </p>
+              <p>
+                <strong>Pincode:</strong> {userData.pincode || "N/A"}
+              </p>
+              <p>
+                <strong>Mobile:</strong> {userData.mobileno || "N/A"}
+              </p>
+              <p>
+                <strong>Landline:</strong> {userData.landline || "N/A"}
+              </p>
+              <p>
+                <strong>Email:</strong> {userData.email || "N/A"}
+              </p>
             </div>
 
             {/* <div className="tab-content-2 col-lg-4">
@@ -869,8 +968,8 @@ const UserProfile = () => {
                       </a>
                       <div className="highlight">
                         <span>
-                          100% Guaranteed support and updates for the next 5
-                          years.
+                          100% Guaranteed support and updates for the next
+                          5years.
                         </span>
                       </div>
                     </div>
@@ -880,156 +979,6 @@ const UserProfile = () => {
             )}
           </div>
         )}
-
-        {activeTab === "settings" && (
-          <div className="tab-content">
-            <h2>Settings</h2>
-
-            {!isEditing ? (
-              <>
-                <p>Change Password</p>
-                <p>Manage Notifications</p>
-                <p>Privacy Settings</p>
-
-                {/* Button to Enable Edit Mode */}
-                <Button variant="primary" onClick={toggleEdit}>
-                  Edit Profile
-                </Button>
-              </>
-            ) : (
-              <div className="about-edit-form">
-                <Form.Group>
-                  <Form.Label>Prefix</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="prefix"
-                    value={
-                      editableDetails.prefix ||
-                      editableDetails.personprefix ||
-                      ""
-                    }
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-
-                <Form.Group>
-                  <Form.Label>Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="businessname/person"
-                    value={
-                      editableDetails.businessname ||
-                      editableDetails.person ||
-                      ""
-                    }
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-
-                <Form.Group>
-                  <Form.Label>Product</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="product"
-                    value={editableDetails.product || ""}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-
-                <Form.Group>
-                  <Form.Label>Address</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="address"
-                    value={editableDetails.address || ""}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-
-                <Form.Group>
-                  <Form.Label>City</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="city"
-                    value={editableDetails.city || ""}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-
-                <Form.Group>
-                  <Form.Label>Pincode</Form.Label>
-                  <Form.Control
-                    type="number"
-                    name="pincode"
-                    value={editableDetails.pincode || ""}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-
-                <Form.Group>
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="email"
-                    value={editableDetails.email || ""}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-
-                <Form.Group>
-                  <Form.Label>Bio</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="description"
-                    value={editableDetails.description || ""}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-
-                {/* Action Buttons */}
-                <div className="action-buttons">
-                  <Button variant="secondary" onClick={toggleEdit}>
-                    Cancel
-                  </Button>
-                  <Button variant="primary" onClick={handleSave}>
-                    Save Changes
-                  </Button>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-      <div className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
-        <button className="sidebar-toggle" onClick={toggleSidebar}>
-          ☰
-        </button>
-        <ul>
-          <li
-            className={activeTab === "general" ? "active" : ""}
-            onClick={() => handleTabChange("general")}
-          >
-            General
-          </li>
-          <li
-            className={activeTab === "tasks" ? "active" : ""}
-            onClick={() => handleTabChange("tasks")}
-          >
-            Tasks
-          </li>
-          <li
-            className={activeTab === "sub" ? "active" : ""}
-            onClick={() => handleTabChange("sub")}
-          >
-            Subscription
-          </li>
-          <li
-            className={activeTab === "settings" ? "active" : ""}
-            onClick={() => handleTabChange("settings")}
-          >
-            Settings
-          </li>
-        </ul>
       </div>
     </div>
   );
