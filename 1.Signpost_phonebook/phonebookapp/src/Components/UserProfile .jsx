@@ -35,7 +35,7 @@ const UserProfile = () => {
     defaultModal: false, // Existing modal
     membershipCard: false, // New Membership Card modal
   });
-  const [soldCount, setSoldCount] = useState("");
+  const [buyerId, setBuyerId] = useState("");
 
   const toggleMembershipModal = (modalName) => {
     setModalState((prev) => ({
@@ -77,6 +77,32 @@ const UserProfile = () => {
   const handleBuyNow = (price) => {
     setSelectedPrice(price);
   };
+
+  const verifyIsvalidCustomer = async ()=>{
+    try{
+      const response = await fetch(
+        `https://signpostphonebook.in/icecream/validate_buyer.php`,
+        {
+          method:"POST",
+          headers:{
+            "Content-Type":"application/json",
+          },
+          body:JSON.stringify({buyer_id:buyerId})
+        }
+      )
+
+      const result = await response.json();
+      if(result.success){
+        console.log("Valid Customer");
+      }else{
+        console.log("Invalid Customer");
+      }
+    }catch(error){
+      console.log(error)
+    }
+  }
+
+
 
   const checkIsOwner = async () => {
     try {
@@ -286,6 +312,36 @@ const UserProfile = () => {
     }
   };
 
+  const iceCreamTransaction =async()=>{
+    try {
+      const response = await fetch(
+        `https://signpostphonebook.in/icecream/transaction_details.php`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ 
+            customerid:buyerId,
+            userid:userData.id,
+            username:userData.businessname||userData.person
+          }),
+        }
+      );
+
+      const result = await response.json();
+      if (result.status) {
+        console.log(result.status);
+        console.log("user Added successfully")
+        setBuyerId("")
+      } else {
+        console.log("user not updated");
+      }
+    } catch (error) {
+      console.log("Error Message from Buyer check", error);
+    }
+  }
+
   const handleTabChange = (selectedTab) => {
     setActiveTab(selectedTab); // Update active tab
   };
@@ -326,10 +382,7 @@ const UserProfile = () => {
   };
 
   const handleSoldSubmit = () => {
-    // Implement your logic to handle the sold count here
-    console.log("Items Sold:", soldCount);
-    // You might want to send this data to your backend
-    setSoldCount(""); // Clear the input after submission
+    
   };
 
   const defaultimage =
@@ -439,16 +492,23 @@ const UserProfile = () => {
                                 {/* <Form.Label>Enter Icecream Count</Form.Label> */}
                                 <Form.Control
                                   type="number"
-                                  placeholder="Enter count"
-                                  value={soldCount}
-                                  onChange={(e) => setSoldCount(e.target.value)}
+                                  placeholder="Enter Customer Id"
+                                  value={buyerId}
+                                  onChange={(e) => setBuyerId(e.target.value)}
                                 />
                               </Form.Group>
                               <Button
                                 variant="primary"
-                                onClick={handleSoldSubmit}
+                                style={{marginRight:2}}
+                                onClick={verifyIsvalidCustomer}
                               >
-                                Submit Sold Count
+                                Verify
+                              </Button>
+                              <Button
+                                variant="primary"
+                                onClick={iceCreamTransaction}
+                              >
+                                Sold Ice Cream
                               </Button>
                             </div>
                           )}
