@@ -240,6 +240,8 @@ h6 {
   align-items: center;
   gap: 5px;
   margin-top: 45px;
+  position: relative;
+  text-wrap: nowrap;
 }
 
 .enquiry-btn:hover {

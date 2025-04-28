@@ -343,11 +343,11 @@ export default function Homepage() {
                     title="Call"
                   />
                   <CiHeart
-                    className="favorite-icon"
+                    className="favorite-icon mt-2"
                     onClick={() => handleIconClick(item)}
                     style={{
                       cursor: "pointer",
-                      fontSize: "30px",
+                      fontSize: "26px",
                     }}
                     title="Add to MyList"
                   />
@@ -369,8 +369,8 @@ export default function Homepage() {
                       ? toTitleCase(item.person)
                       : toTitleCase(
                           item.businessname
-                            ? item.businessname.length > 20
-                              ? `${item.businessname.slice(0, 20)}....`
+                            ? item.businessname.length > 14
+                              ? `${item.businessname.slice(0, 14)}....`
                               : item.businessname
                             : item.person
                         )}
@@ -388,7 +388,7 @@ export default function Homepage() {
                     className="phone-number"
                     style={{
                       position: "absolute",
-                      top: "63px",
+                      top: "60px",
                       fontSize: "14px",
                       marginbottom: "-15px",
                     }}
@@ -402,8 +402,10 @@ export default function Homepage() {
                       Number(item.priority) === 1 ? "prime_enquiry-button" : ""
                     }`}
                     onClick={() => handleEnquiryClick(item)}
+                    style={{ fontSize: "13px", fontWeight: "bold" }} // Add this inline style
                   >
-                    <BiQuestionMark className="button-icon" title="enquiry" />
+                    {/* Change this line */}
+                    Send Enquiry
                   </button>
                 </div>
               </div>
@@ -521,7 +523,7 @@ export default function Homepage() {
                   </div>
                   <div className="button-group">
                     <button
-                      className="popup-btn whatsapp-btn mb-2"
+                      className="popup-btn whatsapp-btn"
                       onClick={() => openWhatsApp(selectedItem.mobileno)}
                     >
                       whatsapp
