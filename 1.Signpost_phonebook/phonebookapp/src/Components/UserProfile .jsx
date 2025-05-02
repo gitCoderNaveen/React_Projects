@@ -84,11 +84,11 @@ const UserProfile = () => {
     setSelectedPrice(price);
   };
 
-  const handleVerifyClick = () => {
+  const handleVerifyClick = async() => {
     if (!buyerId.trim()) {
       Swal.fire({
         title: "Warning!",
-        text: "Please enter the Customer ID.",
+        text: "Please enter the Gift Winner ID.",
         icon: "warning",
         customClass: {
           container: "my-swal-container",
@@ -116,11 +116,12 @@ const UserProfile = () => {
 
       const result = await response.json();
       if (result.success) {
+        console.log(result.success)
         console.log("Valid Customer");
         setIsVerified(true); // Set verified status to true on success
         Swal.fire({
           title: "Verified!",
-          html: "<i>Customer ID is valid.</i>",
+          html: "<i>Gift Winner Customer</i>",
           icon: "success",
           timer: 2000, // Optional: Auto close after 2 seconds
           showConfirmButton: false,
@@ -386,8 +387,7 @@ const UserProfile = () => {
       );
 
       const result = await response.json();
-      if (result.status) {
-        console.log(result.status);
+      if (result.status !='error') {        
         console.log("Ice cream sold successfully");
         setIsSaleSuccessful(true); // Disable the button after successful sale
         setBuyerId("");
@@ -407,10 +407,10 @@ const UserProfile = () => {
         //   setIsSaleSuccessful(false);
         // }, 3000); // Enable after 3 seconds
       } else {
-        console.log("Transaction failed");
+        console.log("Already Buy Ice Cream");
         Swal.fire({
           title: "Error!",
-          text: "Failed to record the ice cream sale.",
+          text: "Already Buy Ice Cream",
           icon: "error",
           customClass: {
             container: "my-swal-container",

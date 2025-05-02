@@ -109,9 +109,9 @@ URL :- www.signpostphonebook.in
 User name :-  Your mobile number
 Password  :- Signpost
 You are registered Under the Category
-${myproduct}
+${myproduct.toUpperCase}
 
-You can use the PHONE BOOK for your business promotion in any desired (Pincode) area or Entire Coimbatore`
+${mybusinessname && 'You can use the PHONE BOOK for your business promotion in any desired (Pincode) area or Entire Coimbatore'}`
     );
     const smsLink = `sms:${mymobileno}?body=${smsBody}`;
 
