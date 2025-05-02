@@ -1,10 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useAuth, Authcontext } from "./Auth"; // Import Authcontext as well
-import { FaPlus, FaTimes, FaPaperPlane } from "react-icons/fa";
+import { Authcontext } from "./Auth";
+import { FaPlus, FaTimes, FaPaperPlane, FaArrowLeft } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../Css/Buyer.css"; // Create this CSS file
+import "../Css/Buyer.css";
+import { useNavigate } from "react-router-dom";
 
 const Buyer = () => {
+  const navigate = useNavigate();
   const { userData } = useContext(Authcontext);
   const [buyerId, setBuyerId] = useState("");
   const [buyerMobile, setBuyerMobile] = useState("");
@@ -120,25 +122,34 @@ const Buyer = () => {
     }
     setErrorMessage("");
 
-    const lastBuyer = buyerList[buyerList.length - 1];
-    const smsUrl = `sms:${lastBuyer.buyerMobile}?body=${encodeURIComponent(
-      message
-    )}`;
+    const mobileNumbers = buyerList.map((buyer) => buyer.buyerMobile);
 
-    window.open(smsUrl); // For web-based SMS
+    const recipients = mobileNumbers.join(",");
 
-    // Optional: Clear the list after sending
-    // setBuyerList([]);
+    const smsUrl = `sms:${recipients}?body=${encodeURIComponent(message)}`;
+
+    window.open(smsUrl);
+    setBuyerList([]);
+  };
+
+  const handleGoBack = () => {
+    navigate(-1);
   };
 
   return (
     <div className="container buyer-container mt-4">
+      <div className="d-flex align-items-center mb-3">
+        <p onClick={handleGoBack} className="btn btn-danger mb-5">
+          <FaArrowLeft className="me-2" /> Back
+        </p>
+        <h2 className="text-primary mb-0 mt-5">
+          <FaPaperPlane className="me-2" size={25} /> Send Icecream
+        </h2>
+        <div></div> {/* Empty div for spacing */}
+      </div>
+
       <div className="card shadow">
         <div className="card-body">
-          <h2 className="card-title text-primary mb-4">
-            <FaPaperPlane className="me-2" /> Send Ice Cream Eligibility
-          </h2>
-
           <div className="mb-3 d-flex align-items-center">
             <input
               type="number"

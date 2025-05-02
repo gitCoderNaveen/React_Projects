@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "../Css/NearbyPromotion.css";
 import { FaPencilAlt } from "react-icons/fa";
 import { useAuth } from "./Auth";
 import Swal from "sweetalert2";
 import { Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../Css/NearbyPromotion.css"; // Import your custom CSS for overrides
 
 const Nearbypromotion = () => {
   const [pincodeInput, setPincodeInput] = useState("");
@@ -22,7 +22,7 @@ const Nearbypromotion = () => {
   );
   const [prefix, setPrefix] = useState("");
   const [loading, setLoading] = useState(false);
-  const { userData, setUserData } = useAuth();
+  const { userData } = useAuth();
 
   const handleSelectAllChange = () => {
     if (selectAll) {
@@ -38,8 +38,9 @@ const Nearbypromotion = () => {
       const response = await fetch(
         "https://signpostphonebook.in/client_fetch.php"
       );
-      if (!response.ok)
+      if (!response.ok) {
         throw new Error(`HTTP Error! Status: ${response.status}`);
+      }
       const jsonResponse = await response.json();
       if (Array.isArray(jsonResponse)) {
         setData(jsonResponse.sort((a, b) => b.id - a.id));
@@ -68,7 +69,7 @@ const Nearbypromotion = () => {
       Swal.fire({
         icon: "warning",
         title: "Attention!",
-        text: "Please enter a valid pincode and select a prefix.",
+        text: "Please enter a valid pincode and select a recipient type.",
       });
       return;
     }
@@ -116,7 +117,7 @@ const Nearbypromotion = () => {
     fetchData();
     setSelectAll(false);
     setSelectedBusinesses([]);
-    setClrBtn(!clrBtn);
+    setClrBtn(false);
     setShowresults(false);
     setNoRecord(false);
   };
@@ -136,15 +137,15 @@ const Nearbypromotion = () => {
       text: `Do you want to send the following message to ${selectedBusinesses.length} recipients?`,
       icon: "question",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
+      confirmButtonColor: "#007bff",
+      cancelButtonColor: "#6c757d",
       confirmButtonText: "Yes, send it!",
     }).then((result) => {
       if (result.isConfirmed) {
         const currentDate = new Date().toISOString().split("T")[0];
 
         const postData = {
-          user_name: userData.bussinessname || userData.person || "Unknown",
+          user_name: userData?.bussinessname || userData?.person || "Unknown",
           date: currentDate,
           pincode: pincodeInput.trim(),
           product: "",
@@ -199,8 +200,8 @@ const Nearbypromotion = () => {
   };
 
   return (
-    <div className="container" style={{ marginTop: "40px" }}>
-      <div className="accordion" id="nearbyPromotionAccordion">
+    <div className="container mt-4">
+      <div className="accordion mb-3" id="nearbyPromotionAccordion">
         <div className="accordion-item">
           <h2 className="accordion-header" id="headingOne">
             <button
@@ -238,136 +239,123 @@ const Nearbypromotion = () => {
           </div>
         </div>
       </div>
-      <div className="input-section">
-        <div>
-          <label htmlFor="">
-            <strong>
-              Edit / Create Message :
-              <span>
-                <FaPencilAlt
-                  style={{
-                    marginLeft: "10px",
-                    cursor: "pointer",
-                    color: "#000000",
-                  }}
-                />
-              </span>
-            </strong>
-          </label>
+
+      <div className="mb-3">
+        <label htmlFor="message" className="form-label fw-semibold">
+          Edit / Create Message :
+          <FaPencilAlt
+            className="ms-2"
+            style={{ cursor: "pointer", color: "#007bff" }}
+          />
+        </label>
+        <div className="position-relative">
+          <textarea
+            className="form-control"
+            id="message"
+            value={customMessage}
+            onChange={(e) => setCustomMessage(e.target.value)}
+            rows={4}
+            placeholder="Type your message here..."
+          ></textarea>
           <div
-            className="message-box-container"
-            style={{ position: "relative", width: "100%" }}
+            className="text-muted position-absolute top-0 end-0 pe-2 pt-1"
+            style={{
+              color: customMessage.length === maxLength ? "red" : "inherit",
+              fontSize: "0.8rem",
+            }}
           >
-            <textarea
-              className="message-box"
-              value={customMessage}
-              onChange={(e) => setCustomMessage(e.target.value)}
-              rows={4}
-              placeholder="Type your message here..."
-              style={{
-                width: "100%",
-                padding: "10px",
-                boxSizing: "border-box",
-              }}
-            ></textarea>
-            <div
-              className="char-counter"
-              style={{
-                position: "absolute",
-                top: "2px",
-                right: "10px",
-                fontSize: "14px",
-                color: customMessage.length === maxLength ? "red" : "black",
-              }}
-            >
-              {maxLength - customMessage.length} / {maxLength}
-            </div>
-          </div>
-          <label>
-            <strong>Select Recipients Type :</strong>
-          </label>
-          <div className="prefix-container">
-            <div className="radio-group" aria-required>
-              <label htmlFor="Mr">
-                <input
-                  type="radio"
-                  value="Mr."
-                  checked={prefix === "Mr."}
-                  onChange={(e) => setPrefix(e.target.value)}
-                />
-                &nbsp;Males
-              </label>
-            </div>
-            <div className="radio-group">
-              <label htmlFor="Mr">
-                <input
-                  type="radio"
-                  value="Ms."
-                  checked={prefix === "Ms."}
-                  onChange={(e) => setPrefix(e.target.value)}
-                />
-                &nbsp;Females
-              </label>
-            </div>
-            <div className="radio-group">
-              <label htmlFor="Mr">
-                <input
-                  type="radio"
-                  value="M/s."
-                  checked={prefix === "M/s."}
-                  onChange={(e) => setPrefix(e.target.value)}
-                />
-                &nbsp;Business Firms
-              </label>
-            </div>
+            {maxLength - customMessage.length} / {maxLength}
           </div>
         </div>
-        <div>
-          <label htmlFor="">
-            <strong>Type Pincode of Recipients</strong>
-          </label>
-        </div>
-        <div className="search_Container">
-          <div className="input-wrapper">
-            <input
-              type="number"
-              placeholder="Enter Pincode"
-              maxLength={6}
-              value={pincodeInput}
-              onChange={(e) => setPincodeInput(e.target.value)}
-            />
-          </div>
-          {clrBtn ? (
-            <button
-              className="btn btn-primary search_Button"
-              onClick={clearItems}
-            >
-              Clear
-            </button>
-          ) : (
-            <button
-              className="btn btn-primary search_Button"
-              onClick={fetchBusinesses}
-            >
-              Search
-            </button>
-          )}
-        </div>
-        {showresults && (
-          <div className="data_Controls">
-            <div>
-              <p>
-                <strong>Results Displayed :</strong> {datas.length},
-              </p>
-            </div>
-            <div>
-              <p>
-                <strong>Selected:</strong> {selectedBusinesses.length}
-              </p>
-            </div>
-          </div>
-        )}
       </div>
+
+      <div className="mb-3">
+        <label className="form-label fw-semibold">
+          Select Recipients Type :
+        </label>
+        <div className="d-flex gap-3">
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="prefix"
+              id="male"
+              value="Mr."
+              checked={prefix === "Mr."}
+              onChange={(e) => setPrefix(e.target.value)}
+            />
+            <label className="form-check-label" htmlFor="male">
+              Males
+            </label>
+          </div>
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="prefix"
+              id="female"
+              value="Ms."
+              checked={prefix === "Ms."}
+              onChange={(e) => setPrefix(e.target.value)}
+            />
+            <label className="form-check-label" htmlFor="female">
+              Females
+            </label>
+          </div>
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="prefix"
+              id="business"
+              value="M/s."
+              checked={prefix === "M/s."}
+              onChange={(e) => setPrefix(e.target.value)}
+            />
+            <label className="form-check-label" htmlFor="business">
+              Business Firms
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div className="mb-3">
+        <label htmlFor="pincode" className="form-label fw-semibold">
+          Type Pincode of Recipients
+        </label>
+        <div className="input-group">
+          <input
+            type="number"
+            className="form-control"
+            id="pincode"
+            placeholder="Enter Pincode"
+            maxLength={6}
+            value={pincodeInput}
+            onChange={(e) => setPincodeInput(e.target.value)}
+          />
+          <button
+            className={`btn ${
+              clrBtn ? "btn-outline-secondary" : "btn-primary"
+            }`}
+            type="button"
+            onClick={clrBtn ? clearItems : fetchBusinesses}
+          >
+            {clrBtn ? "Clear" : "Search"}
+          </button>
+        </div>
+      </div>
+
+      {showresults && (
+        <div className="d-flex justify-content-between mb-2">
+          <p className="mb-0">
+            <strong>Results Displayed:</strong> {datas.length}
+          </p>
+          <p className="mb-0">
+            <strong>Selected:</strong> {selectedBusinesses.length}
+          </p>
+        </div>
+      )}
+
       {loading ? (
         <div className="d-flex justify-content-center">
           <Spinner animation="border" role="status">
@@ -376,75 +364,88 @@ const Nearbypromotion = () => {
         </div>
       ) : (
         <div>
-          <div className="result-header">
-            <label htmlFor="">
-              <strong>Select Recipients :</strong>
+          <div className="d-flex justify-content-between align-items-center mb-2">
+            <label className="form-label fw-semibold mb-0">
+              Select Recipients :
             </label>
-            <br />
-            <div className="selectAllSection">
-              <div>
-                <label>
-                  <strong>Select All</strong>
-                </label>
-              </div>
-              <div>
+            <div className="d-flex align-items-center">
+              <div className="form-check me-3">
                 <input
                   type="checkbox"
+                  className="form-check-input"
                   onChange={handleSelectAllChange}
                   checked={selectAll}
+                  id="selectAll"
                 />
+                <label
+                  className="form-check-label fw-semibold"
+                  htmlFor="selectAll"
+                >
+                  Select All
+                </label>
               </div>
+              <button className="btn btn-primary" onClick={sendBatchSMS}>
+                Send SMS ({selectedBusinesses.length})
+              </button>
             </div>
-
-            <button className="btn btn-primary mb-2" onClick={sendBatchSMS}>
-              Send SMS
-            </button>
           </div>
+
           {showresults ? (
             <div className="scroll-container">
               {datas.length > 0 ? (
                 <>
                   {datas.map((item) => (
-                    <div className="card" key={item.id}>
-                      <div className="card-details">
-                        <p className="heading-text">
-                          <strong>{item.businessname || item.person}</strong>
-                        </p>
-                        <p className="card-para">{item.product}</p>
-                      </div>
-                      <div className="checkbox">
-                        <p>{item.mobileno.slice(0, -5)}xxxxx</p>
-                        <input
-                          className="inputCheckbox"
-                          type="checkbox"
-                          checked={selectedBusinesses.includes(item)}
-                          onChange={() => handleCheckboxChange(item)}
-                        />
+                    <div className="card mb-2" key={item.id}>
+                      <div className="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                          <h6 className="card-title fw-semibold mb-1">
+                            {item.businessname || item.person}
+                          </h6>
+                          <p className="card-text text-muted mb-0">
+                            {item.product}
+                          </p>
+                        </div>
+                        <div className="d-flex align-items-center">
+                          <p className="mb-0 me-2 text-muted">
+                            {item.mobileno.slice(0, -5)}xxxxx
+                          </p>
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            checked={selectedBusinesses.includes(item)}
+                            onChange={() => handleCheckboxChange(item)}
+                            id={`checkbox-${item.id}`}
+                          />
+                        </div>
                       </div>
                     </div>
                   ))}
                 </>
               ) : (
-                <p>No records found.</p>
+                <p className="text-muted">No records found.</p>
               )}
             </div>
           ) : (
-            <div className="container defaultContainer mt-2">
-              <p>
+            <div className="card mt-2">
+              <div className="card-body text-center text-muted">
                 {noRecord ? (
                   <strong>No Records found</strong>
                 ) : (
                   <strong>Your Result Will be Shown Here!!..</strong>
                 )}
-              </p>
+              </div>
             </div>
           )}
-          <button className="btn btn-primary mt-2" onClick={sendBatchSMS}>
-            Send SMS
-          </button>
-          <p>
-            <strong>Selected:</strong> {selectedBusinesses.length}
-          </p>
+
+          {!showresults && (
+            <button
+              className="btn btn-primary mt-2 w-100"
+              onClick={sendBatchSMS}
+              disabled={selectedBusinesses.length === 0}
+            >
+              Send SMS ({selectedBusinesses.length})
+            </button>
+          )}
         </div>
       )}
     </div>

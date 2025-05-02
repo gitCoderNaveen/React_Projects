@@ -120,13 +120,13 @@ export default function Navigationpage() {
               )}
               {/* ICE CREAM DROPDOWN - Conditional rendering for admins only */}
               {isAdminUser && (
-                <li className="nav-item dropdown">
+                <li className="nav-item">
                   <a
                     className="nav-link text-light"
                     href="#"
-                    id="navbarDropdown"
+                    // id="navbarDropdown"
                     role="button"
-                    data-bs-toggle="dropdown"
+                    // data-bs-toggle="dropdown"
                     aria-expanded={isIceCreamDropdownOpen} // Control expansion with state
                     onClick={toggleIceCreamDropdown} // Toggle state on click
                   >
@@ -138,7 +138,7 @@ export default function Navigationpage() {
                     }`}
                     aria-labelledby="navbarDropdown"
                   >
-                    <li>
+                    {/* <li>
                       <NavLink
                         className="dropdown-item"
                         to="/buyer"
@@ -146,8 +146,8 @@ export default function Navigationpage() {
                       >
                         <p>Buyer</p>
                       </NavLink>
-                    </li>
-                    <li>
+                    </li> */}
+                    {/* <li>
                       <NavLink
                         className="dropdown-item"
                         to="/shopkeeper"
@@ -155,7 +155,7 @@ export default function Navigationpage() {
                       >
                         Shopkeeper
                       </NavLink>
-                    </li>
+                    </li> */}
                     {/* <li>
                       <NavLink
                         className="dropdown-item"
@@ -279,7 +279,7 @@ export default function Navigationpage() {
                       Ice Cream
                     </NavLink>
                   </li>
-                  <li className="nav-item">
+                  {/* <li className="nav-item">
                     <NavLink
                       className="nav-link ms-3"
                       to="/buyer"
@@ -287,8 +287,8 @@ export default function Navigationpage() {
                     >
                       Buyer
                     </NavLink>
-                  </li>
-                  <li className="nav-item">
+                  </li> */}
+                  {/* <li className="nav-item">
                     <NavLink
                       className="nav-link ms-3"
                       to="/shopkeeper"
@@ -296,7 +296,7 @@ export default function Navigationpage() {
                     >
                       Shopkeeper
                     </NavLink>
-                  </li>
+                  </li> */}
                   {/* <li className="nav-item">
                     <NavLink
                       className="nav-link ms-3"

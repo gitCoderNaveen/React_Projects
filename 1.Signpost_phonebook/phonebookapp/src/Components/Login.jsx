@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useAuth } from "./Auth";
 import { useNavigate } from "react-router-dom";
 import "../Css/Login.css";
-import { FaEye, FaEyeSlash } from "react-icons/fa"; // Removed FaSpinner
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(true);
@@ -27,6 +27,10 @@ const Login = () => {
     setPassword(e.target.value.toLowerCase());
   };
 
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -46,7 +50,7 @@ const Login = () => {
             <button className="close-button" onClick={handleClosePopup}>
               &times;
             </button>
-            <h2>Login</h2>
+            <h2 className="text-center fw-bold">Login</h2>
             <form onSubmit={handleLogin}>
               <div className="input-group">
                 <label htmlFor="username">Mobile Number</label>
@@ -74,7 +78,7 @@ const Login = () => {
                   {password && (
                     <span
                       className="toggle-password"
-                      onClick={() => setShowPassword(!showPassword)}
+                      onClick={handleTogglePassword}
                     >
                       {showPassword ? <FaEyeSlash /> : <FaEye />}
                     </span>

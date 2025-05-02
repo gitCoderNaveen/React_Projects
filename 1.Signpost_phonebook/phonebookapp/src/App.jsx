@@ -3,7 +3,6 @@ import Navigationpage from "./Components/Navigationpage";
 import { Routes, Route } from "react-router-dom";
 import "../src/App.css";
 import Auth, { useAuth, Authcontext } from "./Components/Auth"; // Uncomment and ensure Auth is imported
-
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import BookLoader from "./Components/BookLoader";

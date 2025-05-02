@@ -1,7 +1,9 @@
-// export default Signup;
 import React, { useEffect, useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "../Css/Signup.css";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
 
 function Signup() {
   const [mypromoCode, setPromoCode] = useState("");
@@ -33,7 +35,6 @@ function Signup() {
   const [showStdText, setshowStdText] = useState(false);
   const [showEmailText, setshowEmailText] = useState(false);
   const [showPromoText, setshowPromoText] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
   const [showPopup1, setShowPopup1] = useState(false);
   const mypriority = "0";
   const mydiscount = "";
@@ -55,9 +56,7 @@ function Signup() {
     const minutes = now.getMinutes();
     const ampm = hours >= 12 ? "PM" : "AM";
     hours = hours % 12 || 12; // Convert to 12-hour format
-    const formattedTime = `${hours}:${
-      minutes < 10 ? "0" + minutes : minutes
-    } ${ampm}`;
+    const formattedTime = `<span class="math-inline">\{hours\}\:</span>{minutes < 10 ? "0" + minutes : minutes} ${ampm}`;
 
     // Combine date and time
     setDateTime(`${formattedDate} ${formattedTime}`);
@@ -96,12 +95,6 @@ function Signup() {
     if (/^[a-zA-Z\s]*$/.test(personName)) {
       setPerson(personName);
     }
-  };
-  const handlePopup = (e) => {
-    e.preventDefault();
-    setShowPopup(false);
-    navigate("/login");
-    resetForm();
   };
 
   const handleClosePopup1 = (e) => {
@@ -194,7 +187,20 @@ function Signup() {
       const jsonResponse = await response.json();
 
       if (jsonResponse.Message) {
-        setShowPopup(true);
+        Swal.fire({
+          title: "Registration Successful!",
+          html: `<p>You are successfully registered in the portal -</p>
+                 <h4><strong>Signpost PHONE BOOK</strong></h4>
+                 <p>Your access Credentials are :</p>
+                 <p>User Name : <strong>${mymobileno}</strong></p>
+                 <p>Password : <strong>Signpost</strong></p>`,
+          icon: "success",
+          confirmButtonText: "OK",
+          didClose: () => {
+            navigate("/login");
+            resetForm();
+          },
+        });
       } else {
         alert("Unexpected response from server.");
       }
@@ -375,279 +381,366 @@ function Signup() {
     setshowPromoText(true);
   };
   return (
-    <div className="signup-container">
-      <div className="signup-content">
-        <button className="close-button" onClick={() => navigate("/login")}>
-          &times;{" "}
-        </button>
-        <h2 className="header-text">Signup</h2>
-        <div className="form-container">
-          <form className="scrollable-form">
-            <label htmlFor="mobile">Mobile Number*:</label>
-            <input
-              type="number"
-              id="mobile"
-              name="mobile"
-              value={mymobileno}
-              onClick={handleMobileHelptext}
-              onChange={(e) => {
-                setMobileno(e.target.value);
-              }}
-              maxLength={10}
-              onInput={(e) => {
-                if (e.target.value.length > 10)
-                  e.target.value = e.target.value.slice(0, 10);
-              }}
-              onBlur={() => checkMobileNumber(mymobileno)}
-              required
-            />
-            {showMobiletext && (
-              <p className="helptext">{`Type 10 digits with get Country code (+91), without gap Don't Type Land Line`}</p>
-            )}
-
-            <label htmlFor="name">Person Name*:</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={myperson}
-              onClick={handlePersonHelptext}
-              onChange={handlePersonName}
-            />
-            {showPersonName && (
-              <p className="helptext">{`Type Initial at the end`}</p>
-            )}
-
-            <label>Prefix*:</label>
-            <div className="radio-group">
-              <label>
+    <div className="container-fluid bg-light py-5">
+      <div className="row justify-content-center">
+        <div className="col-12 col-md-8 col-lg-6">
+          <div className="card shadow-lg p-4 rounded-lg">
+            <button
+              className="btn-close float-end"
+              onClick={() => navigate("/login")}
+              aria-label="Close"
+            ></button>
+            <h2 className="text-center mb-4">Signup</h2>
+            <form className="scrollable-form">
+              <div className="mb-3">
+                <label htmlFor="mobile" className="form-label">
+                  Mobile Number<span className="text-danger">*</span>:
+                </label>
                 <input
-                  type="radio"
-                  name="title"
-                  value="Mr."
-                  checked={myprefix === "Mr."}
-                  onClick={handleRadio}
+                  type="number"
+                  className="form-control"
+                  id="mobile"
+                  name="mobile"
+                  value={mymobileno}
+                  onClick={handleMobileHelptext}
                   onChange={(e) => {
-                    setPrefix(e.target.value);
+                    setMobileno(e.target.value);
                   }}
-                />
-                Mr.
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="title"
-                  value="Ms."
-                  onClick={handleRadio}
-                  checked={myprefix === "Ms."}
-                  onChange={(e) => {
-                    setPrefix(e.target.value);
+                  maxLength={10}
+                  onInput={(e) => {
+                    if (e.target.value.length > 10)
+                      e.target.value = e.target.value.slice(0, 10);
                   }}
+                  onBlur={() => checkMobileNumber(mymobileno)}
+                  required
                 />
-                Ms.
-              </label>
-            </div>
-            {showprefixtext && (
-              <p className="helptext">{`Select Mr. For Gents and Ms. for Ladies`}</p>
-            )}
-
-            <label htmlFor="name">Firm/Business Name*:</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={mybusinessname}
-              onClick={handleBusinessHelptext}
-              onChange={handleBusinessName}
-            />
-            {showbusinesstext && (
-              <p className="helptext">{`Type Your FirmName or BusinessName`}</p>
-            )}
-
-            <label htmlFor="city">
-              City<span className="red-star">*</span>:
-            </label>
-            <input
-              type="text"
-              id="city"
-              name="city"
-              value={mycity}
-              onClick={handleCity}
-              onChange={handleCityName}
-              required
-            />
-            {showCityText && (
-              <p className="helptext">{`Type City Name. Don't Use Petnames (Kovai Etc.)`}</p>
-            )}
-
-            <label htmlFor="pincode">
-              Pincode<span className="red-star">*</span>:
-            </label>
-            <input
-              type="number"
-              id="pincode"
-              name="pincode"
-              value={mypincode}
-              onChange={(e) => {
-                setPincode(e.target.value);
-              }}
-              onClick={handlePincode}
-              maxLength={6}
-              onInput={(e) => {
-                if (e.target.value.length > 6)
-                  e.target.value = e.target.value.slice(0, 6);
-              }}
-              required
-            />
-            {showPincodeText && (
-              <p className="helptext">{`Type 6 Digits Continioulsy Without Gap`}</p>
-            )}
-
-            <label htmlFor="address">
-              Address<span className="red-star">*</span>:
-            </label>
-            <textarea
-              id="address"
-              name="address"
-              value={myaddress}
-              onClick={handleAddress}
-              onChange={(e) => {
-                setAddress(e.target.value);
-              }}
-              required
-            ></textarea>
-            {showAddressText && (
-              <p className="helptext">{`Type Door Number, Street, Flat No, Appartment Name, Landmark, Area Name etc.`}</p>
-            )}
-
-            {mybusinessname && (
-              <div>
-                <label htmlFor="productService">Product/Service*:</label>
-                <input
-                  type="text"
-                  id="productService"
-                  name="productService"
-                  value={myproduct}
-                  onChange={(e) => {
-                    setProduct(e.target.value);
-                  }}
-                  onClick={handleProduct}
-                />
-                {showProductText && (
-                  <p className="helptext">{`Type Correct & Specific Name of Product/Service offered. Sepparate Each Keyword By Comma. For `}</p>
+                {showMobiletext && (
+                  <div className="form-text text-danger">
+                    Type 10 digits with country code (+91), without gap. Don't
+                    type Land Line.
+                  </div>
                 )}
               </div>
-            )}
 
-            <label htmlFor="landline">Landline No:</label>
-            <input
-              type="number"
-              id="landline"
-              name="landline"
-              value={mylandLine}
-              onClick={handleLandLine}
-              onChange={(e) => {
-                setLandLine(e.target.value);
-              }}
-            />
-            {showLandlineText && (
-              <p className="helptext">{`Type Only Landline, if Available. Don't Type Mobile Number here.`}</p>
-            )}
+              <div className="mb-3">
+                <label htmlFor="name" className="form-label">
+                  Person Name<span className="text-danger">*</span>:
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="name"
+                  name="name"
+                  value={myperson}
+                  onClick={handlePersonHelptext}
+                  onChange={handlePersonName}
+                />
+                {showPersonName && (
+                  <div className="form-text text-danger">
+                    Type Initial at the end.
+                  </div>
+                )}
+              </div>
 
-            <label htmlFor="stdCode">STD Code:</label>
-            <input
-              type="number"
-              id="stdCode"
-              name="stdCode"
-              value={myLcode}
-              onClick={handleStdCode}
-              onChange={(e) => {
-                setLcode(e.target.value);
-              }}
-            />
-            {showStdText && (
-              <p className="helptext">{`Type Only Landline, if Available. Don't Type Mobile Number here.`}</p>
-            )}
+              <div className="mb-3">
+                <label className="form-label">
+                  Prefix<span className="text-danger">*</span>:
+                </label>
+                <div className="d-flex align-items-center gap-3">
+                  <div className="form-check">
+                    <input
+                      type="radio"
+                      className="form-check-input"
+                      name="title"
+                      value="Mr."
+                      checked={myprefix === "Mr."}
+                      onClick={handleRadio}
+                      onChange={(e) => {
+                        setPrefix(e.target.value);
+                      }}
+                      id="mr-radio" // Added an ID for the label to associate with
+                    />
+                    <label className="form-check-label" htmlFor="mr-radio">
+                      Mr.
+                    </label>
+                  </div>
+                  <div className="form-check">
+                    <input
+                      type="radio"
+                      className="form-check-input"
+                      name="title"
+                      value="Ms."
+                      onClick={handleRadio}
+                      checked={myprefix === "Ms."}
+                      onChange={(e) => {
+                        setPrefix(e.target.value);
+                      }}
+                      id="ms-radio" // Added an ID for the label to associate with
+                    />
+                    <label className="form-check-label" htmlFor="ms-radio">
+                      Ms.
+                    </label>
+                  </div>
+                </div>
+                {showprefixtext && (
+                  <div className="form-text text-danger">
+                    Select Mr. For Gents and Ms. for Ladies.
+                  </div>
+                )}
+              </div>
 
-            <label htmlFor="email">Email:</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={myemail}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-              onClick={handleEmail}
-            />
-            {showEmailText && (
-              <p className="helptext">{`Type Correctly, Only If Available`}</p>
-            )}
+              <div className="mb-3">
+                <label htmlFor="businessName" className="form-label">
+                  Firm/Business Name<span className="text-danger">*</span>:
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="businessName"
+                  name="businessName"
+                  value={mybusinessname}
+                  onClick={handleBusinessHelptext}
+                  onChange={handleBusinessName}
+                />
+                {showbusinesstext && (
+                  <div className="form-text text-danger">
+                    Type Your Firm Name or Business Name.
+                  </div>
+                )}
+              </div>
 
-            <label htmlFor="promoCode">Promo Code:</label>
-            <input
-              type="text"
-              id="promoCode"
-              name="promoCode"
-              value={mypromoCode}
-              onClick={handlePromoCode}
-              onChange={(e) => {
-                setPromoCode(e.target.value);
-              }}
-            />
-            {showPromoText && (
-              <p className="helptext">{`Mobile Number of Person, Who Refered you Here. Leave Blank if Not Refer`}</p>
-            )}
-          </form>
-        </div>
-        <div className="submit-Button">
-          <button
-            className="btn btn-primary mt-2"
-            type="button"
-            onClick={insertRecord}
-          >
-            Submit
-          </button>
-        </div>
-        <div className="login-container">
-          <p>
-            If You have already registered, Please{" "}
-            <button
-              type="button"
-              className="signupButton"
-              onClick={() => {
-                navigate("/login");
-              }}
-            >
-              <strong>Login</strong>
-            </button>
-          </p>
-        </div>
-        {showPopup && (
-          <div className="popup">
-            <div className="popup-content">
-              <p>You are successfully registered in the portal -</p>
-              <h4>
-                <strong>Signpost PHONE BOOK</strong>
-              </h4>
-              <p>Your access Credintials are :</p>
-              <p>
-                User Name : <strong>{mymobileno},</strong>{" "}
-              </p>
-              <p>
-                Password : <strong>Signpost</strong>{" "}
-              </p>
+              <div className="mb-3">
+                <label htmlFor="city" className="form-label">
+                  City<span className="text-danger">*</span>:
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="city"
+                  name="city"
+                  value={mycity}
+                  onClick={handleCity}
+                  onChange={handleCityName}
+                  required
+                />
+                {showCityText && (
+                  <div className="form-text text-danger">
+                    Type City Name. Don't Use Petnames (Kovai Etc.).
+                  </div>
+                )}
+              </div>
 
-              <button onClick={handlePopup}>OK</button>
+              <div className="mb-3">
+                <label htmlFor="pincode" className="form-label">
+                  Pincode<span className="text-danger">*</span>:
+                </label>
+                <input
+                  type="number"
+                  className="form-control"
+                  id="pincode"
+                  name="pincode"
+                  value={mypincode}
+                  onChange={(e) => {
+                    setPincode(e.target.value);
+                  }}
+                  onClick={handlePincode}
+                  maxLength={6}
+                  onInput={(e) => {
+                    if (e.target.value.length > 6)
+                      e.target.value = e.target.value.slice(0, 6);
+                  }}
+                  required
+                />
+                {showPincodeText && (
+                  <div className="form-text text-danger">
+                    Type 6 Digits Continuously Without Gap.
+                  </div>
+                )}
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="address" className="form-label">
+                  Address<span className="text-danger">*</span>:
+                </label>
+                <textarea
+                  className="form-control"
+                  id="address"
+                  name="address"
+                  value={myaddress}
+                  onClick={handleAddress}
+                  onChange={(e) => {
+                    setAddress(e.target.value);
+                  }}
+                  required
+                ></textarea>
+                {showAddressText && (
+                  <div className="form-text text-danger">
+                    Type Door Number, Street, Flat No, Appartment Name,
+                    Landmark, Area Name etc.
+                  </div>
+                )}
+              </div>
+
+              {mybusinessname && (
+                <div className="mb-3">
+                  <label htmlFor="productService" className="form-label">
+                    Product/Service<span className="text-danger">*</span>:
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="productService"
+                    name="productService"
+                    value={myproduct}
+                    onChange={(e) => {
+                      setProduct(e.target.value);
+                    }}
+                    onClick={handleProduct}
+                  />
+                  {showProductText && (
+                    <div className="form-text text-danger">
+                      Type Correct & Specific Name of Product/Service offered.
+                      Separate Each Keyword By Comma.
+                    </div>
+                  )}
+                </div>
+              )}
+
+              <div className="mb-3">
+                <label htmlFor="landline" className="form-label">
+                  Landline No:
+                </label>
+                <input
+                  type="number"
+                  className="form-control"
+                  id="landline"
+                  name="landline"
+                  value={mylandLine}
+                  onClick={handleLandLine}
+                  onChange={(e) => {
+                    setLandLine(e.target.value);
+                  }}
+                />
+                {showLandlineText && (
+                  <div className="form-text text-danger">
+                    Type Only Landline, if Available. Don't Type Mobile Number
+                    here.
+                  </div>
+                )}
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="stdCode" className="form-label">
+                  STD Code:
+                </label>
+                <input
+                  type="number"
+                  className="form-control"
+                  id="stdCode"
+                  name="stdCode"
+                  value={myLcode}
+                  onClick={handleStdCode}
+                  onChange={(e) => {
+                    setLcode(e.target.value);
+                  }}
+                />
+                {showStdText && (
+                  <div className="form-text text-danger">
+                    Type STD Code of your Landline.
+                  </div>
+                )}
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="email" className="form-label">
+                  Email:
+                </label>
+                <input
+                  type="email"
+                  className="form-control"
+                  id="email"
+                  name="email"
+                  value={myemail}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                  onClick={handleEmail}
+                />
+                {showEmailText && (
+                  <div className="form-text text-danger">
+                    Type Correctly, Only If Available.
+                  </div>
+                )}
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="promoCode" className="form-label">
+                  Promo Code:
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="promoCode"
+                  name="promoCode"
+                  value={mypromoCode}
+                  onClick={handlePromoCode}
+                  onChange={(e) => {
+                    setPromoCode(e.target.value);
+                  }}
+                />
+                {showPromoText && (
+                  <div className="form-text text-danger">
+                    Mobile Number of Person, Who Referred you Here. Leave Blank
+                    if Not Referred.
+                  </div>
+                )}
+              </div>
+            </form>
+            <div className="d-grid mt-3">
+              <button
+                className="btn btn-primary"
+                type="button"
+                onClick={insertRecord}
+              >
+                Submit
+              </button>
             </div>
+            <p className="mt-3 text-center">
+              If You have already registered, Please{" "}
+              <button
+                type="button"
+                className="btn btn-link signupButton"
+                onClick={() => {
+                  navigate("/login");
+                }}
+              >
+                <strong>Login</strong>
+              </button>
+            </p>
           </div>
-        )}
-        {/* Popup Modal */}
-        {showPopup1 && (
-          <div style={popupStyles.overlay}>
-            <div style={popupStyles.modal}>
-              <h3>Mobile Number Already Registered</h3>
-              <div>
+        </div>
+      </div>
+
+      {showPopup1 && (
+        <div
+          className="modal fade show"
+          tabIndex="-1"
+          style={{ display: "block", backgroundColor: "rgba(0,0,0,0.5)" }}
+        >
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title text-danger">
+                  Mobile Number Already Registered
+                </h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={handleClosePopup1}
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div className="modal-body text-center">
                 {regBusinessName ? (
                   <div>
                     <p>
@@ -668,54 +761,21 @@ function Signup() {
                   </div>
                 )}
               </div>
-              <button
-                onClick={handleClosePopup1}
-                style={popupStyles.closeButton}
-              >
-                Close
-              </button>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={handleClosePopup1}
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
-
-const popupStyles = {
-  error: {
-    color: "#EC2D01",
-  },
-  overlay: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    zIndex: 1000,
-  },
-  modal: {
-    backgroundColor: "#fff",
-    padding: "20px",
-    borderRadius: "8px",
-    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-    textAlign: "center",
-    maxWidth: "400px",
-    width: "80%",
-  },
-  closeButton: {
-    marginTop: "20px",
-    padding: "10px 20px",
-    backgroundColor: "#007BFF",
-    color: "#fff",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
-  },
-};
 
 export default Signup;

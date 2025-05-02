@@ -5,7 +5,7 @@ import "../Css/UserProfile.css";
 import { Modal, Button, Form, Spinner } from "react-bootstrap";
 import bookLogo from "../assets/images/logos.png";
 import Swal from "sweetalert2";
-import iceCreamBadge from "../assets/images/icecream-logo.png"; // Import the ice cream badge image
+import iceCreamBadge from "../assets/images/icecream-badge.png"; // Import the ice cream badge image
 
 const UserProfile = () => {
   const [activeTab, setActiveTab] = useState("general");
@@ -563,8 +563,11 @@ const UserProfile = () => {
                               <h2>
                                 {userData.businessname || userData.person || ""}
                                 {isBuyer && (
-                                  <p>
-                                    <strong>ID:</strong> {userData.id || "N/A"}
+                                  <p
+                                    className="fw-bolder px-1 py-1 rounded-3"
+                                    style={{ backgroundColor: "#FFD772" }}
+                                  >
+                                    <span>ID:</span> {userData.id || "N/A"}
                                   </p>
                                 )}
                               </h2>
@@ -634,7 +637,7 @@ const UserProfile = () => {
                 </button>
               </div>
 
-              <p>
+              <p className="mt-5">
                 <strong>Prefix:</strong>{" "}
                 {userData.prefix || userData.personprefix || "N/A"}
               </p>
@@ -657,71 +660,6 @@ const UserProfile = () => {
                 <strong>Email:</strong> {userData.email || "N/A"}
               </p>
             </div>
-
-            {/* <div className="tab-content-2 col-lg-4">
-              <div className="description">
-                <h3>Bio</h3>
-                <p>{userData.description || "N/A"}</p>
-                <Button onClick={toggleModal} variant="primary">
-                  Request from{" "}
-                  {userData.businessname ||
-                    userData.person ||
-                    "Business Name Not Available"}{" "}
-                  to signpostphonebook
-                </Button>
-
-                <Modal show={showModal} onHide={toggleModal} centered>
-                  <Modal.Header closeButton>
-                    <Modal.Title>
-                      Frequently Asked Questions{" "}
-                      <h3 style={{ fontSize: 18 }}>
-                        contact us if you need help
-                      </h3>
-                    </Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-
-                    <div className="faq-list">
-                      {questionsAndAnswers.map((item, index) => (
-                        <div key={index} className="faq-item">
-                          <strong>Q: {item.question}</strong>
-                          <p>A: {item.answer}</p>
-                        </div>
-                      ))}
-                    </div>
-
-
-                    <Form.Group className="mt-3">
-                      <Form.Label>Ask a Question:</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Type your message..."
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
-                      />
-                    </Form.Group>
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button variant="secondary" onClick={toggleModal}>
-                      Close
-                    </Button>
-                    <Button
-                      variant="primary"
-                      onClick={() => {
-                        toggleModal();
-                      }}
-                    >
-                      Send
-                    </Button>
-                  </Modal.Footer>
-                </Modal>
-                <div className="socialmedia">
-                  <h3>Links</h3>
-                  <Button variant="primary">Share</Button>
-                  <Button variant="primary">Social media of Signpost</Button>
-                </div>
-              </div>
-            </div> */}
           </div>
         )}
         {activeTab === "tasks" && (
