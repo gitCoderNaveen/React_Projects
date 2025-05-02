@@ -1,18 +1,28 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Swal from "sweetalert2"; // Import SweetAlert
+import Swal from "sweetalert2";
+import {
+  FaUser,
+  FaIceCream,
+  FaCheckCircle,
+  FaTimesCircle,
+  FaSpinner,
+  FaArrowLeft,
+} from "react-icons/fa";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const Shopkeeper = () => {
+  const navigate = useNavigate(); // Initialize useNavigate
   const [buyerId, setBuyerId] = useState("");
   const [ownerName, setOwnerName] = useState("");
   const [icecreamQuantity, setIcecreamQuantity] = useState("");
   const [buyerDetails, setBuyerDetails] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
-  const [loading, setLoading] = useState(false); // State for loading spinner
+  const [loading, setLoading] = useState(false);
 
   const fetchBuyerDetails = async () => {
     if (buyerId) {
-      setLoading(true); // Start loading
+      setLoading(true);
       try {
         const response = await fetch(
           `https://signpostphonebook.in/client_fetch_for_new_database.php`
@@ -25,8 +35,8 @@ const Shopkeeper = () => {
 
         if (matchedBuyer) {
           setBuyerDetails(matchedBuyer);
-          setOwnerName(matchedBuyer.person || matchedBuyer.businessname || ""); // Set owner name
-          setErrorMessage(""); // Clear any previous error message
+          setOwnerName(matchedBuyer.person || matchedBuyer.businessname || "");
+          setErrorMessage("");
         } else {
           setBuyerDetails(null);
           setOwnerName("");
@@ -38,17 +48,16 @@ const Shopkeeper = () => {
         setOwnerName("");
         setErrorMessage("Failed to fetch buyer details.");
       } finally {
-        setLoading(false); // End loading, regardless of success or failure
+        setLoading(false);
       }
     } else {
       setBuyerDetails(null);
       setOwnerName("");
       setErrorMessage("");
-      setLoading(false); // Ensure loading is false if buyerId is empty
+      setLoading(false);
     }
   };
 
-  // Fetch details only when the "Add" button is clicked
   const handleAddClick = () => {
     fetchBuyerDetails();
   };
@@ -112,87 +121,118 @@ const Shopkeeper = () => {
     }
   };
 
+  const handleGoBack = () => {
+    navigate(-1); // Go back to the previous page in history
+  };
+
   return (
-    <div className="container mt-4">
-      <form onSubmit={handleSubmit} className="row g-3">
-        <div className="col-md-6">
-          <label htmlFor="buyerId" className="form-label">
-            Enter Owner ID:
+    <div className="container-fluid p-3">
+      <div className="d-flex justify-content-start align-items-center mb-3">
+        <p
+          onClick={handleGoBack}
+          className="me-3 bg-danger text-white p-2 mb-5"
+        >
+          <FaArrowLeft className="me-2" />
+          Back
+        </p>
+        <h2 className="mb-0 text-center text-primary mt-5">
+          <FaIceCream className="me-2" /> Icecream Owner
+        </h2>
+      </div>
+      <form onSubmit={handleSubmit} className="row gy-3">
+        <div className="col-12">
+          <label htmlFor="buyerId" className="form-label fw-bold">
+            <FaUser className="me-1" /> Owner ID:
           </label>
           <div className="input-group">
             <input
               type="number"
-              className="form-control"
+              className="form-control form-control-lg"
               id="buyerId"
+              placeholder="Enter Owner ID"
               value={buyerId}
               onChange={(e) => setBuyerId(e.target.value)}
             />
             <button
               type="button"
-              className="btn btn-outline-secondary"
+              className="btn btn-outline-primary btn-lg"
               onClick={handleAddClick}
-              disabled={!buyerId}
+              disabled={!buyerId || loading}
             >
+              {loading ? (
+                <FaSpinner className="spinner-border spinner-border-sm" />
+              ) : (
+                <FaCheckCircle />
+              )}{" "}
               Add
             </button>
           </div>
-          {errorMessage && <div className="text-danger">{errorMessage}</div>}
+          {errorMessage && (
+            <div className="text-danger mt-2">
+              <FaTimesCircle className="me-1" /> {errorMessage}
+            </div>
+          )}
         </div>
-
-        <div className="col-md-6">
-          <label htmlFor="ownerName" className="form-label">
-            Owner Name:
+        <div className="col-12">
+          <label htmlFor="ownerName" className="form-label fw-bold">
+            <FaUser className="me-1" /> Owner Name:
           </label>
           <input
             type="text"
-            className="form-control"
+            className="form-control form-control-lg"
             id="ownerName"
             value={ownerName}
-            readOnly // Make it read-only as it's auto-filled
-            placeholder={loading ? "Loading..." : ""} // Show loading text
+            readOnly
+            placeholder={loading ? "Loading..." : "Owner Name"}
           />
         </div>
-
-        <div className="col-md-12">
-          <label htmlFor="icecreamQuantity" className="form-label">
-            Enter Icecream Quantity:
+        <div className="col-12">
+          <label htmlFor="icecreamQuantity" className="form-label fw-bold">
+            <FaIceCream className="me-1" /> Quantity:
           </label>
           <input
             type="number"
-            className="form-control"
+            className="form-control form-control-lg"
             id="icecreamQuantity"
+            placeholder="Enter Quantity"
             value={icecreamQuantity}
             onChange={(e) => setIcecreamQuantity(e.target.value)}
           />
         </div>
-
-        <div className="col-12">
+        <div className="col-12 mt-3">
           <button
             type="submit"
-            className="btn btn-primary"
-            disabled={!buyerDetails || loading} // Disable submit during loading
+            className="btn btn-primary btn-lg w-100"
+            disabled={!buyerDetails || loading || !icecreamQuantity}
           >
             Submit
           </button>
         </div>
       </form>
-
-      {loading && (
-        <div className="d-flex justify-content-center mt-3">
-          <div className="spinner-border text-primary" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
+      {!loading && buyerDetails && (
+        <div className="mt-4 p-3 bg-white text-dark shadow rounded">
+          <h5 className="mb-2">
+            <FaUser className="me-2" /> Owner Info:
+          </h5>
+          <p className="mb-1">
+            <strong>Name:</strong>{" "}
+            {buyerDetails.person || buyerDetails.businessname}
+          </p>
+          <p className="mb-1">
+            <strong>City:</strong> {buyerDetails.city}
+          </p>
+          <p className="mb-0">
+            <strong>Pincode:</strong> {buyerDetails.pincode}
+          </p>
         </div>
       )}
-
-      {!loading && buyerDetails && (
-        <div className="mt-3 alert alert-info">
-          <h5>Buyer Details:</h5>
-          <p className="mb-1">
-            Name: {buyerDetails.person || buyerDetails.businessname}
-          </p>
-          <p className="mb-1">City: {buyerDetails.city}</p>
-          <p className="mb-0">Pincode: {buyerDetails.pincode}</p>
+      {loading && (
+        <div className="d-flex justify-content-center mt-3">
+          <FaSpinner
+            className="spinner-border text-primary spinner-border-lg"
+            role="status"
+          />
+          <span className="visually-hidden">Loading...</span>
         </div>
       )}
     </div>

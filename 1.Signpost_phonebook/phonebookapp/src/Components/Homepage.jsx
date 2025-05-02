@@ -14,6 +14,10 @@ import { BiQuestionMark } from "react-icons/bi";
 import { FaPhoneAlt } from "react-icons/fa";
 import { color } from "framer-motion";
 import axios from "axios";
+import { FaWhatsapp } from "react-icons/fa";
+import { IoIosCall } from "react-icons/io";
+import { FaSms } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
 
 export default function Homepage() {
   const [data, setData] = useState([]);
@@ -523,9 +527,10 @@ export default function Homepage() {
                   </div>
                   <div className="button-group">
                     <button
-                      className="popup-btn whatsapp-btn"
+                      className="popup-btn whatsapp-btn d-flex gap-1"
                       onClick={() => openWhatsApp(selectedItem.mobileno)}
                     >
+                      <FaWhatsapp />
                       whatsapp
                     </button>
                     {selectedItem.email && (
@@ -533,21 +538,24 @@ export default function Homepage() {
                         href={`mailto:${
                           selectedItem.email || "business@example.com"
                         }`}
-                        className="popup-btn mail-btn"
+                        className="popup-btn mail-btn d-flex gap-1"
                       >
+                        <MdEmail />
                         Mail
                       </a>
                     )}
                     <a
                       href={`tel:${selectedItem.mobileno}`}
-                      className="popup-btn call-btn"
+                      className="popup-btn call-btn d-flex gap-1"
                     >
+                      <IoIosCall />
                       Call
                     </a>
                     <a
                       href={`sms:${selectedItem.mobileno}?&body=${encodedMessage}`}
-                      className="popup-btn sms-btn"
+                      className="popup-btn sms-btn d-flex gap-1"
                     >
+                      <FaSms />
                       SMS
                     </a>
                   </div>

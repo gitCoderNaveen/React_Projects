@@ -122,17 +122,30 @@
 }
 
 .membership-button {
-  background-color: #4caf50; /* Button color */
   color: white;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   flex-shrink: 0;
+  font-weight: bolder;
 }
 
+.membership-button {
+  background-color: rgb(202, 174, 14);
+  animation: goldGlow 2s infinite alternate; /* Apply the animation */
+}
 .membership-button:hover {
-  background-color: #45a049; /* Darker shade on hover */
+  background-color: rgb(244, 215, 49);
+}
+
+@keyframes goldGlow {
+  from {
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.7); /* Initial glow */
+  }
+  to {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.9); /* Stronger glow */
+  }
 }
 
 .profile-picture {
@@ -952,8 +965,9 @@ a.yellow:hover {
 }
 
 .memcard-header img {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
+  margin-left: 10px;
 }
 
 .memcard-header .membership-title {
@@ -1004,15 +1018,16 @@ a.yellow:hover {
   padding: 10px;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
-  font-size: 14px;
+  font-size: 12px;
   text-align: center;
 }
 
 .icecream-badge {
   height: 150px;
   position: relative;
-  right: -40px;
-  bottom: 25px;
+  border-radius: 70%;
+  background-color: brown;
+  padding: 2px;
 }
 
 .swal2-container.my-swal-container {

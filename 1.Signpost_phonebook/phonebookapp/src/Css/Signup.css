@@ -151,3 +151,21 @@
 .popup-content button:hover {
   background-color: #0056b3;
 }
+
+/* Signup.css */
+
+/* Add this or modify existing rules */
+.radio-group {
+  display: flex;
+  align-items: center; /* Vertically align items in the group */
+  gap: 1rem; /* Adjust spacing between radio buttons */
+}
+
+.form-check {
+  display: flex;
+  align-items: center; /* Vertically align input and label within each form-check */
+}
+
+.form-check-input {
+  margin-top: 0; /* Reset default top margin that might cause misalignment */
+}
