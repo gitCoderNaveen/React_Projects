@@ -1,0 +1,153 @@
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f9f9f9;
+  padding: 20px;
+}
+
+.signup-content {
+  max-width: 500px;
+  width: 100%;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  box-sizing: border-box;
+}
+.close-button {
+  position: relative;
+  display: flex;
+  justify-self: flex-end;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: black;
+}
+.signupButton {
+  background: none;
+  color: red;
+}
+
+.header-text {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-container {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.scrollable-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.scrollable-form label {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.scrollable-form input,
+.scrollable-form textarea {
+  margin-top: 5px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.scrollable-form button {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.scrollable-form button:hover {
+  background-color: #0056b3;
+}
+
+.radio-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 25px;
+}
+
+.radio-group label {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.red-star {
+  color: #ec2d01;
+}
+
+.helptext {
+  color: red;
+  font-size: small;
+}
+
+.login-container {
+  text-align: center;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.login-container p {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.login-container a:hover {
+  text-decoration: underline;
+}
+.submit-Button {
+  display: flex;
+  justify-content: center;
+}
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.popup-content p {
+  margin-bottom: 20px;
+}
+
+.popup-content button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.popup-content button:hover {
+  background-color: #0056b3;
+}

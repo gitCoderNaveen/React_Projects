@@ -1,0 +1,85 @@
+/* Error Container */
+.error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  min-height: 100vh;
+  animation: fadeIn 2s ease-in-out;
+}
+
+/* Error Content */
+.error-content {
+  text-align: center;
+  background: #fff;
+  padding: 40px 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.error-content:hover {
+  transform: scale(1.05);
+}
+
+/* Error Title */
+.error-title {
+  font-size: 5rem;
+  color: #ff6f61;
+  margin: 0;
+  animation: bounce 1s infinite alternate;
+}
+
+/* Error Message */
+.error-message {
+  font-size: 1.2rem;
+  color: #555;
+  margin: 15px 0;
+}
+
+/* Home Link */
+.home-link {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #ff6f61;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.home-link:hover {
+  background-color: #ff3b3b;
+  transform: translateY(-3px);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .error-title {
+    font-size: 3rem;
+  }
+  .error-content {
+    padding: 20px;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-15px);
+  }
+}

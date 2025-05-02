@@ -1,0 +1,154 @@
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.popup-card {
+  background: white;
+  width: 80%;
+  max-width: 600px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-50%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.open-popup-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.close-popup-btn {
+  position: absolute;
+  top: 0;
+  right: 5%;
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 14px;
+  background: none;
+  width: fit-content;
+  border: none;
+  border-radius: 5px;
+  background-color: red;
+  cursor: pointer;
+}
+
+.btn-close:hover {
+  background-color: #ec2d01;
+}
+
+.close-popup-btn:hover {
+  background-color: #ec2d01;
+  color: #ffffff;
+  border-radius: 50%;
+}
+.header-text {
+  color: #ec2d01;
+}
+.form-container {
+  height: 100vh;
+  font-weight: bolder;
+}
+
+.form-container label {
+  font-weight: bold;
+  margin-top: 10px;
+  display: block;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+}
+
+.red-star {
+  color: #ec2d01;
+}
+
+.radio-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 25px;
+  /* Adjust spacing between items */
+}
+
+.radio-group label {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  /* Adjust spacing between the radio button and text */
+}
+
+.input-buttons {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+@media (max-width: 480px) {
+  .popup-card {
+    background: white;
+    width: 80%;
+    max-width: 600px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+  }
+
+  .red-star {
+    color: #ec2d01;
+  }
+
+  .animate-slide-in {
+    animation: slideIn 0.5s ease-out;
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateY(-50%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  .close-popup-btn:hover {
+    background-color: #ec2d01;
+    color: #ccc;
+  }
+}

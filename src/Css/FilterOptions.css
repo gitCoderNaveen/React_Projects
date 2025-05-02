@@ -1,0 +1,31 @@
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+  }
+  
+.filterOptions{
+    display: flex;
+    flex-direction: row;
+}
+.popup {
+    background-Color: #ffffff;
+    padding: 20px;
+    border-radius: "8px";
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    text-align: "center";
+  }
+  .close-popup-btnn{
+    position: relative;
+    top: 2;
+    right: -45%;
+    background: none;
+    border: none;
+  }

@@ -1,0 +1,230 @@
+body {
+  overflow-x: hidden;
+}
+
+.mobile-image-container {
+  width: 300px; /* Base width */
+}
+
+@media (min-width: 576px) {
+  .mobile-image-container {
+    width: 350px; /* sm */
+  }
+}
+
+@media (min-width: 768px) {
+  .mobile-image-container {
+    width: 450px; /* md */
+  }
+}
+
+@media (min-width: 992px) {
+  .mobile-image-container {
+    width: 500px; /* lg */
+  }
+}
+
+.background-circle {
+  position: absolute;
+  top: -48px; /* -top-12 * 4 */
+  left: -48px; /* -left-12 * 4 */
+  background-color: #2f0036; /* fuchsia-950 */
+  height: 300px; /* Base height */
+  width: 300px; /* Base width */
+  border-radius: 50%;
+  z-index: -1;
+  right: 20px;
+}
+
+@media (min-width: 576px) {
+  .background-circle {
+    height: 350px;
+    width: 350px;
+  }
+}
+
+@media (min-width: 768px) {
+  .background-circle {
+    height: 450px;
+    width: 450px;
+  }
+}
+
+@media (min-width: 992px) {
+  .background-circle {
+    height: 500px;
+    width: 500px;
+  }
+}
+
+.mobile-about-image {
+  position: relative;
+  z-index: 1;
+  height: 300px; /* Base height */
+  animation: app-bounce 2s infinite ease-in-out;
+  /* margin-top: -60px; */
+}
+
+@media (min-width: 576px) {
+  .mobile-about-image {
+    height: 400px;
+  }
+}
+
+@media (min-width: 768px) {
+  .mobile-about-image {
+    height: 500px;
+  }
+}
+
+.mobile-image {
+  position: absolute;
+  top: 80px; /* top-20 * 4 */
+  left: 160px; /* left-40 * 4 */
+  bottom: 30px;
+  z-index: 2;
+  height: 250px; /* Base height */
+  animation: app-bounce 2s infinite ease-in-out;
+  padding-bottom: 15px;
+}
+
+@media (min-width: 576px) {
+  .mobile-image {
+    height: 350px;
+  }
+}
+
+@media (min-width: 768px) {
+  .mobile-image {
+    height: 450px;
+  }
+}
+
+@keyframes app-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.max-width-text {
+  max-width: 400px; /* max-w-lg */
+}
+
+.section-title {
+  font-size: 2rem; /* text-3xl */
+  font-weight: 600; /* font-semibold */
+  margin-bottom: 1rem; /* mb-4 */
+  color: #881391; /* fuchsia-950 */
+}
+
+.orange-text {
+  color: #ea580c; /* orange-700 */
+}
+
+.section-description {
+  margin-bottom: 1rem; /* mb-4 */
+  color: #4b5563; /* gray-700 */
+  font-size: 1rem; /* text-md */
+}
+
+.promotion-title {
+  font-size: 1.25rem; /* text-lg */
+  font-weight: 600; /* font-semibold */
+  margin-bottom: 1rem; /* mb-4 */
+  color: #ea580c; /* orange-700 */
+}
+
+.stats-column {
+  font-size: 1.25rem; /* text-lg */
+  font-weight: 600; /* font-semibold */
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem; /* gap-3 */
+}
+
+.stats-item {
+  background-color: #f9fafb; /* gray-50 */
+  padding: 0.25rem 0.75rem; /* px-3 py-1 */
+  border-radius: 9999px; /* rounded-full */
+}
+
+.start-trial-button {
+  background-color: #ea580c; /* orange-700 */
+  color: white;
+  padding: 0.5rem 1rem; /* py-2 px-4 */
+  font-weight: 600; /* font-semibold */
+  border-radius: 9999px; /* rounded-3xl */
+  border: none;
+}
+.mobile-image-container {
+  width: 300px; /* Base width */
+  position: relative; /* Needed for absolute positioning of the circle */
+}
+
+@media (min-width: 576px) {
+  .mobile-image-container {
+    width: 350px; /* sm */
+  }
+}
+
+@media (min-width: 768px) {
+  .mobile-image-container {
+    width: 450px; /* md */
+  }
+}
+
+@media (min-width: 992px) {
+  .mobile-image-container {
+    width: 500px; /* lg */
+  }
+}
+
+.background-circle {
+  position: absolute;
+  background-color: #2f0036; /* fuchsia-950 */
+  border-radius: 50%;
+  z-index: -1;
+}
+
+/* Center the background circle on small devices */
+@media (max-width: 575px) {
+  .background-circle {
+    width: 80vw; /* Adjust size relative to viewport width */
+    height: 80vw; /* Ensure it's a circle */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@media (min-width: 576px) {
+  .background-circle {
+    top: -48px; /* -top-12 * 4 */
+    left: -48px; /* -left-12 * 4 */
+    height: 300px;
+    width: 300px;
+    right: auto; /* Ensure no right positioning on larger screens */
+  }
+}
+
+@media (min-width: 768px) {
+  .background-circle {
+    height: 450px;
+    width: 450px;
+    top: -48px;
+    left: -48px;
+  }
+}
+
+@media (min-width: 992px) {
+  .background-circle {
+    height: 500px;
+    width: 500px;
+    top: -48px;
+    left: -48px;
+  }
+}

@@ -1,0 +1,1020 @@
+/* General Styles */
+.profile_Card_main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: #f4f4f9;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.Profile_card {
+  width: 100%;
+  max-width: 400px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.Profile_card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.card-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.Profile_card:hover .card-image img {
+  transform: scale(1.1);
+}
+
+.card-content {
+  padding: 20px;
+  text-align: center;
+}
+
+.name_card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.name_card p {
+  font-size: 16px;
+  color: #333333;
+  font-weight: 500;
+}
+
+.name_card h2 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #0077cc;
+  margin: 0;
+}
+
+.card-stats {
+  background: #f9fafb;
+  padding: 10px;
+  border-radius: 8px;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.user-profile {
+  width: 100%;
+  background-color: #007bff;
+  display: flex;
+  justify-content: center;
+}
+
+.content {
+  width: 100%;
+  height: auto;
+  padding: 20px;
+  background-color: #ffffff;
+}
+
+.tab-content {
+  width: 100%;
+}
+
+.tab-content .profile-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px; /* Adjust the gap between elements */
+}
+
+.profile-info {
+  flex: 1;
+  min-width: 250px; /* Ensures it doesn't shrink too much */
+}
+
+.membership-button {
+  background-color: #4caf50; /* Button color */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.membership-button:hover {
+  background-color: #45a049; /* Darker shade on hover */
+}
+
+.profile-picture {
+  position: relative;
+}
+
+.profile-circle {
+  display: inline-block;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 4px solid #000000;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.profile-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cam-icon {
+  position: absolute;
+  top: 80%;
+  left: 80%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  color: rgb(255, 255, 255);
+  /* opacity: 0.8; */
+  background-color: rgb(0, 0, 0);
+  padding: 5px;
+  border-radius: 50%;
+  /* display: none; */
+}
+
+.profile-info {
+  position: relative;
+  left: 5vh;
+  margin-top: 20px;
+  flex: 1;
+}
+
+.profile-info h3 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.profile-info p {
+  font-size: 1rem;
+  color: #7f8c8d;
+}
+
+/* Profile Actions */
+.profile-actions {
+  display: flex;
+  gap: 15px;
+}
+
+.profile-actions .share-btn,
+.profile-actions .ref-btn {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.profile-actions .share-btn:hover,
+.profile-actions .ref-btn:hover {
+  background-color: #ff0000;
+}
+
+.profile-actions i {
+  font-size: 18px;
+}
+
+/* About Details */
+.about-details {
+  flex-direction: column;
+  margin-top: 30px;
+}
+
+.about-details p {
+  font-size: 1.1rem;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.about-details strong {
+  font-weight: 600;
+  color: #000000;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  width: 250px;
+  background-color: #2c3e50;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease-in-out;
+}
+
+.sidebar button {
+  background: none;
+  border: none;
+  color: white;
+  padding: 15px;
+  text-align: left;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.sidebar button.active,
+.sidebar button:hover {
+  background-color: #34495e;
+}
+
+.subscription-card {
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 5px;
+  background-color: #3498db;
+  color: white;
+  text-align: center;
+  font-size: 16px;
+}
+
+/* Responsive Sidebar */
+.toggle-button {
+  display: none;
+  background: #2c3e50;
+  color: white;
+  border: none;
+  font-size: 24px;
+  padding: 10px;
+  position: relative;
+  /* top: 25px; */
+  /* left: 15px; */
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  width: 100%;
+  border-radius: 15px;
+  position: relative;
+  top: 0;
+  text-align: center;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@media (max-width: 768px) {
+  .profile-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .membership-button {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .toggle-button {
+    /* z-index: 1000; */
+    display: block;
+  }
+
+  .sidebar {
+    position: fixed;
+    left: -250px;
+    height: 100%;
+    width: 250px;
+    transform: translateX(0);
+  }
+
+  .sidebar.open {
+    z-index: 1000;
+    transform: translateX(273px);
+  }
+}
+
+@media (max-width: 480px) {
+  .user-profile {
+    width: 100%;
+    background-color: #007bff;
+  }
+
+  .profile-container {
+    display: flex;
+  }
+
+  .profile-info {
+    text-align: center;
+    left: 0;
+    margin-top: 30px;
+  }
+
+  .content {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .tab-content {
+    width: 100%;
+    background-color: #16a085;
+  }
+
+  .tab-content .profile-header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .modal-overlay {
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+  }
+
+  .modal-overlay .modal-content {
+    background: white;
+    padding: 20px;
+    width: auto;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.3s ease-in-out;
+    /* REMOVED THE ROTATION */
+  }
+
+  .memcard-header {
+    width: 20%;
+    background: #ff4081;
+    padding: 10px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+  }
+}
+
+.general-tab {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Profile Section */
+
+/* Profile Header */
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-header {
+    z-index: 1000;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .profile-info {
+    padding: 0 15px;
+    position: relative;
+    top: -30px;
+    /* background-color: #2c3e50; */
+  }
+
+  .profile-actions {
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .profile-actions .share-btn,
+  .profile-actions .ref-btn {
+    width: 100%;
+  }
+}
+
+.tab-content-2 {
+  background: rgb(255, 255, 255);
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+  top: 1vh;
+  left: 13px;
+  height: auto;
+
+  @media screen and (max-width: 768px) {
+    top: 0px;
+    left: 0;
+    width: 100%;
+  }
+}
+
+.description {
+  padding: 25px;
+  transition: transform 0.3s ease;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.description h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.description p {
+  font-size: 1rem;
+  color: #7f8c8d;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+/* Button Styling */
+.description button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.description button:hover {
+  background-color: #ff4757;
+  transform: scale(1.05);
+}
+
+/* Social Media Section */
+.socialmedia {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #dfe6e9;
+}
+
+.socialmedia h3 {
+  font-size: 1.3rem;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.socialmedia button {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  background-color: #1abc9c;
+}
+
+.socialmedia button:hover {
+  background-color: #16a085;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .description {
+    padding: 20px;
+    max-width: 90%;
+  }
+
+  .description h3 {
+    font-size: 1.4rem;
+  }
+
+  .description button {
+    width: 100%;
+    padding: 12px;
+  }
+}
+
+/* Subscription Plans */
+.sub-tab {
+  text-align: center; /* Center-align child elements */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.starter-plan-card,
+.monthly-plan-card,
+.yearly-plan-card {
+  display: inline-block; /* Allow cards to sit next to each other */
+  vertical-align: top; /* Align cards properly */
+  width: calc(33.333% - 20px); /* Default: 3 cards per row */
+  max-width: 400px;
+  margin: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: #fff;
+}
+
+.starter-plan-card:hover,
+.monthly-plan-card:hover,
+.yearly-plan-card:hover {
+  /* transform: translateY(-5px); */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.plan-header {
+  text-align: center;
+  padding: 20px;
+  font-weight: bold;
+  color: #b71c1c;
+}
+
+.starter-plan-card .plan-header {
+  background-color: #ffcdd2;
+}
+
+.monthly-plan-card .plan-header {
+  background-color: #ffffcd;
+}
+
+.yearly-plan-card .plan-header {
+  background-color: #d8ffcd;
+}
+
+.plan-body {
+  padding: 20px;
+  text-align: center;
+}
+
+.plan-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.plan-features li {
+  font-size: 0.9rem;
+  margin: 8px 0;
+}
+
+.subscribe-btn {
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+  .starter-plan-card,
+  .monthly-plan-card,
+  .yearly-plan-card {
+    width: calc(50% - 20px); /* Two cards per row on tablets */
+  }
+}
+
+@media (max-width: 768px) {
+  .starter-plan-card,
+  .monthly-plan-card,
+  .yearly-plan-card {
+    width: calc(100% - 40px); /* Full-width cards on small screens */
+    margin: 20px auto; /* Center the cards */
+  }
+}
+
+/* Adjustments for very small screens */
+@media (max-width: 480px) {
+  .plan-header {
+    font-size: 1.1rem; /* Slightly smaller text for headers */
+    padding: 15px;
+  }
+
+  .plan-body {
+    padding: 15px;
+  }
+
+  .plan-features li {
+    font-size: 0.8rem; /* Reduce text size for smaller screens */
+  }
+
+  .subscribe-btn {
+    font-size: 0.9rem; /* Adjust button size */
+  }
+}
+
+@media (max-width: 768px) {
+  .txt .col-md-6 {
+    text-align: start;
+  }
+}
+
+.rightside-sub {
+  /* width: 100%; */
+  text-align: center;
+}
+
+.card-blue {
+  width: 100%;
+  background-color: #007bff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #007bff !important;
+}
+
+.card-blue .p-3 {
+  padding: 20px;
+}
+
+.text-white {
+  color: white;
+}
+
+.mb-3 {
+  margin-bottom: 20px;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.align-items-end {
+  align-items: flex-end;
+}
+
+.mb-0 {
+  margin-bottom: 0;
+}
+
+.yellow {
+  color: #ffd700;
+}
+
+span {
+  font-size: 16px;
+}
+
+a.yellow {
+  color: #ffd700;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+a.yellow:hover {
+  text-decoration: underline;
+}
+
+.highlight {
+  background-color: #f7f7f7;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 15px;
+  color: #333;
+}
+
+/* setting cs */
+.tab-content {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Settings Section */
+.tab-content h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.tab-content p {
+  font-size: 1rem;
+  color: #7f8c8d;
+  margin-bottom: 15px;
+}
+
+/* Edit Form */
+.about-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Labels */
+.about-edit-form label {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+/* Form Inputs */
+.about-edit-form input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #bdc3c7;
+  border-radius: 5px;
+  transition: border 0.3s ease;
+}
+
+.about-edit-form input:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.action-buttons button {
+  flex: 1;
+  padding: 10px;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.action-buttons .btn-success {
+  background: #27ae60;
+  color: white;
+}
+
+.action-buttons .btn-success:hover {
+  background: #218c54;
+}
+
+.action-buttons .btn-secondary {
+  background: #7f8c8d;
+  color: white;
+}
+
+.action-buttons .btn-secondary:hover {
+  background: #6c757d;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .tab-content {
+    padding: 20px;
+  }
+
+  .about-edit-form {
+    padding: 15px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 10;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  position: relative;
+  text-align: center;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.close-button {
+  position: absolute;
+  top: 0px;
+  right: 10px;
+  font-size: 24px;
+  font-weight: bolder;
+  cursor: pointer;
+  color: #333;
+  z-index: 1000;
+}
+
+/* Fade-in animation for modal */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.CompanyLogo {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1px solid black;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: space-evenly;
+  gap: 50px;
+  margin-left: -50px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.CompanyLogo2 {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1px solid rgb(60, 255, 0);
+  background-color: #f0f0f0;
+  padding: 5px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.membership-profile-img {
+  width: 100px; /* Adjust for card design */
+  height: 100px;
+  border-radius: 50%; /* Makes it circular */
+  object-fit: cover; /* Ensures the image fits well without distortion */
+  border: 4px solid #764ba2; /* Matching the gradient theme */
+  background-color: #f0f0f0; /* Light background in case image doesn't load */
+  padding: 5px; /* Adds spacing inside border */
+  transition: transform 0.3s ease-in-out;
+}
+
+.membership-profile-img:hover {
+  transform: scale(1.05); /* Subtle zoom effect on hover */
+}
+
+.membership-card {
+  background: #fff;
+  border-radius: 15px;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.memcard-header {
+  width: 100%;
+  background: #ff4081;
+  padding: 10px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.memcard-header img {
+  width: 50px;
+  height: 50px;
+}
+
+.memcard-header .membership-title {
+  font-size: 26px;
+  font-weight: bold;
+  text-align: center;
+  color: black;
+}
+
+.memcard-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  /* padding: 20px 0; */
+}
+
+.memprofile-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 4px solid #ff4081;
+  background-color: white;
+  object-fit: cover;
+  margin-right: 15px;
+  margin-left: 15px;
+}
+
+.memuser-details {
+  text-align: left;
+}
+
+.memuser-details h2 {
+  font-size: 20px;
+  margin: 5px 0;
+}
+
+.memuser-details p {
+  font-size: 16px;
+  color: #555;
+  margin: 5px 0;
+}
+
+.memfooter {
+  margin: 5px 0;
+  width: 100%;
+  background: #ff4081;
+  color: white;
+  padding: 10px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.icecream-badge {
+  height: 150px;
+  position: relative;
+  right: -40px;
+  bottom: 25px;
+}
+
+.swal2-container.my-swal-container {
+  z-index: 10000 !important; /* Use a very high value */
+}

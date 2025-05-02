@@ -1,0 +1,454 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "../Css/NearbyPromotion.css";
+import { FaPencilAlt } from "react-icons/fa";
+import { useAuth } from "./Auth";
+import Swal from "sweetalert2";
+import { Spinner } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+const Nearbypromotion = () => {
+  const [pincodeInput, setPincodeInput] = useState("");
+  const [selectAll, setSelectAll] = useState(false);
+  const [clrBtn, setClrBtn] = useState(false);
+  const [datas, setData] = useState([]);
+  const [showresults, setShowresults] = useState(false);
+  const [noRecord, setNoRecord] = useState(false);
+  const [selectedBusinesses, setSelectedBusinesses] = useState([]);
+  const [selectedPrefix, setSelectedPrefix] = useState(null);
+  const maxLength = 290;
+  const [customMessage, setCustomMessage] = useState(
+    "I Saw Your Listing in SIGNPOST PHONE BOOK. I am Interested in your Products. Please Send Details/Call Me. (Sent Thro Signpost PHONE BOOK)"
+  );
+  const [prefix, setPrefix] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { userData, setUserData } = useAuth();
+
+  const handleSelectAllChange = () => {
+    if (selectAll) {
+      setSelectedBusinesses([]);
+    } else {
+      setSelectedBusinesses(datas);
+    }
+    setSelectAll(!selectAll);
+  };
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        "https://signpostphonebook.in/client_fetch.php"
+      );
+      if (!response.ok)
+        throw new Error(`HTTP Error! Status: ${response.status}`);
+      const jsonResponse = await response.json();
+      if (Array.isArray(jsonResponse)) {
+        setData(jsonResponse.sort((a, b) => b.id - a.id));
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Unexpected response from server.",
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Failed to load data: " + error.message,
+      });
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchBusinesses = () => {
+    if (!pincodeInput || !prefix) {
+      Swal.fire({
+        icon: "warning",
+        title: "Attention!",
+        text: "Please enter a valid pincode and select a prefix.",
+      });
+      return;
+    }
+
+    setLoading(true);
+    axios
+      .get(
+        `https://signpostphonebook.in/get_details_based_on_prefix_pincode.php?pincode=${pincodeInput}&prefix=${prefix}`
+      )
+      .then((response) => {
+        if (response.data?.[0] === "No records found.") {
+          setNoRecord(true);
+          setClrBtn(true);
+          setData([]);
+          setShowresults(false);
+        } else {
+          setData(response.data);
+          setClrBtn(true);
+          setShowresults(true);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching businesses:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Error fetching businesses.",
+        });
+      })
+      .finally(() => setLoading(false));
+  };
+
+  const handleCheckboxChange = (client) => {
+    setSelectedBusinesses((prev) =>
+      prev.includes(client)
+        ? prev.filter((item) => item !== client)
+        : [...prev, client]
+    );
+  };
+
+  const clearItems = () => {
+    setPincodeInput("");
+    setPrefix("");
+    setSelectedPrefix(null);
+    fetchData();
+    setSelectAll(false);
+    setSelectedBusinesses([]);
+    setClrBtn(!clrBtn);
+    setShowresults(false);
+    setNoRecord(false);
+  };
+
+  const sendBatchSMS = () => {
+    if (selectedBusinesses.length === 0) {
+      Swal.fire({
+        icon: "warning",
+        title: "Attention!",
+        text: "No clients are selected!",
+      });
+      return;
+    }
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: `Do you want to send the following message to ${selectedBusinesses.length} recipients?`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, send it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const currentDate = new Date().toISOString().split("T")[0];
+
+        const postData = {
+          user_name: userData.bussinessname || userData.person || "Unknown",
+          date: currentDate,
+          pincode: pincodeInput.trim(),
+          product: "",
+          selected_prefix: prefix,
+          promotion_from: "Nearby Promotion",
+          selected_count: selectedBusinesses.length,
+        };
+
+        axios
+          .post(
+            "https://signpostphonebook.in/promotion_app/promotion_appliaction.php",
+            postData
+          )
+          .then((response) => {
+            console.log(response.data.Message);
+            Swal.fire({
+              icon: "success",
+              title: "SMS Request Sent!",
+              text: "Your SMS request has been successfully sent.",
+            });
+          })
+          .catch((error) => {
+            console.error("Error sending data:", error);
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Error sending data.",
+            });
+          });
+
+        const mobileNumbers = selectedBusinesses.map(
+          (client) => client.mobileno
+        );
+        try {
+          const recipients = mobileNumbers.join(",");
+          const smsUri = `sms:${recipients}?body=${encodeURIComponent(
+            customMessage
+          )}`;
+          window.location.href = smsUri;
+          setSelectedBusinesses([]);
+          setSelectAll(false);
+        } catch (error) {
+          console.error("Error opening SMS application:", error.message);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "An error occurred while opening the SMS application. Please try again.",
+          });
+        }
+      }
+    });
+  };
+
+  return (
+    <div className="container" style={{ marginTop: "40px" }}>
+      <div className="accordion" id="nearbyPromotionAccordion">
+        <div className="accordion-item">
+          <h2 className="accordion-header" id="headingOne">
+            <button
+              className="accordion-button collapsed fw-semibold text-primary"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseOne"
+              aria-expanded="false"
+              aria-controls="collapseOne"
+            >
+              How to Use Nearby Promotion
+            </button>
+          </h2>
+          <div
+            id="collapseOne"
+            className="accordion-collapse collapse"
+            aria-labelledby="headingOne"
+            data-bs-parent="#nearbyPromotionAccordion"
+          >
+            <div className="accordion-body">
+              <p>
+                Send Text messages to Mobile Users in desired Pincode Area
+                <br />
+                1) First edit / create message to be sent. Minimum 1 Count (145
+                characters), Maximum 2 counts (290 characters)
+                <br />
+                2) Select type of Recipient (Males / Females / Business Firms)
+                <br />
+                3) Type Pincode Number of Targetted area for Promotion
+                <br />
+                4) For error free delivery of messages, send in batches of 10
+                nos. each time
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="input-section">
+        <div>
+          <label htmlFor="">
+            <strong>
+              Edit / Create Message :
+              <span>
+                <FaPencilAlt
+                  style={{
+                    marginLeft: "10px",
+                    cursor: "pointer",
+                    color: "#000000",
+                  }}
+                />
+              </span>
+            </strong>
+          </label>
+          <div
+            className="message-box-container"
+            style={{ position: "relative", width: "100%" }}
+          >
+            <textarea
+              className="message-box"
+              value={customMessage}
+              onChange={(e) => setCustomMessage(e.target.value)}
+              rows={4}
+              placeholder="Type your message here..."
+              style={{
+                width: "100%",
+                padding: "10px",
+                boxSizing: "border-box",
+              }}
+            ></textarea>
+            <div
+              className="char-counter"
+              style={{
+                position: "absolute",
+                top: "2px",
+                right: "10px",
+                fontSize: "14px",
+                color: customMessage.length === maxLength ? "red" : "black",
+              }}
+            >
+              {maxLength - customMessage.length} / {maxLength}
+            </div>
+          </div>
+          <label>
+            <strong>Select Recipients Type :</strong>
+          </label>
+          <div className="prefix-container">
+            <div className="radio-group" aria-required>
+              <label htmlFor="Mr">
+                <input
+                  type="radio"
+                  value="Mr."
+                  checked={prefix === "Mr."}
+                  onChange={(e) => setPrefix(e.target.value)}
+                />
+                &nbsp;Males
+              </label>
+            </div>
+            <div className="radio-group">
+              <label htmlFor="Mr">
+                <input
+                  type="radio"
+                  value="Ms."
+                  checked={prefix === "Ms."}
+                  onChange={(e) => setPrefix(e.target.value)}
+                />
+                &nbsp;Females
+              </label>
+            </div>
+            <div className="radio-group">
+              <label htmlFor="Mr">
+                <input
+                  type="radio"
+                  value="M/s."
+                  checked={prefix === "M/s."}
+                  onChange={(e) => setPrefix(e.target.value)}
+                />
+                &nbsp;Business Firms
+              </label>
+            </div>
+          </div>
+        </div>
+        <div>
+          <label htmlFor="">
+            <strong>Type Pincode of Recipients</strong>
+          </label>
+        </div>
+        <div className="search_Container">
+          <div className="input-wrapper">
+            <input
+              type="number"
+              placeholder="Enter Pincode"
+              maxLength={6}
+              value={pincodeInput}
+              onChange={(e) => setPincodeInput(e.target.value)}
+            />
+          </div>
+          {clrBtn ? (
+            <button
+              className="btn btn-primary search_Button"
+              onClick={clearItems}
+            >
+              Clear
+            </button>
+          ) : (
+            <button
+              className="btn btn-primary search_Button"
+              onClick={fetchBusinesses}
+            >
+              Search
+            </button>
+          )}
+        </div>
+        {showresults && (
+          <div className="data_Controls">
+            <div>
+              <p>
+                <strong>Results Displayed :</strong> {datas.length},
+              </p>
+            </div>
+            <div>
+              <p>
+                <strong>Selected:</strong> {selectedBusinesses.length}
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+      {loading ? (
+        <div className="d-flex justify-content-center">
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        </div>
+      ) : (
+        <div>
+          <div className="result-header">
+            <label htmlFor="">
+              <strong>Select Recipients :</strong>
+            </label>
+            <br />
+            <div className="selectAllSection">
+              <div>
+                <label>
+                  <strong>Select All</strong>
+                </label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  onChange={handleSelectAllChange}
+                  checked={selectAll}
+                />
+              </div>
+            </div>
+
+            <button className="btn btn-primary mb-2" onClick={sendBatchSMS}>
+              Send SMS
+            </button>
+          </div>
+          {showresults ? (
+            <div className="scroll-container">
+              {datas.length > 0 ? (
+                <>
+                  {datas.map((item) => (
+                    <div className="card" key={item.id}>
+                      <div className="card-details">
+                        <p className="heading-text">
+                          <strong>{item.businessname || item.person}</strong>
+                        </p>
+                        <p className="card-para">{item.product}</p>
+                      </div>
+                      <div className="checkbox">
+                        <p>{item.mobileno.slice(0, -5)}xxxxx</p>
+                        <input
+                          className="inputCheckbox"
+                          type="checkbox"
+                          checked={selectedBusinesses.includes(item)}
+                          onChange={() => handleCheckboxChange(item)}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <p>No records found.</p>
+              )}
+            </div>
+          ) : (
+            <div className="container defaultContainer mt-2">
+              <p>
+                {noRecord ? (
+                  <strong>No Records found</strong>
+                ) : (
+                  <strong>Your Result Will be Shown Here!!..</strong>
+                )}
+              </p>
+            </div>
+          )}
+          <button className="btn btn-primary mt-2" onClick={sendBatchSMS}>
+            Send SMS
+          </button>
+          <p>
+            <strong>Selected:</strong> {selectedBusinesses.length}
+          </p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Nearbypromotion;

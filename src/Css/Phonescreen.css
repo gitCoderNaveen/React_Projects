@@ -1,0 +1,431 @@
+.phone-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  background: url('../assets/images/background.jpg') no-repeat center center/cover; 
+  border-radius: 10px;
+}
+
+.phone-container h1{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 2.5rem;
+  color: #ffffff;
+  margin:10px;
+  
+}
+
+/* Phone Frame */
+.phone-container .phone-frame {
+  position: relative;
+  width: 90%;
+  height: 600px;
+  border-radius: 30px;
+  background-color: #070707;
+  border: 4px solid #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.phone-screen{
+  position: absolute;
+width: 100%;
+height: 90%;
+top: 25px;
+background:url("../assets/images/mobile_Background.jpg") no-repeat center center/cover;
+border-radius: 20px;
+overflow-y: auto;
+padding: 10px;
+}
+.phone-camera {
+  position: absolute;
+  top: 10px;
+  width: 9px;
+  height: 9px;
+  background-color: gray;
+  border-radius: 50%;
+}
+.home_card-container {
+  position: relative;
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  width: 98%;
+  margin: 10px auto;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.home_card-left {
+  flex: 1;
+  text-align: left;
+}
+
+.home_card-name {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.card-location {
+  font-size: 14px;
+  color: #555;
+  margin: 4px 0 0;
+}
+
+.home_card-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.phone-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.phone-icon {
+  margin-right: 8px;
+  font-size: 18px;
+}
+
+.phone-number {
+  font-size:1.5rem;
+  color: #333;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-group {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+.button-group a{
+  text-decoration: none;
+  color:#ffffff;
+}
+
+.mybtn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.call-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+.call-btn:hover {
+  background-color: #45a049;
+}
+
+.more-btn {
+  background-color: #008cba;
+  color: white;
+}
+
+.more-btn:hover {
+  background-color: #007bb5;
+}
+.phone-home {
+  position: absolute;
+  bottom: 15px;
+  width: 50px;
+  height: 10px;
+  background-color: #ffffff;
+  border-radius: 5px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+.pagination-number{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: white;
+  margin: 2px;
+}
+
+.pagination button {
+  background-color: #c90b5e;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 10px;
+}
+
+/* .pagination button:hover {
+  background-color: #ddd;
+}
+
+.pagination .active-page {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+} */
+
+.goto-page {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.goto-page input {
+  padding: 5px;
+  width: 80px;
+  text-align: center;
+}
+  
+  @media screen and (max-width:480px) {
+    .phone-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      min-height: 100vh;
+      background: url('../assets/images/background.jpg') no-repeat center center/cover; 
+      border-radius: 10px;
+    }
+
+    .phone-container h1{
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      font-size: 2.5rem;
+      color: #ffffff;
+      margin:10px;
+      
+    }
+    
+    /* Phone Frame */
+    .phone-container .phone-frame {
+      position: relative;
+      width: 90%;
+      height: 600px;
+      border-radius: 30px;
+      background-color: #070707;
+      border: 4px solid #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    
+    .phone-screen{
+      position: absolute;
+    width: 100%;
+    height: 90%;
+    top: 25px;
+    background:url("../assets/images/mobile_Background.jpg") no-repeat center center/cover;
+    border-radius: 20px;
+    overflow-y: auto;
+    padding: 10px;
+    }
+    .phone-camera {
+      position: absolute;
+      top: 10px;
+      width: 9px;
+      height: 9px;
+      background-color: gray;
+      border-radius: 50%;
+    }
+    .home_card-container {
+      position: relative;
+      display: flex;
+      gap: 3px;
+      align-items: center;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 10px;
+      width: 98%;
+      margin: 10px auto;
+      background-color: #f9f9f9;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .home_card-left {
+      flex: 1;
+      text-align: left;
+    }
+    
+    .home_card-name {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 0;
+    }
+    
+    .card-location {
+      font-size: 14px;
+      color: #555;
+      margin: 4px 0 0;
+    }
+    
+    .home_card-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .phone-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    
+    .phone-icon {
+      margin-right: 8px;
+      font-size: 18px;
+    }
+    
+    .phone-number {
+      font-size: 16px;
+      color: #333;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+    }
+    .button-group a{
+      text-decoration: none;
+      color:#ffffff;
+    }
+    
+    .mybtn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    
+    .call-btn {
+      background-color: #4caf50;
+      color: white;
+    }
+    
+    .call-btn:hover {
+      background-color: #45a049;
+    }
+    
+    .more-btn {
+      background-color: #008cba;
+      color: white;
+    }
+    
+    .more-btn:hover {
+      background-color: #007bb5;
+    }
+    .phone-home {
+      position: absolute;
+      bottom: 15px;
+      width: 50px;
+      height: 10px;
+      background-color: #ffffff;
+      border-radius: 5px;
+    }
+    .loading-bar{
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .pagination {
+      display: flex;      
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+    }
+    
+    .pagination button {
+      background-color: #4caf50;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+      transition: 0.3s;
+      border-radius: 10px;
+    }
+    .pagination-number{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      border: 2px solid #ffffff;
+    }
+    
+    /* .pagination button:hover {
+      background-color: #ddd;
+    }
+    
+    .pagination .active-page {
+      background-color: #007bff;
+      color: white;
+      font-weight: bold;
+    } */
+
+    .goto-page {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+    
+    .goto-page input {
+      padding: 5px;
+      width: 80px;
+      text-align: center;
+    }
+  }
+  @media screen and (max-width:320px) {
+    .phone-screen{
+      position: absolute;
+    width: 280px;
+    height: 550px;
+    top: 25px;
+    background-color: white;
+    border-radius: 15px;
+    overflow-y: auto;
+    padding: 10px;
+    }
+    .phone-home {
+      position: absolute;
+      bottom: 15px;
+      width: 50px;
+      height: 10px;
+      background-color: gray;
+      border-radius: 5px;
+    }
+  }

@@ -1,0 +1,136 @@
+.navbar {
+  background: url("../assets/images/background.jpg") no-repeat center
+    center/cover;
+  width: 100%;
+  padding: 5px;
+}
+.nav-brand {
+  text-decoration: none;
+  color: #ffffff;
+  font-size: x-large;
+  font-weight: 700;
+  border: 2px solid white;
+  padding: 4px;
+  margin-left: -10px;
+}
+
+.navbar-nav .nav-link {
+  display: flex;
+}
+.navbar-collapse ul {
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.userfn-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.userfn-btn .userlogin-name {
+  text-wrap: nowrap;
+}
+.userfn-btn button {
+  width: fit-content;
+  height: fit-content;
+  text-align: center;
+  text-wrap: nowrap;
+}
+
+.user_btn {
+  border: none;
+  background: none;
+  color: #f9f5f5;
+  font-weight: 700;
+}
+
+@media (max-width: 480px) {
+  .Navbar-buttondiv {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    margin: 3px;
+  }
+  .navbar-nav .nav-link {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+  }
+  .navbar-collapse ul {
+    width: 100%;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .userfn-btn {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    margin-left: 10px;
+    justify-content: left;
+    align-items: flex-start;
+  }
+  .user_btn {
+    border: none;
+    background: none;
+    color: #ec2d01;
+    font-weight: 700;
+    margin-left: 10px;
+  }
+}
+
+@media (min-width: 992px) {
+  .drawer-open {
+    display: none !important; /* Ensure the drawer is hidden on large screens */
+  }
+}
+
+.navbar-toggler {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 2rem;
+  height: 2rem;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+.navbar-toggler:focus {
+  outline: none;
+}
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 2rem;
+  height: 2rem;
+}
+
+.hamburger span {
+  display: block;
+  width: 2rem;
+  height: 0.25rem;
+  background: #fff; /* Adjust color as needed */
+  border-radius: 10px;
+  transition: all 0.3s linear;
+  position: relative;
+  transform-origin: 1px;
+}
+
+.hamburger.open span:nth-child(1) {
+  transform: rotate(45deg);
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg);
+}
